@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopkeeper Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background: #f8f9fa; }
+    .card-status { font-size: 0.9rem; }
+    .badge-pending { background-color: #ffc107; }
+    .badge-delivered { background-color: #28a745; }
+  </style>
+</head>
+<body>
+
+<div class="container py-4">
+  <h2 class="text-center mb-4">Shopkeeper Dashboard</h2>
+
+  <div class="row mb-4">
+    <div class="col-md-4">
+      <div class="card text-white bg-primary">
+        <div class="card-body">
+          <h5 class="card-title">Total Orders</h5>
+          <p class="card-text fs-4" id="orderCount">0</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card text-white bg-success">
+        <div class="card-body">
+          <h5 class="card-title">Total Quantity</h5>
+          <p class="card-text fs-4" id="totalQuantity">0</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card text-white bg-warning">
+        <div class="card-body">
+          <h5 class="card-title">Estimated Revenue (₹)</h5>
+          <p class="card-text fs-4" id="totalRevenue">0</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" id="orders"></div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDsKMHremVDMox2vsgyVpDRa6FSDi2IlVw",
+    authDomain: "create-account-5ca6d.firebaseapp.com",
+    projectId: "create-account-5ca6d",
+    storageBucket: "create-account-5ca6d.appspot.com",
+    messagingSenderId: "361167086120",
+    appId: "1:361167086120:web:e2980b9eb60c053b69cb1d"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const container = document.getElementById("orders");
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  const currentShopId = user?.uid;
+
+  if (!currentShopId) {
+    alert("No shopkeeper logged in!");
+    window.location.href = "login..html";
+  }
+
+  const ordersRef = ref(db, "orders");
+  onValue(ordersRef, (snapshot) => {
+    const data = snapshot.val();
+    const filteredOrders = [];
+    for (let id in data) {
+      if (data[id].shopId === currentShopId) {
+        filteredOrders.push({ id, ...data[id] });
+      }
+    }
+    renderOrders(filteredOrders);
+  });
+
+  function renderOrders(orders) {
+    container.innerHTML = "";
+    let total = 0;
+    let totalQty = 0;
+    let revenue = 0;
+    const ratePerItem = 50; 
+
+    if (orders.length === 0) {
+      container.innerHTML = `<div class='text-center text-muted'>No orders yet.</div>`;
+    }
+
+    orders.forEach(order => {
+      const card = document.createElement("div");
+      card.className = "col-md-4 mb-3";
+      const status = order.status === "Delivered" ? "Delivered" : "Pending";
+      const badgeClass = status === "Delivered" ? "badge-delivered" : "badge-pending";
+
+      total++;
+      totalQty += parseInt(order.quantity);
+      revenue += parseInt(order.quantity) * ratePerItem;
+
+      card.innerHTML = `
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">${order.product} × ${order.quantity}</h5>
+            <p><strong>Customer:</strong> ${order.orderedBy}</p>
+            <p><strong>Phone:</strong> ${order.phone}</p>
+            <p><strong>Address:</strong> ${order.address}</p>
+            <p><strong>Time:</strong> ${new Date(order.time).toLocaleString()}</p>
+            <p><strong>Status:</strong> <span class="badge ${badgeClass} card-status">${status}</span></p>
+            ${status === "Pending" ? `<button class="btn btn-sm btn-outline-success mt-2" onclick="markDelivered('${order.id}')">Mark as Delivered</button>` : ""}
+          </div>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+
+    document.getElementById("orderCount").innerText = total;
+    document.getElementById("totalQuantity").innerText = totalQty;
+    document.getElementById("totalRevenue").innerText = revenue;
+  }
+
+  window.markDelivered = function (orderId) {
+    const updateRef = ref(db, `orders/${orderId}`);
+    update(updateRef, { status: "Delivered" });
+  };
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

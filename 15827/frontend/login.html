@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Lib Management</title>
+  <link rel="stylesheet" href="style/register.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+  <div class="auth-bg">
+    <div class="auth-card">
+      <h2 class="auth-title gradient-text">Welcome Back</h2>
+      <form id="loginForm" class="auth-form">
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button type="submit" class="auth-btn"><span class="btn-text">Login</span></button>
+        <div id="loginError" class="error-message"></div>
+      </form>
+      <div class="social-login">
+        <button type="button" class="social-btn google-btn"><i class="fab fa-google"></i> Sign in with Google</button>
+        <button type="button" class="social-btn facebook-btn"><i class="fab fa-facebook-f"></i> Sign in with Facebook</button>
+      </div>
+      <p class="auth-link">Don't have an account? <a href="register.html">Register</a></p>
+      <p class="auth-link">Forgot your password? <a href="reset-password.html">Reset Password</a></p>
+    </div>
+  </div>
+  <script src="js/login.js"></script>
+</body>
+</html> 

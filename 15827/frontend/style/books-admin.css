@@ -1,0 +1,100 @@
+h2 {
+  color: #0d133d;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+}
+.add-book-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(13,19,61,0.10);
+}
+.add-book-form input, .add-book-form textarea {
+  flex: 1 1 180px;
+  padding: 0.7rem;
+  border: 1px solid #bdbdbd;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s;
+}
+.add-book-form textarea {
+  min-width: 200px;
+  min-height: 40px;
+  resize: vertical;
+}
+.add-book-form input:focus, .add-book-form textarea:focus {
+  border: 1.5px solid #1a237e;
+}
+.add-book-form .action-btn {
+  background: #1a237e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.add-book-form .action-btn:hover {
+  background: #3949ab;
+}
+.books-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(13,19,61,0.10);
+  overflow: hidden;
+}
+.books-table th, .books-table td {
+  padding: 1rem 0.75rem;
+  text-align: left;
+}
+.books-table th {
+  background: #e3f2fd;
+  color: #0d133d;
+  font-weight: 700;
+}
+.books-table tr:not(:last-child) {
+  border-bottom: 1px solid #e0e0e0;
+}
+.books-table td {
+  font-size: 1rem;
+  color: #333;
+}
+.books-table .action-btn {
+  background: #1a237e;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.4rem 1rem;
+  margin-right: 0.5rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.books-table .action-btn.delete {
+  background: #d32f2f;
+}
+.books-table .action-btn.barcode {
+  background: #388e3c;
+}
+.books-table .action-btn:hover {
+  opacity: 0.85;
+}
+@media (max-width: 900px) {
+  .add-book-form {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .books-table th, .books-table td {
+    padding: 0.5rem 0.3rem;
+    font-size: 0.95rem;
+  }
+} 

@@ -1,0 +1,58 @@
+  <script src="../js/reports.js"></script>
+  <footer>
+    <p>&copy; 2024 LibraryPro. All rights reserved.</p>
+  </footer>
+  <script>
+    // Navbar login/logout logic
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+    const navLinks = document.querySelector('.nav-links');
+    if (navLinks) {
+      if (token) {
+        let adminLink = '';
+        if (user && user.role === 'admin') {
+          adminLink = '<li><a href="admin/admin.html">Admin Dashboard</a></li>';
+        }
+        navLinks.innerHTML = `
+          <li><a href="index.html">Home</a></li>
+          <li><a href="books.html">Books</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          ${adminLink}
+          <li class="user-menu">
+            <span class="user-avatar" title="Profile">
+              <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User" width="28" height="28" style="border-radius:50%;vertical-align:middle;"> 
+              <span class="user-name">${user ? user.name.split(' ')[0] : 'User'}</span>
+            </span>
+            <ul class="user-dropdown">
+              <li><a href="#" id="logoutBtn">Logout</a></li>
+            </ul>
+          </li>
+        `;
+        // Dropdown logic
+        const userMenu = document.querySelector('.user-menu');
+        const dropdown = document.querySelector('.user-dropdown');
+        if (userMenu && dropdown) {
+          userMenu.addEventListener('mouseenter', () => dropdown.style.display = 'block');
+          userMenu.addEventListener('mouseleave', () => dropdown.style.display = 'none');
+        }
+        document.getElementById('logoutBtn').onclick = function(e) {
+          e.preventDefault();
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          window.location.href = 'login.html';
+        };
+      } else {
+        navLinks.innerHTML = `
+          <li><a href="index.html">Home</a></li>
+          <li><a href="books.html">Books</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="register.html">Register</a></li>
+        `;
+      }
+    }
+  </script>
+</body>
+</html> 

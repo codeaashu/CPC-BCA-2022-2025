@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discover Books | LibraryPro - Your Gateway to Knowledge</title>
+  <meta name="description" content="Explore our vast collection of books across all genres. Find your next favorite read with our advanced search and filtering system.">
+  <link rel="stylesheet" href="style/books.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <a href="index.html" style="color:inherit;text-decoration:none;">
+          <i class="fas fa-book-open"></i> LibraryPro
+        </a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="books.html" class="active">Books</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="register.html">Register</a></li>
+      </ul>
+      <div class="mobile-menu-btn">
+        <i class="fas fa-bars"></i>
+      </div>
+    </nav>
+  </header>
+
+  <main class="books-container">
+  
+    <!-- Hero Section -->
+    
+
+    <!-- Search Section -->
+    <section class="search-section animate-on-scroll">
+      <!-- <div class="section-header">
+        <h2><i class="fas fa-search"></i> Find Your Perfect Read</h2>
+        <p>Use our advanced search to discover books by title, author, genre, or explore our curated collections</p>
+      </div> -->
+      <form id="searchForm" class="search-form">
+        <div class="search-input-group">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" id="searchInput" placeholder="Search by title, author, ISBN, or keywords...">
+        </div>
+        <div class="filter-group">
+          <select id="categoryFilter" style="min-width:120px;" placeholder="Select Category">
+            <option value="">All Categories</option>
+          </select>
+        <select id="sortFilter" style="min-width:120px;">
+          <option value="">Sort By</option>
+          <option value="title">Title (A-Z)</option>
+          <option value="author">Author (A-Z)</option>
+          <option value="year">Year (Newest)</option>
+          <option value="available">Availability</option>
+            <option value="popular">Most Popular</option>
+        </select>
+        </div>
+        <div class="button-group">
+          <button type="submit" class="btn primary-btn">
+            <i class="fas fa-search"></i>
+            Search Books
+          </button>
+          <button type="button" id="clearFiltersBtn" class="btn secondary-btn">
+            <i class="fas fa-times"></i>
+            Clear Filters
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Quick Categories -->
+   
+
+    <!-- Books List -->
+    <section id="booksList" class="books-list">
+      <!-- Books will be rendered here by JS -->
+    </section>
+    <div id="booksError" class="error-message"></div>
+
+    <!-- Featured Collections -->
+    <section class="featured-collections animate-on-scroll">
+      <div class="section-header">
+        <h2><i class="fas fa-star"></i> Featured Collections</h2>
+        <p>Handpicked collections curated by our librarians for the best reading experience</p>
+      </div>
+      <div class="collections-grid">
+        <div class="collection-card">
+          <div class="collection-icon">
+            <i class="fas fa-crown"></i>
+          </div>
+          <h3>Classic Literature</h3>
+          <p>Timeless masterpieces that have shaped literature and culture for generations</p>
+          <span class="collection-count">500+ Books</span>
+        </div>
+        <div class="collection-card">
+          <div class="collection-icon">
+            <i class="fas fa-rocket"></i>
+          </div>
+          <h3>Modern Fiction</h3>
+          <p>Contemporary novels and short stories from today's most talented authors</p>
+          <span class="collection-count">800+ Books</span>
+        </div>
+        <div class="collection-card">
+          <div class="collection-icon">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <h3>Academic Excellence</h3>
+          <p>Comprehensive textbooks and reference materials for students and researchers</p>
+          <span class="collection-count">2000+ Books</span>
+        </div>
+        <div class="collection-card">
+          <div class="collection-icon">
+            <i class="fas fa-child"></i>
+          </div>
+          <h3>Children's Corner</h3>
+          <p>Enchanting stories and educational books for young minds and families</p>
+          <span class="collection-count">300+ Books</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reading Tips -->
+    <section class="reading-tips animate-on-scroll">
+      <div class="section-header">
+        <h2><i class="fas fa-lightbulb"></i> Reading Tips & Recommendations</h2>
+        <p>Enhance your reading experience with our expert tips and personalized recommendations</p>
+      </div>
+      <div class="tips-grid">
+        <div class="tip-card">
+          <div class="tip-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <h3>Set Reading Goals</h3>
+          <p>Start with 20 minutes daily and gradually increase. Consistency is key to building a lasting reading habit.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">
+            <i class="fas fa-bookmark"></i>
+          </div>
+          <h3>Create Your Reading List</h3>
+          <p>Keep a list of books you want to read. This helps you stay organized and motivated.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">
+            <i class="fas fa-comments"></i>
+          </div>
+          <h3>Join Book Discussions</h3>
+          <p>Share your thoughts and discover new perspectives through our community discussions.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">
+            <i class="fas fa-highlighter"></i>
+          </div>
+          <h3>Take Notes</h3>
+          <p>Highlight important passages and jot down your thoughts to deepen your understanding.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3><i class="fas fa-book-open"></i> LibraryPro</h3>
+        <p>Empowering minds through knowledge, one book at a time. Join our community of passionate readers and lifelong learners.</p>
+        <div class="social-links">
+          <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="books.html">Browse Books</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="login.html">Login</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="contact.html">Help Center</a></li>
+          <li><a href="contact.html">Documentation</a></li>
+          <li><a href="contact.html">API Reference</a></li>
+          <li><a href="contact.html">Status</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Contact Info</h4>
+        <div class="contact-info">
+          <p><i class="fas fa-envelope"></i> support@librarypro.com</p>
+          <p><i class="fas fa-phone"></i> +91 8102624230</p>
+          <p><i class="fas fa-map-marker-alt"></i> MRD 7 Vivekanand Park Road, Patliputra colony ALpana Market Patna 800013</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 LibraryPro. All rights reserved. | Made with <i class="fas fa-heart"></i> for book lovers</p>
+    </div>
+  </footer>
+
+  <script src="js/books.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+  <script>
+    // Enhanced navbar logic with user authentication
+    const userToken = localStorage.getItem('token');
+    const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (navLinks) {
+      if (userToken) {
+        let adminLink = '';
+        if (user && user.role === 'admin') {
+          adminLink = '<li><a href="admin/admin.html">Admin Dashboard</a></li>';
+        }
+        navLinks.innerHTML = `
+          <li><a href="index.html">Home</a></li>
+          <li><a href="books.html" class="active">Books</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          ${adminLink}
+          <li class="user-menu">
+            <span class="user-avatar" title="Profile">
+              <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User" width="28" height="28" style="border-radius:50%;vertical-align:middle;"> 
+              <span class="user-name">${user ? user.name.split(' ')[0] : 'User'}</span>
+            </span>
+            <ul class="user-dropdown">
+              <li><a href="#" id="logoutBtn">Logout</a></li>
+            </ul>
+          </li>
+        `;
+        
+        // Dropdown logic
+        const userMenu = document.querySelector('.user-menu');
+        const dropdown = document.querySelector('.user-dropdown');
+        if (userMenu && dropdown) {
+          userMenu.addEventListener('mouseenter', () => dropdown.style.display = 'block');
+          userMenu.addEventListener('mouseleave', () => dropdown.style.display = 'none');
+        }
+        
+        document.getElementById('logoutBtn').onclick = function(e) {
+          e.preventDefault();
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          window.location.href = 'login.html';
+        };
+      } else {
+        navLinks.innerHTML = `
+          <li><a href="index.html">Home</a></li>
+          <li><a href="books.html" class="active">Books</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="register.html">Register</a></li>
+        `;
+      }
+    }
+
+    // Category card click handlers
+    document.querySelectorAll('.category-card').forEach(card => {
+      card.addEventListener('click', function() {
+        const category = this.dataset.category;
+        if (category) {
+          // Trigger search for this category
+          const searchInput = document.getElementById('searchInput');
+          if (searchInput) {
+            searchInput.value = category;
+            document.getElementById('searchForm').dispatchEvent(new Event('submit'));
+          }
+        }
+      });
+    });
+
+    // Mobile menu toggle
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinksElement = document.querySelector('.nav-links');
+    
+    if (mobileMenuBtn && navLinksElement) {
+      mobileMenuBtn.addEventListener('click', () => {
+        navLinksElement.classList.toggle('active');
+      });
+    }
+  </script>
+
+<!-- Payment Modal for Borrowing -->
+<div id="paymentModal" class="modal" style="display:none;">
+  <div class="modal-content payment-modal">
+    <span class="close-btn" id="closePaymentModal">&times;</span>
+    <h2>Pay to Borrow Book</h2>
+    <p>Scan the QR code below to pay <strong>₹49</strong> for 5 days borrowing. Upload your payment slip and enter your transaction ID for verification.</p>
+    <div class="qr-section" style="text-align:center;">
+      <img src="assets/dynamic49.png" alt="UPI QR Code" style="max-width:200px; margin-bottom:1rem;" />
+    </div>
+    <form id="paymentForm" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="paymentSlip">Upload Payment Slip <span style="color:red;">*</span></label>
+        <input type="file" id="paymentSlip" name="paymentSlip" accept="image/*,application/pdf" required />
+      </div>
+      <div class="form-group">
+        <label for="transactionId">Transaction ID <span style="color:red;">*</span></label>
+        <input type="text" id="transactionId" name="transactionId" required placeholder="Enter Transaction ID" />
+      </div>
+      <button type="submit" class="btn primary-btn" id="submitPaymentBtn">Submit Payment</button>
+      <div id="paymentError" class="error-message"></div>
+      <div id="paymentSuccess" class="success-message"></div>
+    </form>
+  </div>
+</div>
+
+<!-- Book Details Modal -->
+<div id="bookDetailsModal" class="modal" style="display:none;">
+  <div class="modal-content book-details-modal">
+    <span class="close-btn" id="closeBookDetailsBtn">&times;</span>
+    <div id="modalBookContent"></div>
+  </div>
+</div>
+</body>
+</html> 

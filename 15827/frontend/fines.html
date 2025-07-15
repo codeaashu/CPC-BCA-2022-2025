@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Fines | LibraryPro</title>
+  <link rel="stylesheet" href="style/fines.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <a href="index.html" style="color:inherit;text-decoration:none;">
+          <i class="fas fa-book-open"></i> LibraryPro
+        </a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="books.html">Books</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="register.html">Register</a></li>
+      </ul>
+      <div class="mobile-menu-btn">
+        <i class="fas fa-bars"></i>
+      </div>
+    </nav>
+  </header>
+
+  <main class="fines-container">
+    <!-- Hero Section -->
+    <section class="hero-section animate-on-scroll">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1 class="hero-title">
+            <span class="gradient-text">Fine Management</span>
+            <br>Stay on Track
+          </h1>
+          <p class="hero-description">
+            View and manage your library fines. Pay overdue fines to maintain good standing and continue enjoying our services.
+          </p>
+        </div>
+        <div class="hero-visual">
+          <div class="fine-stats">
+            <div class="stat-card">
+              <i class="fas fa-exclamation-triangle"></i>
+              <span class="stat-number" id="totalFines">$0</span>
+              <span class="stat-label">Total Fines</span>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-clock"></i>
+              <span class="stat-number" id="overdueBooks">0</span>
+              <span class="stat-label">Overdue Books</span>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-check-circle"></i>
+              <span class="stat-number" id="paidFines">0</span>
+              <span class="stat-label">Paid Fines</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fine Summary -->
+    <section class="fine-summary animate-on-scroll">
+      <div class="summary-cards">
+        <div class="summary-card total-fines">
+          <div class="card-icon">
+            <i class="fas fa-dollar-sign"></i>
+          </div>
+          <div class="card-content">
+            <h3>Total Outstanding</h3>
+            <p class="amount" id="outstandingAmount">$0.00</p>
+            <span class="status">Unpaid</span>
+          </div>
+        </div>
+        <div class="summary-card overdue-books">
+          <div class="card-icon">
+            <i class="fas fa-book"></i>
+          </div>
+          <div class="card-content">
+            <h3>Overdue Books</h3>
+            <p class="amount" id="overdueCount">0</p>
+            <span class="status">Need Attention</span>
+          </div>
+        </div>
+        <div class="summary-card fine-rate">
+          <div class="card-icon">
+            <i class="fas fa-calendar"></i>
+          </div>
+          <div class="card-content">
+            <h3>Fine Rate</h3>
+            <p class="amount">$1/day</p>
+            <span class="status">Per Book</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fines List -->
+    <section class="fines-list-section animate-on-scroll">
+      <div class="section-header">
+        <h2><i class="fas fa-list"></i> Fine Details</h2>
+        <p>Review your fines and make payments to maintain good standing</p>
+      </div>
+      
+      <div class="fines-filter">
+        <button class="filter-btn active" data-filter="all">All Fines</button>
+        <button class="filter-btn" data-filter="overdue">Overdue</button>
+        <button class="filter-btn" data-filter="unpaid">Unpaid</button>
+        <button class="filter-btn" data-filter="paid">Paid</button>
+      </div>
+
+      <div id="finesList" class="fines-list">
+        <!-- Fines will be loaded here -->
+      </div>
+      
+      <div id="finesError" class="error-message"></div>
+    </section>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" id="closePaymentModal">&times;</span>
+        <div class="payment-form">
+          <h2><i class="fas fa-credit-card"></i> Pay Fine</h2>
+          <div class="fine-details">
+            <div class="book-info">
+              <h3 id="modalBookTitle">Book Title</h3>
+              <p id="modalBookAuthor">Author Name</p>
+            </div>
+            <div class="fine-info">
+              <div class="fine-item">
+                <span>Days Overdue:</span>
+                <span id="modalDaysOverdue">0</span>
+              </div>
+              <div class="fine-item">
+                <span>Fine Amount:</span>
+                <span id="modalFineAmount">₹0.00</span>
+              </div>
+              <div class="fine-item">
+                <span>Due Date:</span>
+                <span id="modalDueDate">Date</span>
+              </div>
+            </div>
+          </div>
+          <div class="qr-section" style="text-align:center; margin:1rem 0;">
+            <img src="assets/qr_upi.png" alt="UPI QR Code" style="max-width:200px; margin-bottom:1rem;" />
+            <p>Scan the QR code above to pay your fine. Upload your payment slip and enter your transaction ID for verification.</p>
+          </div>
+          <form id="finePaymentForm" enctype="multipart/form-data">
+            <div class="form-group">
+              <label for="finePaymentSlip">Upload Payment Slip <span style="color:red;">*</span></label>
+              <input type="file" id="finePaymentSlip" name="finePaymentSlip" accept="image/*,application/pdf" required />
+            </div>
+            <div class="form-group">
+              <label for="fineTransactionId">Transaction ID <span style="color:red;">*</span></label>
+              <input type="text" id="fineTransactionId" name="fineTransactionId" required placeholder="Enter Transaction ID" />
+            </div>
+            <button type="submit" class="btn primary-btn" id="submitFinePaymentBtn">Submit Fine Payment</button>
+            <div id="finePaymentError" class="error-message"></div>
+            <div id="finePaymentSuccess" class="success-message"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+      <div class="modal-content success-content">
+        <div class="success-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h2>Payment Successful!</h2>
+        <p>Your fine has been paid successfully. Thank you for maintaining good standing with our library.</p>
+        <button id="closeSuccessModal" class="btn primary-btn">Continue</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3><i class="fas fa-book-open"></i> LibraryPro</h3>
+        <p>Empowering minds through knowledge, one book at a time. Join our community of passionate readers and lifelong learners.</p>
+        <div class="social-links">
+          <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="books.html">Browse Books</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="login.html">Login</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="contact.html">Help Center</a></li>
+          <li><a href="contact.html">Documentation</a></li>
+          <li><a href="contact.html">API Reference</a></li>
+          <li><a href="contact.html">Status</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Contact Info</h4>
+        <div class="contact-info">
+          <p><i class="fas fa-envelope"></i> support@librarypro.com</p>
+          <p><i class="fas fa-phone"></i> +91 8102624230</p>
+          <p><i class="fas fa-map-marker-alt"></i> MRD 7 Vivekanand Park Road, Patliputra colony ALpana Market Patna 800013</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 LibraryPro. All rights reserved. | Made with <i class="fas fa-heart"></i> for book lovers</p>
+    </div>
+  </footer>
+
+  <script src="js/fines.js"></script>
+  <script>
+    // Enhanced navbar logic with user authentication
+    const userToken = localStorage.getItem('token');
+    const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (navLinks) {
+      if (userToken) {
+        let adminLink = '';
+        if (user && user.role === 'admin') {
+          adminLink = '<li><a href="admin/admin.html">Admin Dashboard</a></li>';
+        }
+        navLinks.innerHTML = `
+          <li><a href="index.html">Home</a></li>
+          <li><a href="books.html">Books</a></li>
+          <li><a href="fines.html" class="active">My Fines</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          ${adminLink}
+          <li class="user-menu">
+            <span class="user-avatar" title="Profile">
+              <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User" width="28" height="28" style="border-radius:50%;vertical-align:middle;"> 
+              <span class="user-name">${user ? user.name.split(' ')[0] : 'User'}</span>
+            </span>
+            <ul class="user-dropdown">
+              <li><a href="#" id="logoutBtn">Logout</a></li>
+            </ul>
+          </li>
+        `;
+        
+        // Dropdown logic
+        const userMenu = document.querySelector('.user-menu');
+        const dropdown = document.querySelector('.user-dropdown');
+        if (userMenu && dropdown) {
+          userMenu.addEventListener('mouseenter', () => dropdown.style.display = 'block');
+          userMenu.addEventListener('mouseleave', () => dropdown.style.display = 'none');
+        }
+        
+        document.getElementById('logoutBtn').onclick = function(e) {
+          e.preventDefault();
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          window.location.href = 'login.html';
+        };
+      } else {
+        navLinks.innerHTML = `
+          <li><a href="index.html">Home</a></li>
+          <li><a href="books.html">Books</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="register.html">Register</a></li>
+        `;
+      }
+    }
+
+    // Enhanced Intersection Observer for animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, observerOptions);
+
+    // Observe all sections with animate-on-scroll class
+    document.querySelectorAll('.animate-on-scroll').forEach(section => {
+      observer.observe(section);
+    });
+
+    // Mobile menu toggle
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinksElement = document.querySelector('.nav-links');
+    
+    if (mobileMenuBtn && navLinksElement) {
+      mobileMenuBtn.addEventListener('click', () => {
+        navLinksElement.classList.toggle('active');
+      });
+    }
+  </script>
+</body>
+</html> 

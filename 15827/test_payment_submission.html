@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Submission Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .submit-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        .submit-btn:hover {
+            background: #0056b3;
+        }
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+</head>
+<body>
+    <h1>Payment Submission Test</h1>
+    
+    <div class="test-form">
+        <h2>Test Payment Submission</h2>
+        
+        <form id="paymentForm">
+            <div class="form-group">
+                <label for="bookId">Book ID:</label>
+                <input type="text" id="bookId" value="507f1f77bcf86cd799439011" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="transactionId">Transaction ID:</label>
+                <input type="text" id="transactionId" value="TEST-TXN-123456" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="paymentSlip">Payment Slip:</label>
+                <input type="file" id="paymentSlip" accept="image/*,application/pdf" required>
+            </div>
+            
+            <button type="submit" class="submit-btn" id="submitBtn">Submit Payment</button>
+        </form>
+        
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('paymentForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const resultDiv = document.getElementById('result');
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+            resultDiv.textContent = 'Submitting payment...';
+            resultDiv.className = 'result info';
+            
+            try {
+                // Get form data
+                const bookId = document.getElementById('bookId').value;
+                const transactionId = document.getElementById('transactionId').value;
+                const paymentSlip = document.getElementById('paymentSlip').files[0];
+                
+                if (!paymentSlip) {
+                    throw new Error('Please select a payment slip file');
+                }
+                
+                // Create FormData
+                const formData = new FormData();
+                formData.append('paymentSlip', paymentSlip);
+                formData.append('transactionId', transactionId);
+                formData.append('bookId', bookId);
+                
+                // Get auth token
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    throw new Error('No authentication token found. Please login first.');
+                }
+                
+                // Submit payment
+                const response = await fetch('http://localhost:5000/api/payments/borrow', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.textContent = '✅ Payment submitted successfully!\n\nResponse:\n' + JSON.stringify(data, null, 2);
+                    resultDiv.className = 'result success';
+                    
+                    // Show success notification
+                    showSuccessNotification('Payment submitted successfully! Your request is pending admin verification.');
+                } else {
+                    throw new Error(data.message || 'Payment submission failed');
+                }
+                
+            } catch (error) {
+                resultDiv.textContent = '❌ Error: ' + error.message;
+                resultDiv.className = 'result error';
+                
+                // Show error notification
+                showErrorNotification('Payment submission failed: ' + error.message);
+            } finally {
+                // Reset button
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Payment';
+            }
+        });
+        
+        function showSuccessNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #28a745;
+                color: white;
+                padding: 15px 20px;
+                border-radius: 5px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 1000;
+                max-width: 300px;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+        
+        function showErrorNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #dc3545;
+                color: white;
+                padding: 15px 20px;
+                border-radius: 5px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 1000;
+                max-width: 300px;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+        
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                document.getElementById('result').textContent = '⚠️ Please login first to test payment submission';
+                document.getElementById('result').className = 'result info';
+            }
+        });
+    </script>
+</body>
+</html> 

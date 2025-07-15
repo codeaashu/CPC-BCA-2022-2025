@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Welcome to your Lovable project
 
 ## Project info
@@ -71,3 +72,7 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+=======
+# CPC-BCA-2022-2025
+Cimage Professional College - BCA - 2022-2025 Batch
+>>>>>>> 851e9fa43913019b5a8c37970b5717d4190b94e7
