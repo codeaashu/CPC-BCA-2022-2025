@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Profile | TravelHub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Fonts + Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-color: #0D3166;
+      --secondary-color: #ffffff;
+      --accent-color: #00bcd4;
+      --shadow-color: rgba(0, 0, 0, 0.15);
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #e0ecf5, #d7e3f4);
+      font-family: 'Poppins', sans-serif;
+      color: #333;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 26px;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .modal {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .modal-content {
+      background-color: var(--secondary-color);
+      border-radius: 20px;
+      width: 90%;
+      max-width: 450px;
+      padding: 30px;
+      box-shadow: 0 8px 20px var(--shadow-color);
+      text-align: center;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .profile-pic {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 20px;
+      border: 4px solid var(--primary-color);
+    }
+
+    .user-info {
+      font-size: 16px;
+      margin: 8px 0;
+    }
+
+    .user-info i {
+      margin-right: 8px;
+      color: var(--primary-color);
+    }
+
+    .action-button {
+      margin-top: 25px;
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+      text-decoration: none;
+    }
+
+    .action-button:hover {
+      background-color: #09244c;
+    }
+
+    .loader, .error {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 18px;
+      color: var(--primary-color);
+    }
+    .go-home-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #0D3166;
+  color: #fff;
+  padding: 16px 28px;
+  border-radius: 32px 8px 32px 8px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  box-shadow: 0 6px 24px rgba(13,49,102,0.18);
+  text-decoration: none;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+  margin: 20px 115px 0 auto;
+  position: static;
+  z-index: 1;
+  justify-content: center;
+}
+.go-home-btn:hover {
+  background: #00bcd4;
+  color: #fff;
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: 0 12px 32px rgba(13,49,102,0.28);
+}
+.go-home-btn i {
+  font-size: 1.3em;
+}
+@media (max-width: 600px) {
+  .go-home-btn {
+    padding: 12px 18px;
+    font-size: 1rem;
+  }
+}
+
+    .footer {
+  background-color: #0D3166;
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.04);
+  position: static;
+  width: 100%;
+  margin-top: 20px;
+}
+
+    @media (max-width: 480px) {
+      .modal-content {
+        padding: 20px;
+      }
+
+    }
+
+    
+  </style>
+</head>
+<body>
+
+  <header>My Profile</header>
+
+  <div id="loader" class="loader">Loading profile...</div>
+  <div class="modal" style="display: none;" id="modal-box">
+    <div class="modal-content" id="profile-container">
+      <!-- Profile content will be injected here -->
+    </div>
+  </div>
+
+  <div style="display: flex; justify-content: center;">
+    <a href="index.html" class="go-home-btn" title="Go to Home Page">
+      <i class="fas fa-home"></i> Home
+    </a>
+  </div>
+
+  <div class="footer">
+    &copy; 2025 TravelHub &bull; Your Gateway to Amazing Stays ✈️
+  </div>
+
+  <div id="error" class="error"></div>
+
+  <script>
+    const token = localStorage.getItem("jwtToken");
+
+    async function fetchProfile() {
+      try {
+        const response = await fetch("http://127.0.0.1:9999/api/user/profile", {
+          method: "GET",
+          headers: {
+            "Authorization": "Bearer " + token,
+            "Content-Type": "application/json"
+          }
+        });
+
+        if (!response.ok) throw new Error("Failed to fetch profile");
+
+        const data = await response.json();
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("modal-box").style.display = "flex";
+
+        const container = document.getElementById("profile-container");
+        const { username, email, phoneNumber, role } = data;
+
+        let buttonHtml = "";
+
+        if (role === "BUYER") {
+          buttonHtml = `<a href="my-bookings.html" class="action-button">My Bookings</a>`;
+        } else if (role === "SELLER") {
+          buttonHtml = `<a href="my-hotels.html" class="action-button">My Hotels</a>`;
+        } else if (role === "ADMIN") {
+          buttonHtml = `<a href="admin-dashboard.html" class="action-button">Admin Dashboard</a>`;
+        }
+
+        container.innerHTML = `
+          <img src="https://i.ibb.co/z8rC1tx/default-profile.png" alt="Profile" class="profile-pic" />
+          <h2 style="color: var(--primary-color);">${username}</h2>
+          <div class="user-info"><i class="fas fa-envelope"></i>${email}</div>
+          <div class="user-info"><i class="fas fa-phone"></i>${phoneNumber}</div>
+          <div class="user-info"><i class="fas fa-user-tag"></i>Role: <strong>${role}</strong></div>
+          ${buttonHtml}
+        `;
+      } catch (err) {
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("error").textContent = err.message;
+      }
+    }
+
+    fetchProfile();
+  </script>
+
+</body>
+</html>

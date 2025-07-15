@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Book Your Stay | TravelHub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background-color: #f3f4f6;
+      color: #333;
+    }
+
+    header {
+      background-color: #0D3166;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px 40px;
+      border-radius: 10px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    h2 {
+      color: #0D3166;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input {
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 15px;
+    }
+
+    button {
+      margin-top: 30px;
+      background-color: #0D3166;
+      color: white;
+      padding: 12px;
+      border: none;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #092448;
+    }
+
+    /* Modal overlay and response box */
+    #modalOverlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(13,49,102,0.25);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #modalResponseBox {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 40px rgba(13,49,102,0.18);
+      padding: 40px 50px;
+      min-width: 350px;
+      min-height: 180px;
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 1001;
+      font-size: 1.25rem;
+      text-align: center;
+    }
+    #modalResponseBox span {
+      font-weight: bold;
+      color: #0D3166;
+      font-size: 1.1em;
+    }
+
+    /* Not Logged In Modal */
+    #notLoggedInModal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(13,49,102,0.25);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #notLoggedInModal > div {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 40px rgba(13,49,102,0.18);
+      padding: 40px 50px;
+      min-width: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 1.25rem;
+      text-align: center;
+    }
+
+    #notLoggedInModal div {
+      margin-bottom: 24px;
+      color: #0D3166;
+      font-weight: bold;
+    }
+
+    #goToLoginBtn {
+      padding: 12px 32px;
+      background: #0D3166;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Booking Page</h1>
+  </header>
+
+  <div class="container">
+    <h2>Confirm Your Booking</h2>
+
+    <form id="bookingForm">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" required>
+
+      <label for="checkin">Check-in Date</label>
+      <input type="date" id="checkin" required>
+
+      <label for="checkout">Check-out Date</label>
+      <input type="date" id="checkout" required>
+
+      <label for="guests">Number of Guests</label>
+      <input type="number" id="guests" min="1" required>
+
+      <button type="submit">Initiate Payment</button>
+    </form>
+
+    <!-- Modal overlay and response box -->
+    <div id="modalOverlay">
+      <div id="modalResponseBox">
+        <form id="paymentForm">
+          <label for="contactNumber">Contact Number</label>
+          <input type="text" id="contactNumber" required pattern="[0-9]{10}" maxlength="10">
+
+          <label for="upiId">UPI ID</label>
+          <input type="text" id="upiId" required>
+
+          <label for="amount">Amount (₹)</label>
+          <input type="number" id="amount" readonly>
+
+          <button type="submit" id="initiatePaymentBtn">Initiate Payment</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Not Logged In Modal -->
+    <div id="notLoggedInModal">
+      <div>
+        <div>You are not logged in!</div>
+        <button id="goToLoginBtn">Go to Login</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // JWT token check
+    const token = localStorage.getItem("jwtToken");
+    if (!token) {
+      document.getElementById("notLoggedInModal").style.display = "flex";
+      document.body.style.overflow = "hidden";
+      document.getElementById("goToLoginBtn").onclick = function() {
+        window.location.href = "login.html";
+      };
+    }
+
+    const form = document.getElementById("bookingForm");
+    const paymentForm = document.getElementById("paymentForm");
+    const modalOverlay = document.getElementById("modalOverlay");
+    const amountInput = document.getElementById("amount");
+    const guestsInput = document.getElementById("guests");
+
+    let bookingData = {};
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const hotelId = urlParams.get("id");
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      // Save booking data
+      bookingData = {
+        hotelId: hotelId,
+        checkInDate: document.getElementById("checkin").value,
+        checkOutDate: document.getElementById("checkout").value,
+        numGuests: guestsInput.value
+      };
+
+      // Calculate amount
+      const amount = parseInt(guestsInput.value, 10) * 679;
+      amountInput.value = amount;
+      
+
+      // Show modal
+      modalOverlay.style.display = "flex";
+    });
+    
+
+    // Payment form submit
+    paymentForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      
+
+      // Add payment details to bookingData
+      // bookingData.contactNumber = document.getElementById("contactNumber").value;
+      // bookingData.upiId = document.getElementById("upiId").value;
+      // bookingData.amount = amountInput.value;
+
+      try {
+        const response = await fetch("http://127.0.0.1:9999/api/bookings/hotel", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          },
+          body: JSON.stringify(bookingData)
+        });
+
+        const result = await response.json();
+
+        alert(
+          `Status: ${result.status || "Unknown"}\n` +
+          `Transaction ID: ${result.transactionId || "N/A"}\n` +
+          `Message: ${result.message || "No message"}`
+        );
+
+        window.location.href = "my-bookings.html";
+      } catch (err) {
+        alert("Payment initiation failed. Please try again.");
+        console.error(err);
+      }
+    });
+
+    // Go to login button click
+    document.getElementById("goToLoginBtn").addEventListener("click", () => {
+      window.location.href = "login.html";
+    });
+  </script>
+</body>
+</html>

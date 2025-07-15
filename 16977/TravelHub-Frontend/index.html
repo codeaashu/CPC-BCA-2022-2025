@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelHub</title>
+    <meta name="description" content="This is a Hotel Booking website devloped by De-Coder-Pritam">
+    <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0..1,0" />
+
+<link rel="stylesheet" href="./assets/css/style.css">
+<script src="./assets/js/script.js" defer>
+</script>
+</head>
+<body>
+    <header class="header active" data-header>
+        <div class="container">
+            <a href="./index.html" class="logo">
+               <img src="./assets/images/logo.png" alt="logo" width="190" height="28"> 
+            </a>
+            <nav class="navbar" data-navbar>
+
+                <ul class="navbar-list">
+                    <li>
+                        <a href="./index.html" class="navbar-link label-medium active">Home</a>
+                    </li>
+                    <li>
+                        <a href="./listings.html" class="navbar-link label-medium">Listings</a>
+                    </li>
+                    <li>
+                        <a href="./reviews.html" class="navbar-link label-medium">Reviews</a>
+                    </li>
+                    <li>
+                        <a href="about.html" target="_parent" class="navbar-link label-medium">About</a>
+                    </li>
+                    <li>
+                        <a href="./complaint.html" class="navbar-link label-medium">Raise a Complaint</a>
+                    </li>
+
+                </ul>
+
+                <div class="navbar-wrapper" id="navbarUserSection">
+                </div>
+            </nav>
+            <button class="nav-toggle-btn icon-btn " aria-label="toggle navbar" data-nav-toggler>
+                <span class="material-symbols-rounded open" aria-hidden="true">menu</span>
+                <span class="material-symbols-rounded close" aria-hidden="true">close</span>
+            </button>
+            
+        </div>
+    </header>
+    <main>
+        <article>
+
+            <!-- hero section -->
+            <section class="hero">
+                <div class="container">
+                    <div class="hero-content">
+                        <h1 class="headline-large hero-title">Book your perfect stay with TravelHub</h1>
+                        <p class="body-large hero-text">
+                            Discover hotels that match your
+                            comfort and style.Whether it’s a
+                            quick getaway or a long vacation,
+                            TravelHub helps you find the place
+                            that truly feels like home.
+
+                        </p>
+                        <form action="./search-page.html" method="get" class="search-bar">
+                            
+
+                            
+
+                            <label class="search-item">
+                                <span class="label-medium label">location</span>
+                                <input type="text" name="location" placeholder="Street, City, Zip..." class="search-item-field body-medium">
+                                <span class="material-symbols-rounded" aria-hidden="true">location_on</span>
+                            </label>
+
+                            <button type="submit" class="search-btn">
+                                <span class="material-symbols-rounded" aria-hidden="true">search</span>
+
+                                <span class="label-medium">Search</span>
+
+                            </button>
+                        </form>
+                    </div>
+                    <img src="./assets/images/hero.png" width="816" height="659" role="presentation" 
+                    class="hero-banner">
+                    <img src="./assets/images/bg-pattern.png" width="1240" height="840" role="presentation" 
+                    class="bg-pattern">
+
+                </div>
+            </section>
+            <!-- property section -->
+             <section class="section property" aria-labelledby="property-label">
+                <div class="container">
+
+                    <div class="title-wrapper">
+                        <div>
+                            <h2 class="section-title headline-small">Top-rated Hotels in Your Destination</h2>
+                            <p class="section-text body-large">
+                            Whether it’s a vacation or a business trip,
+                            find stays that match your needs.
+                            Start exploring to discover the comfort,
+                            safety, and service you deserve.
+                            </p>
+                        </div>
+
+                        <a href="./Listings.html" class="btn btn-outline">
+                            <span class="label-medium">Browse Listings</span>
+
+                            <span class="material-symbols-rounded" aria-hidden="true">arrow_outward</span>
+                        </a>
+                    </div>
+
+                    <div class="property-grid" id="propertyGrid">
+
+                    </div>
+                    
+                </div>
+             </section>
+             <!-- feature -->
+
+             <section class="section feature" aria-labelledby="feature-label">
+                <div class="container">
+                    <figure class="feature-banner">
+                        <img src="./assets/images/feature-banner-1.jpg" width="1020" height="690" loading="lazy" alt="feature banner" class="img-cover">
+                    </figure>
+                    <div class="feature-content">
+                        <h2 class="headline-medium" id="feature-label">
+                            Experience Handpicked Stays That Feel Like Home
+                        </h2>
+                        <p class="body-large feature-text">
+                            Looking for a place that matches your vibe
+                            and comfort? TravelHub brings you 
+                            top-rated stays that combine style,
+                            comfort, and convenience — handpicked
+                            to suit your travel lifestyle.
+                            Whether you're traveling for business,
+                            leisure, or a peaceful retreat,
+                            we've got the perfect space waiting for you.
+
+                        </p>
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
+                                <span class="body-medium">Modern Amenities</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
+                                <span class="body-medium">Beautiful Scene Around</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
+                                <span class="body-medium">Exceptional Experiences</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
+                                <span class="body-medium">Complete 24/7 Security</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+             </section>
+             <section class="section feature feature-2" aria-labelledby="feature-label-2">
+                <div class="container">
+                    <figure class="feature-banner">
+                        <img src="./assets/images/feature-banner-2.jpg" width="1020" height="690" loading="lazy" alt="feature banner" class="img-cover">
+                    </figure>
+                    <div class="feature-content">
+                        <h2 class="headline-medium" id="feature-label-2">
+                            We Curate Stays That Reflect Your Style
+                        </h2>
+                        <p class="body-large feature-text">
+                           Looking for more than just a 
+                           place to stay? At TravelHub,
+                            we connect you with properties
+                            that reflect charm, character,
+                            and comfort — crafted to match
+                            your lifestyle. From cozy heritage
+                            homes to modern luxury escapes, 
+                            each space is handpicked and thoughtfully
+                            presented to feel like your own.
+
+                        </p>
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
+                                <span class="body-medium">Modern Amenities</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
+                                <span class="body-medium">Beautiful Scene Around</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
+                                <span class="body-medium">Exceptional Experiences</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
+                                <span class="body-medium">Complete 24/7 Security</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+             </section>
+
+             <!-- video -->
+
+             <section class="section video">
+                <div class="container">
+                    <div class="video-card">
+                        <button class="play-btn" aria-label="play video">
+                            <span class="material-symbols-rounded" aria-hidden="true">play_arrow</span>
+
+
+                        </button>
+                    </div>
+                </div>
+             </section>
+
+             <!-- story -->
+              <section class="section story">
+                <div class="container">
+                    <div class="title-wrapper">
+                        <div>
+                            <p class="section-subtitle title-medium">Our Customers</p>
+                            <h2 class="section-title headline-medium">
+                                We Help 1000+ Family Find Their True Home
+                            </h2>
+                            <ul class="avatar-list">
+                               <li class="avatar">
+                                <img src="./assets/images/avatar-1.jpg" width="120" height="80" loading="lazy" class="img-cover" alt="Pritam">
+                               </li> 
+                               <li class="avatar">
+                                <img src="./assets/images/avatar-2.jpg" width="120" height="80" loading="lazy" class="img-cover" alt="Pritam">
+                               </li> 
+                               <li class="avatar">
+                                <img src="./assets/images/avatar-3.jpg" width="120" height="80" loading="lazy" class="img-cover" alt="Pritam">
+                               </li> 
+                               <li class="avatar">
+                                <img src="./assets/images/avatar-4.jpg" width="120" height="80" loading="lazy" class="img-cover" alt="Pritam">
+                                <div class="overlay-content">
+                                    <span class="label-medium">99+</span>
+                                </div>
+                               </li> 
+                            </ul>
+                        </div>
+                        <a href="./reviews.html" class="btn btn-outline">
+                            <span class="label-medium">View All Stories</span>
+                            <span class="material-symbols-rounded" aria-hidden="true">arrow_outward</span>
+
+                        </a>
+                    </div>
+
+                    <ul class="story-list">
+                        <li class="story-card" style="background-image: url('./assets/images/story-1.jpg');">
+                            <a href="" class="overlay-content">
+                                <div>
+                                    <h3 class="title-small">Pritam Kr.</h3>
+                                    <div class="rating-wrapper">
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <data value="5" class="title-small rating-text">5.0</data>
+                                    </div>
+                                </div>
+
+                                <figure class="card-avatar">
+                                    <img src="./assets/images/story-avatar-1.jpg" width="56" height="56" loading="lazy" alt="Pritam kr." class="img-cover">
+                                </figure>
+                            </a>
+                        </li>
+
+                        <li class="story-card" style="background-image: url('./assets/images/story-2.jpg');">
+                            <a href="" class="overlay-content">
+                                <div>
+                                    <h3 class="title-small">Ankesh Malhotra</h3>
+                                    <div class="rating-wrapper">
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <data value="5" class="title-small rating-text">5.0</data>
+                                    </div>
+                                </div>
+
+                                <figure class="card-avatar">
+                                    <img src="./assets/images/story-avatar-2.jpg" width="56" height="56" loading="lazy" alt="Pritam kr." class="img-cover">
+                                </figure>
+                            </a>
+                        </li>
+
+                        <li class="story-card" style="background-image: url('./assets/images/story-3.jpg');">
+                            <a href="" class="overlay-content">
+                                <div>
+                                    <h3 class="title-small">Ankesh Malhotra</h3>
+                                    <div class="rating-wrapper">
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <data value="5" class="title-small rating-text">5.0</data>
+                                    </div>
+                                </div>
+
+                                <figure class="card-avatar">
+                                    <img src="./assets/images/story-avatar-3.jpg" width="56" height="56" loading="lazy" alt="Pritam kr." class="img-cover">
+                                </figure>
+                            </a>
+                        </li>
+
+                        <li class="story-card" style="background-image: url('./assets/images/story-4.jpg');">
+                            <a href="" class="overlay-content">
+                                <div>
+                                    <h3 class="title-small">Aditya Kumar</h3>
+                                    <div class="rating-wrapper">
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <data value="5" class="title-small rating-text">5.0</data>
+                                    </div>
+                                </div>
+
+                                <figure class="card-avatar">
+                                    <img src="./assets/images/story-avatar-4.jpg" width="56" height="56" loading="lazy" alt="Pritam kr." class="img-cover">
+                                </figure>
+                            </a>
+                        </li>
+
+                        <li class="story-card" style="background-image: url('./assets/images/story-5.jpg');">
+                            <a href="" class="overlay-content">
+                                <div>
+                                    <h3 class="title-small">Anurag Singh</h3>
+                                    <div class="rating-wrapper">
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <data value="5" class="title-small rating-text">5.0</data>
+                                    </div>
+                                </div>
+
+                                <figure class="card-avatar">
+                                    <img src="./assets/images/story-avatar-5.jpg" width="56" height="56" loading="lazy" alt="Pritam kr." class="img-cover">
+                                </figure>
+                            </a>
+                        </li>
+
+                        <li class="story-card" style="background-image: url('./assets/images/story-6.jpg');">
+                            <a href="" class="overlay-content">
+                                <div>
+                                    <h3 class="title-small">Alok Raj</h3>
+                                    <div class="rating-wrapper">
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                        <data value="5" class="title-small rating-text">5.0</data>
+                                    </div>
+                                </div>
+
+                                <figure class="card-avatar">
+                                    <img src="./assets/images/story-avatar-6.jpg" width="56" height="56" loading="lazy" alt="Pritam kr." class="img-cover">
+                                </figure>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+              </section>
+
+
+        </article>
+    </main>
+
+    <!-- footer -->
+     <footer class="footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <img src="./assets/images/logo.png" width="190" height="28" alt="Estateviata">
+                    </a>
+                    <p class="body-medium footer-brand">
+                        If you're looking for a place
+                             where you can be yourself, 
+                             don't give up. Keep searching 
+                             until you find a place that
+                              feels like home.
+
+                    </p>
+                </div>
+                <nav class="footer-nav" aria-labelledby="nav-label-1">
+                    <p class="title-small footer-list-title" id="nav-label-1">Quick link</p>
+                    <ul class="footer-list">
+                        <li>
+                            <a href="#" class="body-medium footer-link">Home</a>
+                        </li>
+                        <li>
+                            <a href="#" class="body-medium footer-link">Listings</a>
+                        </li>
+                        <li>
+                            <a href="#" class="body-medium footer-link">Reviews</a>
+                        </li>
+                        <li>
+                            <a href="#" class="body-medium footer-link">Search</a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <nav class="footer-nav" aria-labelledby="nav-label-2">
+                    <p class="title-small footer-list-title" id="nav-label-2">Support</p>
+                    <ul class="footer-list">
+                        <li>
+                            <a href="#" class="body-medium footer-link">About us</a>
+                        </li>
+                        <li>
+                            <a href="#" class="body-medium footer-link">contact us</a>
+                        </li>
+                        <li>
+                            <a href="#" class="body-medium footer-link">Privacy Policy</a>
+                        </li>
+                        <li>
+                            <a href="#" class="body-medium footer-link">Terms & Conditions</a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <nav class="footer-nav" aria-labelledby="nav-label-3">
+                    <p class="title-small footer-list-title" id="nav-label-3">Support</p>
+                    <ul class="footer-list">
+                        <li>
+                            <a href="#" class="body-medium footer-link">hello@travelhub.com</a>
+                        </li>
+                        <li>
+                            <address class="address body-medium">
+                                814150 Sarwan Rd. Deoghar, Jharkhand
+                            </address>
+                        </li>
+                        <li>
+                            <ul class="social-list">
+                                <li>
+                                    <a href="#" class="social-link">
+                                        <img src="./assets/images/facebook.svg" alt="facebook">
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" class="social-link">
+                                        <img src="./assets/images/twitter.svg" alt="twitter">
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" class="social-link">
+                                        <img src="./assets/images/insta.svg" alt="instagram">
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container">
+                <p class="copyright body-medium">
+                    &copy; copyright 2025 De-Coder-Pritam
+                </p>
+            </div>
+        </div>
+     </footer>
+</body>
+</html>

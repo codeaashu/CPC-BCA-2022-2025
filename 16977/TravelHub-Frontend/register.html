@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register - TravelHub</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    form {
+      background: white;
+      padding: 3rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 350px;
+    }
+    .inp, .sel {
+      width: 100%;
+      padding: 0.8rem;
+      margin: 1.3rem 0;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    .login {
+      width: 100%;
+      padding: 0.8rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0..1,0" />
+
+<link rel="stylesheet" href="./assets/css/style.css">
+
+</head>
+<body>
+  <header class="header active" data-header>
+    <div class="container">
+        <a href="./index.html" class="logo">
+           <img src="./assets/images/logo.png" alt="logo" width="190" height="28"> 
+        </a>
+        <nav class="navbar" data-navbar>
+
+            <ul class="navbar-list">
+                <li>
+                    <a href="./index.html" class="navbar-link label-medium ">Home</a>
+                </li>
+                <li>
+                    <a href="./Listings.html" class="navbar-link label-medium">Listings</a>
+                </li>
+                <li>
+                    <a href="./reviews.html" class="navbar-link label-medium">Reviews</a>
+                </li>
+                <li>
+                    <a href="./about.html" class="navbar-link label-medium">About</a>
+                </li>
+                <li>
+                        <a href="./complaint.html" class="navbar-link label-medium">Raise a Complaint</a>
+                    </li>
+
+            </ul>
+
+            <div class="navbar-wrapper" id="navbarUserSection">
+            </div>
+        </nav>
+        <button class="nav-toggle-btn icon-btn " aria-label="toggle navbar" data-nav-toggler>
+            <span class="material-symbols-rounded open" aria-hidden="true">menu</span>
+            <span class="material-symbols-rounded close" aria-hidden="true">close</span>
+        </button>
+        
+    </div>
+</header>
+<form id="registerForm">
+  <h2>Register Here</h2>
+  <input class="inp" type="text" name="username" placeholder="Username" required />
+  <input class="inp" type="email" name="email" placeholder="Email" required />
+  <input class="inp" type="password" name="password" placeholder="Password" required />
+  <select class="sel" name="role" required>
+    <option value="">Select Role</option>
+    <option value="buyer">Buyer</option>
+    <option value="seller">Seller</option>
+  </select>
+  <input class="inp" type="text" name="phoneNumber" placeholder="Phone Number" required />
+  <button class="login" type="submit">Register</button>
+</form>
+
+<script>
+  'use strict';
+
+/**
+ *  navbar toggle in mobile
+ */
+
+const /**{NodeElement} */ $navbar = document.querySelector("[data-navbar]");
+const /**{NodeElement} */ $navToggler = document.querySelector("[data-nav-toggler]");
+
+$navToggler.addEventListener("click",()=> $navbar.classList.toggle("active"));
+
+const $header = document.querySelector("[data-header]");
+
+window.addEventListener("scroll", e => {
+    $header.classList[window.scrollY > 50 ? "add" : "remove"]("active");
+});
+
+
+// add to favorite button toggle
+const $toggleBtns = document.querySelectorAll("[data-toggle-btn]");
+$toggleBtns.forEach(
+    $toggleBtn =>{
+        $toggleBtn.addEventListener("click",()=>{
+            $toggleBtn.classList.toggle("active");
+        })
+    }
+)
+
+
+  // Simulate login check: this could be a token, session flag, etc.
+  const isLoggedIn = localStorage.getItem("isLoggedIn");  // example check
+
+  const navbarSection = document.getElementById('navbarUserSection');
+
+  if (isLoggedIn) {
+    // User is logged in: show profile icon
+    navbarSection.innerHTML = `
+      <div class="profile-dropdown">
+        <button type="button" class="btn btn-fill label-medium" onclick="toggleDropdown()">Profile</button>
+        <ul id="profileMenu" style="display: none; list-style: none; margin: 0.5rem 0.7rem; background: white; padding: 1rem; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); position: absolute;">
+          <li><a href="./profile.html">Profile</a></li>
+          <li><a href="#" onclick="logout()">Logout</a></li>
+        </ul>
+      </div>
+    `;
+
+  } else {
+    // User not logged in: show login/register
+    navbarSection.innerHTML = `
+      <a href="./login.html" class="btn-link label-medium">Login</a> 
+      <a href="./register.html" class="btn btn-fill label-medium">Get Started</a>
+    `;
+  }
+
+  function toggleDropdown() {
+    const menu = document.getElementById("profileMenu");
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+  }
+
+  function logout() {
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("jwtToken");
+    location.reload();   // Refresh page to update navbar
+  }
+  document.getElementById('registerForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+
+    const response = await fetch('http://127.0.0.1:9999/api/auth/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: JSON.stringify(data)
+    });
+
+    const result = await response.json();
+    if (!response.ok) {
+      const errorText = await response.text();
+      alert(errorText);
+      return;
+    }
+    if (response.ok){
+      const token = result.token;
+    localStorage.setItem("cuser",JSON.stringify(result))
+    // ✅ Store token in localStorage
+    localStorage.setItem("jwtToken", token);
+    localStorage.setItem("isLoggedIn", "true");
+    alert("User registered and logged in!");
+    
+    window.location.href = "index.html";
+
+  }
+  });
+</script>
+
+</body>
+</html>
+
+
+<!-- const registerUser = async (formData) => {
+  try {
+    const response = await fetch('http://your-backend-url/api/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(errorText);
+    }
+
+    const data = await response.json();
+    const token = data.token;
+
+    // ✅ Store token in localStorage
+    localStorage.setItem("jwtToken", token);
+
+    console.log("User registered and logged in!");
+    console.log("JWT Token:", token);
+
+    // redirect user or call protected API
+    window.location.href = "/dashboard.html";
+
+  } catch (error) {
+    console.error("Registration/Login failed:", error);
+    alert("Something went wrong: " + error.message);
+  }
+};
+
+// Example usage
+const formData = {
+  username: "john123",
+  password: "secure123",
+  email: "john@example.com",
+  phoneNumber: "9876543210",
+  role: "ROLE_USER"
+};
+
+registerUser(formData); -->

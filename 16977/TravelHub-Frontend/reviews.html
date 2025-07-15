@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hotel Reviews | TravelHub</title>
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <script src="./assets/js/generic.js" defer></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background-color: #f3f4f6;
+      color: #333;
+    }
+
+    
+
+    .intro {
+      max-width: 900px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .intro h2 {
+      color: #0D3166;
+      margin-bottom: 15px;
+    }
+
+    .review-section {
+      max-width: 1000px;
+      margin: 30px auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+    }
+
+    .review-card {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+
+    .review-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .review-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .review-content {
+      padding: 20px;
+    }
+
+    .review-title {
+      color: #0D3166;
+      font-weight: bold;
+      font-size: 1.2em;
+      margin-bottom: 10px;
+    }
+
+    .review-author {
+      font-size: 0.95em;
+      color: #777;
+      margin-bottom: 10px;
+    }
+
+    .review-text {
+      font-size: 0.95em;
+      line-height: 1.6;
+      color: #444;
+    }
+
+    .hotel-listing {
+    height: 160px;
+    background-color: #0D3166;
+    color: white;
+    margin-bottom: 20px;
+  }
+
+  .hotel-listing-header {
+    padding-top: 100px;
+    font-size: 2.6em;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+  }
+
+    @media (max-width: 600px) {
+      .hotel-listing-header {
+        font-size: 2em;
+      }
+    }
+  </style>
+</head>
+<body>
+        <header class="header active" data-header>
+        <div class="container">
+            <a href="./index.html" class="logo">
+               <img src="./assets/images/logo.png" alt="logo" width="190" height="28"> 
+            </a>
+            <nav class="navbar" data-navbar>
+
+                <ul class="navbar-list">
+                    <li>
+                        <a href="./index.html" class="navbar-link label-medium ">Home</a>
+                    </li>
+                    <li>
+                        <a href="./listings.html" class="navbar-link label-medium">Listings</a>
+                    </li>
+                    <li>
+                        <a href="./reviews.html" class="navbar-link label-medium active">Reviews</a>
+                    </li>
+                    <li>
+                        <a href="./about.html" class="navbar-link label-medium">About</a>
+                    </li>
+                    <li>
+                        <a href="./complaint.html" class="navbar-link label-medium">Raise a Complaint</a>
+                    </li>
+
+                </ul>
+
+                <div class="navbar-wrapper" id="navbarUserSection">
+                </div>
+            </nav>
+            <button class="nav-toggle-btn icon-btn " aria-label="toggle navbar" data-nav-toggler>
+                <span class="material-symbols-rounded open" aria-hidden="true">menu</span>
+                <span class="material-symbols-rounded close" aria-hidden="true">close</span>
+            </button>
+            
+        </div>
+    </header>
+  <div class="hotel-listing">
+    <h1 class="hotel-listing-header">What Our Guests Say</h1>
+  </div>
+
+  <section class="intro">
+    <h2>Experience the Best Stays with TravelHub</h2>
+    <p>
+      At TravelHub, we partner with some of the finest hotels across the country to bring you premium comfort, unmatched hospitality, and unforgettable memories. From cozy rooms with a view to 5-star luxury resorts with every amenity you can imagine — we've got something for everyone.
+    </p>
+  </section>
+
+  <section class="review-section">
+    <div class="review-card">
+      <img src="assets/images/story-1.jpg" alt="Hotel Room" class="review-img">
+      <div class="review-content">
+        <div class="review-title">A Perfect Weekend Escape</div>
+        <div class="review-author">— Priya Sharma, Delhi</div>
+        <div class="review-text">
+          My stay at the Himalayan Retreat was beyond words! The mountain view, the friendly staff, and the food — everything was perfect. Booking through TravelHub made the whole process smooth and trustworthy.
+        </div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <img src="assets/images/story-2.jpg" alt="Beach Resort" class="review-img">
+      <div class="review-content">
+        <div class="review-title">Unmatched Luxury at Affordable Price</div>
+        <div class="review-author">— Ravi Patel, Ahmedabad</div>
+        <div class="review-text">
+          The 5-star hotel in Goa that I booked via TravelHub exceeded expectations. Clean pool, private beach access, fast check-in and amazing service. Definitely coming back!
+        </div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <img src="assets/images/story-3.jpg" alt="Family Trip" class="review-img">
+      <div class="review-content">
+        <div class="review-title">Best Family Trip Ever</div>
+        <div class="review-author">— Meera Nair, Kochi</div>
+        <div class="review-text">
+          We took a family trip to Jaipur and stayed at a heritage hotel listed on TravelHub. The kids loved it, and so did we. Highly recommended for families looking for culture and comfort.
+        </div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <img src="assets/images/story-4.jpg" alt="Business Stay" class="review-img">
+      <div class="review-content">
+        <div class="review-title">Safe and Clean Stay During Business Travel</div>
+        <div class="review-author">— Ankit Verma, Bangalore</div>
+        <div class="review-text">
+          As a frequent business traveler, I value cleanliness, Wi-Fi, and early check-in. TravelHub listings are always reliable and up to standard. Great experience staying in Mumbai last month.
+        </div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <img src="assets/images/story-5.jpg" alt="Romantic Getaway" class="review-img">
+      <div class="review-content">
+        <div class="review-title">Romantic Getaway Made Memorable</div>
+        <div class="review-author">— Sneha & Karan, Pune</div>
+        <div class="review-text">
+          The candlelight dinner setup and lake view room were magical. TravelHub made our anniversary special. Highly recommend for couples!
+        </div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <img src="assets/images/story-6.jpg" alt="Budget Hotel" class="review-img">
+      <div class="review-content">
+        <div class="review-title">Great Stay on a Budget</div>
+        <div class="review-author">— Sameer Khan, Lucknow</div>
+        <div class="review-text">
+          I was worried about quality when booking a budget hotel, but TravelHub helped me find a great deal without compromising cleanliness and comfort.
+        </div>
+      </div>
+    </div>
+  </section>
+
+ <footer class="footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <img src="./assets/images/logo.png" width="190" height="28" alt="Estateviata">
+                    </a>
+                    <p class="body-medium footer-brand">
+                        If you're looking for a place
+                             where you can be yourself, 
+                             don't give up. Keep searching 
+                             until you find a place that
+                              feels like home.
+
+                    </p>
+                </div>
+                <nav class="footer-nav" aria-labelledby="nav-label-1">
+                    <p class="title-small footer-list-title" id="nav-label-1">Quick link</p>
+                    <ul class="footer-list">
+                        <li>
+                            <a href="#" class="body-medium footer-link">Home</a>
+                        </li>
+                        <li>
+                            <a href="#" class="body-medium footer-link">Listings</a>
+                        </li>
+                        <li>
+                            <a href="#" class="body-medium footer-link">Reviews</a>
+                        </li>
+                        <li>
+                            <a href="#" class="body-medium footer-link">Search</a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <nav class="footer-nav" aria-labelledby="nav-label-2">
+                    <p class="title-small footer-list-title" id="nav-label-2">Support</p>
+                    <ul class="footer-list">
+                        <li>
+                            <a href="#" class="body-medium footer-link">About us</a>
+                        </li>
+                        <li>
+                            <a href="#" class="body-medium footer-link">contact us</a>
+                        </li>
+                        <li>
+                            <a href="#" class="body-medium footer-link">Privacy Policy</a>
+                        </li>
+                        <li>
+                            <a href="#" class="body-medium footer-link">Terms & Conditions</a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <nav class="footer-nav" aria-labelledby="nav-label-3">
+                    <p class="title-small footer-list-title" id="nav-label-3">Support</p>
+                    <ul class="footer-list">
+                        <li>
+                            <a href="#" class="body-medium footer-link">hello@travelhub.com</a>
+                        </li>
+                        <li>
+                            <address class="address body-medium">
+                                814150 Sarwan Rd. Deoghar, Jharkhand
+                            </address>
+                        </li>
+                        <li>
+                            <ul class="social-list">
+                                <li>
+                                    <a href="#" class="social-link">
+                                        <img src="./assets/images/facebook.svg" alt="facebook">
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" class="social-link">
+                                        <img src="./assets/images/twitter.svg" alt="twitter">
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" class="social-link">
+                                        <img src="./assets/images/insta.svg" alt="instagram">
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container">
+                <p class="copyright body-medium">
+                    &copy; copyright 2025 De-Coder-Pritam
+                </p>
+            </div>
+        </div>
+     </footer>
+</body>
+</html>

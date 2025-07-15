@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Approved Hotels - Admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary-color: #0D3166;
+      --accent-color: #00bcd4;
+      --card-bg: #ffffff;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f4f8fc;
+      margin: 0;
+      padding-bottom: 60px;
+    }
+
+    header {
+      background-color: var(--primary-color);
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 30px;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 280px;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    .card h3 {
+      margin: 0;
+      color: var(--primary-color);
+      font-size: 20px;
+    }
+
+    .card p {
+      font-size: 14px;
+      margin: 6px 0;
+    }
+
+    .btn {
+      margin-top: 15px;
+      padding: 10px 16px;
+      font-size: 14px;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .btn:hover {
+      background-color: #082142;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: var(--primary-color);
+      color: white;
+      text-align: center;
+      padding: 12px;
+    }
+  </style>
+</head>
+<body>
+  <header>Admin - Approved Hotels</header>
+
+  <div class="container" id="approvedHotelList">
+    <!-- Hotel cards will be inserted here -->
+  </div>
+
+  <div class="footer">
+    &copy; 2025 TravelHub Admin Panel
+  </div>
+
+  <script>
+    const token = localStorage.getItem("jwtToken");
+
+    async function loadApprovedHotels() {
+      const res = await fetch("http://127.0.0.1:9999/api/admin/hotels/approved", {
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      });
+      const hotels = await res.json();
+      const container = document.getElementById("approvedHotelList");
+      container.innerHTML = "";
+
+      hotels.forEach(hotel => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+          <h3>${hotel.name}</h3>
+          <p><strong>Location:</strong> ${hotel.location}</p>
+          <p><strong>Price:</strong> Rs. ${hotel.pricePerNight}</p>
+          <p><strong>Seller:</strong> ${hotel.sellerUsername}</p>
+          <button class="btn" onclick="deactivateHotel(${hotel.id}, this)">Deactivate</button>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    async function deactivateHotel(hotelId, button) {
+      const confirmed = confirm("Are you sure you want to deactivate this hotel?");
+      if (!confirmed) return;
+
+      try {
+        const res = await fetch(`http://127.0.0.1:9999/api/admin/hotels/${hotelId}/status?active=false`, {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + token
+          }
+        });
+
+        if (res.ok) {
+          button.closest(".card").remove(); // remove card from UI
+        } else {
+          alert("Failed to deactivate hotel.");
+        }
+      } catch (error) {
+        alert("Error: " + error.message);
+      }
+    }
+
+    loadApprovedHotels();
+  </script>
+</body>
+</html>

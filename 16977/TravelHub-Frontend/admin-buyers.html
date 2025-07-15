@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>All Buyers | Admin Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --primary-color: #0D3166;
+      --accent-color: #00bcd4;
+      --card-bg: #ffffff;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f1f6fc;
+      margin: 0;
+    }
+
+    header {
+      background-color: var(--primary-color);
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .container {
+      padding: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      padding: 20px;
+      width: 300px;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card h3 {
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      margin: 4px 0;
+      font-size: 15px;
+    }
+
+    .status {
+      font-weight: bold;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 14px;
+      display: inline-block;
+    }
+
+    .active {
+      background-color: #d4f8e8;
+      color: #2e7d32;
+    }
+
+    .inactive {
+      background-color: #ffe4e4;
+      color: #c62828;
+    }
+
+    .btn {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background-color: var(--primary-color);
+      color: white;
+      transition: background 0.2s;
+    }
+
+    .btn:hover {
+      background-color: #082142;
+    }
+
+    .footer {
+      background-color: var(--primary-color);
+      color: white;
+      text-align: center;
+      padding: 15px;
+      font-size: 14px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <header>All Buyers</header>
+
+  <div class="container" id="buyerList">
+    <!-- Buyer cards inserted here -->
+  </div>
+
+  <div class="footer">
+    &copy; 2025 TravelHub | Admin Panel
+  </div>
+
+  <script>
+    const token = localStorage.getItem("jwtToken");
+
+    async function loadBuyers() {
+      try {
+        const res = await fetch("http://127.0.0.1:9999/api/admin/buyers", {
+          headers: {
+            Authorization: "Bearer " + token
+          }
+        });
+
+        const buyers = await res.json();
+        const container = document.getElementById("buyerList");
+        container.innerHTML = "";
+
+        buyers.forEach(user => {
+          const card = document.createElement("div");
+          card.className = "card";
+
+          card.innerHTML = `
+            <h3>${user.username}</h3>
+            <p><strong>Email:</strong> ${user.email}</p>
+            <p><strong>Role:</strong> ${user.role}</p>
+            <p><strong>Status:</strong> <span class="status ${user.active ? 'active' : 'inactive'}">${user.active ? 'Active' : 'Blocked'}</span></p>
+            <button class="btn" onclick="toggleUser(${user.id}, ${user.active})">${user.active ? 'Block' : 'Unblock'}</button>
+          `;
+
+          container.appendChild(card);
+        });
+      } catch (err) {
+        alert("Failed to load buyers: " + err.message);
+      }
+    }
+
+    async function toggleUser(userId, isActive) {
+      const url = `http://127.0.0.1:9999/api/admin/users/${userId}/${isActive ? 'block' : 'unblock'}`;
+      try {
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: {
+            Authorization: "Bearer " + token
+          }
+        });
+
+        if (res.ok) {
+          loadBuyers(); // refresh list
+        } else {
+          alert("Failed to update user status");
+        }
+      } catch (err) {
+        alert("Error: " + err.message);
+      }
+    }
+
+    loadBuyers();
+  </script>
+</body>
+</html>
