@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login & Registration</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      height: 100vh;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .form-container {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+      max-width: 420px;
+      width: 100%;
+      padding: 30px 35px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    h2 {
+      text-align: center;
+      color: #4a4a4a;
+      font-size: 1.8rem;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    input, select {
+      padding: 12px;
+      font-size: 1rem;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+    input:focus, select:focus {
+      border-color: #667eea;
+      outline: none;
+      box-shadow: 0 0 6px rgba(102,126,234,0.3);
+    }
+    button {
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      background: #667eea;
+      color: white;
+      user-select: none;
+    }
+    button#toggleMode {
+      background: #f0f0f0;
+      color: #555;
+      cursor: pointer;
+    }
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+    .hidden {
+      display: none !important;
+    }
+    #backgroundVideo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+      filter: brightness(0.6);
+    }
+    /* Spinner inside button */
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 3px solid rgba(255, 255, 255, 0.6);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      flex-shrink: 0;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background video -->
+  <video autoplay muted loop playsinline id="backgroundVideo">
+    <source src="background1.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <div class="form-container">
+    <h2 id="formTitle">Login</h2>
+    <form id="authForm" novalidate>
+      <input type="text" id="name" placeholder="Name" class="hidden" />
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="tel" id="phone" placeholder="Phone Number" class="hidden" />
+      <input type="password" id="password" placeholder="Password" required />
+      <select id="role" class="hidden">
+        <option value="">Select Role</option>
+        <option value="User">User</option>
+        <option value="Shopkeeper">Shopkeeper</option>
+      </select>
+      <input type="text" id="location" placeholder="Fetching your location..." class="hidden"  />
+      <button type="submit" id="submitBtn">Submit</button>
+    </form>
+    <button id="toggleMode">Switch to Register</button>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import {
+      getFirestore,
+      doc,
+      setDoc,
+      getDoc,
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDsKMHremVDMox2vsgyVpDRa6FSDi2IlVw",
+      authDomain: "create-account-5ca6d.firebaseapp.com",
+      projectId: "create-account-5ca6d",
+      storageBucket: "create-account-5ca6d.appspot.com",
+      messagingSenderId: "361167086120",
+      appId: "1:361167086120:web:e2980b9eb60c053b69cb1d"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    let isLogin = true;
+
+    const form = document.getElementById("authForm");
+    const nameField = document.getElementById("name");
+    const emailField = document.getElementById("email");
+    const phoneField = document.getElementById("phone");
+    const passwordField = document.getElementById("password");
+    const roleField = document.getElementById("role");
+    const locationField = document.getElementById("location");
+    const formTitle = document.getElementById("formTitle");
+    const toggleBtn = document.getElementById("toggleMode");
+    const submitBtn = document.getElementById("submitBtn");
+
+    function toggleFields() {
+      if (isLogin) {
+        nameField.classList.add("hidden");
+        phoneField.classList.add("hidden");
+        roleField.classList.add("hidden");
+        locationField.classList.add("hidden");
+        formTitle.innerText = "Login";
+        toggleBtn.innerText = "Switch to Register";
+      } else {
+        nameField.classList.remove("hidden");
+        phoneField.classList.remove("hidden");
+        roleField.classList.remove("hidden");
+        locationField.classList.remove("hidden");
+        formTitle.innerText = "Register";
+        toggleBtn.innerText = "Switch to Login";
+        detectLocation();
+      }
+    }
+
+    toggleBtn.addEventListener("click", () => {
+      isLogin = !isLogin;
+      toggleFields();
+    });
+
+    function showLoadingOnButton() {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<div class="spinner"></div>Loading...`;
+    }
+
+    function hideLoadingOnButton() {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Submit";
+    }
+
+    async function detectLocation() {
+      if (!navigator.geolocation) {
+        locationField.value = "Geolocation not supported.";
+        return;
+      }
+
+      locationField.value = "Detecting location...";
+
+      navigator.geolocation.getCurrentPosition(
+        async function (position) {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+
+          try {
+            const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`);
+            const data = await response.json();
+            locationField.value = data.display_name || "Location not found.";
+          } catch (error) {
+            locationField.value = "Error fetching location.";
+          }
+        },
+        function () {
+          locationField.value = "Location error.";
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0,
+        }
+      );
+    }
+
+    window.onload = () => {
+      toggleFields(); // Start with login view
+    };
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      showLoadingOnButton();
+
+      const name = nameField.value.trim();
+      const email = emailField.value.trim();
+      const password = passwordField.value;
+      const phone = phoneField.value.trim();
+      const role = roleField.value;
+      const location = locationField.value;
+
+      try {
+        if (isLogin) {
+          const userCredential = await signInWithEmailAndPassword(auth, email, password);
+          const uid = userCredential.user.uid;
+
+          const userDoc = await getDoc(doc(db, "users", uid));
+          if (userDoc.exists()) {
+            const userData = userDoc.data();
+            localStorage.setItem("user", JSON.stringify(userData));
+            if (userData.role === "Shopkeeper") {
+              window.location.href = "shop_kepper.html";
+            } else {
+              window.location.href = "home_page.html";
+            }
+          } else {
+            alert("User data not found.");
+          }
+        } else {
+          if (!name || !email || !password || !phone || !role || !location) {
+            alert("Please fill all fields.");
+            hideLoadingOnButton();
+            return;
+          }
+          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+          const uid = userCredential.user.uid;
+
+          await setDoc(doc(db, "users", uid), {
+            uid,
+            name,
+            email,
+            phone,
+            role,
+            location,
+          });
+
+          alert("Registration successful. Please login.");
+          isLogin = true;
+          toggleFields();
+          form.reset();
+        }
+      } catch (error) {
+        alert(error.message);
+      }
+
+      hideLoadingOnButton();
+    });
+  </script>
+</body>
+</html>

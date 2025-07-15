@@ -1,0 +1,110 @@
+{
+  "shops": {
+    "shop1": {
+      "name": "Krishna Juice Corner",
+      "type": "Juice",
+      "phone": "9905096533",
+      "place": "patna",
+      "email":"malhotraankesh60@gmail.com",
+      "status": "open",
+      "image_url": "https://via.placeholder.com/150"
+    },
+    "shop2": {
+      "name": "Maa Durga Grocery",
+      "type": "Grocery",
+      "phone": "9832012345",
+      "email":"malhotraankesh60@gmail.com",
+      "place": "patna",
+      "status": "closed",
+      "image_url": "https://via.placeholder.com/150"
+    },
+    "shop3": {
+      "name": "Fresh Sip Juice",
+      "type": "Juice",
+      "phone": "9807896521",
+      "email":"malhotraankesh60@gmail.com",
+      "place": "patna",
+      "status": "open",
+      "image_url": "https://via.placeholder.com/150"
+    },
+    "shop4": {
+      "name": "Daily Needs Store",
+      "type": "Grocery",
+      "phone": "9876543210",
+      "email":"malhotraankesh60@gmail.com",
+      "status": "open",
+      "image_url": "https://via.placeholder.com/150"
+    },
+    "shop5": {
+      "name": "Cool Point Juice Bar",
+      "type": "Juice",
+      "phone": "9911223344",
+      "lat": 25.2128,
+      "lon": 84.9899,
+      "status": "closed",
+      "image_url": "https://via.placeholder.com/150"
+    },
+    "shop6": {
+      "name": "Kiran Grocery Center",
+      "type": "Grocery",
+      "phone": "9800123456",
+      "lat": 25.2139,
+      "lon": 84.9952,
+      "status": "open",
+      "image_url": "https://via.placeholder.com/150"
+    },
+    "shop7": {
+      "name": "Anand Juice Stall",
+      "type": "Juice",
+      "phone": "7894561230",
+      "lat": 25.2145,
+      "lon": 84.9930,
+      "status": "open",
+      "image_url": "https://via.placeholder.com/150"
+    },
+    "shop8": {
+      "name": "Super Mart Grocery",
+      "type": "Grocery",
+      "phone": "7001234567",
+      "lat": 25.2155,
+      "lon": 84.9919,
+      "status": "closed",
+      "image_url": "https://via.placeholder.com/150"
+    },
+    "shop9": {
+      "name": "Natural Juice Center",
+      "type": "Juice",
+      "phone": "9123456789",
+      "lat": 25.2175,
+      "lon": 84.9890,
+      "status": "open",
+      "image_url": "https://via.placeholder.com/150"
+    },
+    "shop10": {
+      "name": "Ghar Bazaar Grocery",
+      "type": "Grocery",
+      "phone": "9988776655",
+      "lat": 25.2160,
+      "lon": 84.9905,
+      "status": "open",
+      "image_url": "https://via.placeholder.com/150"
+    },
+    "shop11": {
+    "name": "Cool Juice Center",
+    "lat": 25.2149,
+    "lon": 84.9882,
+    "type": "Juice",
+    "phone": "9905096533",
+    "status": "open",
+    "image": "https://link-to-image.jpg"
+  },
+  "shop12": {
+    "name": "Royal Bakery",
+    "lat": 25.2130,
+    "lon": 84.9860,
+    "type": "Bakery",
+    "phone": "1234567890",
+    "status": "closed"
+  }
+  }
+}
