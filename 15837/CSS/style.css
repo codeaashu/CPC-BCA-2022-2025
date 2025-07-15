@@ -1,0 +1,74 @@
+/* Reset and Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #f4f6f8;
+  padding: 2rem;
+  color: #333;
+}
+
+h2, h3 {
+  margin-bottom: 1rem;
+  color: #2c3e50;
+}
+
+form, .card, .filters {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 1rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+input[type="number"] {
+  width: 100%;
+  padding: 0.5rem;
+  margin: 0.3rem 0 1rem 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+button {
+  background-color: #3498db;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-right: 0.5rem;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+.card {
+  margin-bottom: 1rem;
+}
+
+input[type="submit"],
+button[type="submit"] {
+  width: 100%;
+}
+
+/* Layout tweaks */
+.filters input, .filters button {
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+@media screen and (min-width: 768px) {
+  form, .filters {
+    max-width: 500px;
+  }
+}

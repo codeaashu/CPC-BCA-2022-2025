@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard - Railway Ticket System</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f4f8;
+      display: flex;
+      flex-direction: column;
+      background: url(Images/Dashboard.jpg);
+      background-size: cover;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 25px;
+      background-color: #004080;
+      color: white;
+    }
+
+    .navbar h3 {
+      margin: 0;
+    }
+
+    .navbar button {
+      padding: 8px 14px;
+      margin-left: 8px;
+      border: none;
+      border-radius: 4px;
+      background-color: #2563eb;
+      color: white;
+      cursor: pointer;
+    }
+
+    .navbar button:last-child {
+      background-color: #ef4444;
+    }
+
+    /* 🔍 Search Bar */
+    .search-container {
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    .search-container h2 {
+      margin-bottom: 20px;
+    }
+
+    .search-container input {
+      padding: 10px;
+      width: 180px;
+      margin: 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .search-container button {
+      padding: 10px 20px;
+      margin: 8px;
+      border: none;
+      border-radius: 6px;
+      background-color: #10b981;
+      color: white;
+      cursor: pointer;
+    }
+
+    .search-container button:nth-child(4) {
+      background-color: #6b7280;
+    }
+
+    /* 📋 Train List */
+    #trainList {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .train-card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+      width: 280px;
+    }
+
+    .train-card h4 {
+      margin-top: 0;
+    }
+
+    .train-card p {
+      margin: 5px 0;
+    }
+
+    .train-card button {
+      margin-top: 10px;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 5px;
+      background-color: #0ea5e9;
+      color: white;
+      cursor: pointer;
+    }
+
+    .train-card button[disabled] {
+      background-color: gray;
+      cursor: not-allowed;
+    }
+
+    /* 🧾 Footer */
+    footer {
+      text-align: center;
+      background-color: #004080;
+      color: white;
+      padding: 15px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🚉 Top Navigation -->
+  <div class="navbar">
+    <h3>Railway Ticket System</h3>
+    <div>
+      <button onclick="window.location.href='bookings.html'">My Bookings</button>
+      <button onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+  <!-- 🔍 Search Section -->
+  <main>
+    <div class="search-container">
+      <h2>Search Trains</h2>
+      <input type="text" id="fromInput" placeholder="From Station" />
+      <input type="text" id="toInput" placeholder="To Station" />
+      <button onclick="searchTrains()">Search</button>
+      <button onclick="resetSearch()">Reset</button>
+    </div>
+
+    <!-- 📋 Train Results -->
+    <div id="trainList"></div>
+  </main>
+
+  <!-- 🧾 Footer -->
+  <footer>
+    © 2025 Railway Ticket System | Crafted with ❤️ by kriti kant
+  </footer>
+
+  <!-- 🔧 Firebase & JS -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+    import {
+      getFirestore,
+      collection,
+      getDocs,
+      doc,
+      addDoc,
+      updateDoc
+    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCXtHw0bDammKO2KdJzTUHZATr4Exgvh9g",
+      authDomain: "railway-management-syste-8bfe4.firebaseapp.com",
+      projectId: "railway-management-syste-8bfe4",
+      storageBucket: "railway-management-syste-8bfe4.firebasestorage.app",
+      messagingSenderId: "182948395723",
+      appId: "1:182948395723:web:b61ecb90c70b7d6732394e"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // ✅ Protect Page
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "login.html";
+        return;
+      }
+    });
+
+    // ✅ Logout Function
+    window.logout = function () {
+      signOut(auth)
+        .then(() => window.location.href = "login.html")
+        .catch((err) => alert("Logout failed: " + err.message));
+    };
+
+    // ✅ Search Trains
+    window.searchTrains = async function () {
+      const fromVal = document.getElementById("fromInput").value.trim().toLowerCase();
+      const toVal = document.getElementById("toInput").value.trim().toLowerCase();
+      const trainList = document.getElementById("trainList");
+      trainList.innerHTML = "";
+
+      if (!fromVal || !toVal) {
+        alert("Please enter both 'From' and 'To' stations.");
+        return;
+      }
+
+      const snapshot = await getDocs(collection(db, "trains"));
+      let found = false;
+
+      snapshot.forEach((docSnap) => {
+        const train = docSnap.data();
+        const matchFrom = train.source.toLowerCase().includes(fromVal);
+        const matchTo = train.destination.toLowerCase().includes(toVal);
+
+        if (matchFrom && matchTo) {
+          displayTrain(train, docSnap.id);
+          found = true;
+        }
+      });
+
+      if (!found) {
+        trainList.innerHTML = "<p>No trains found for the selected route.</p>";
+      }
+    };
+
+    // ✅ Reset search inputs
+    window.resetSearch = function () {
+      document.getElementById("fromInput").value = "";
+      document.getElementById("toInput").value = "";
+      document.getElementById("trainList").innerHTML = "";
+    };
+
+    // ✅ Render Train Card
+    function displayTrain(train, trainId) {
+      const trainList = document.getElementById("trainList");
+      const div = document.createElement("div");
+      div.className = "train-card";
+      div.innerHTML = `
+        <h4>${train.name}</h4>
+        <p><strong>From:</strong> ${train.source} → <strong>To:</strong> ${train.destination}</p>
+        <p><strong>Date:</strong> ${train.date}</p>
+        <p><strong>Available Seats:</strong> ${train.availableSeats}</p>
+        <button onclick="bookTrain('${trainId}')" ${train.availableSeats <= 0 ? "disabled" : ""}>
+          ${train.availableSeats > 0 ? "Book Ticket" : "No Seats"}
+        </button>
+      `;
+      trainList.appendChild(div);
+    }
+
+    // ✅ Book a Train
+    window.bookTrain = async function (trainId) {
+      const user = auth.currentUser;
+      if (!user) {
+        alert("Please log in to book.");
+        return;
+      }
+
+      try {
+        const trainDocs = await getDocs(collection(db, "trains"));
+        let selectedTrain = null;
+
+        trainDocs.forEach((docSnap) => {
+          if (docSnap.id === trainId) {
+            selectedTrain = { ...docSnap.data(), docRef: docSnap.ref };
+          }
+        });
+
+        if (!selectedTrain) {
+          alert("Train not found.");
+          return;
+        }
+
+        if (selectedTrain.availableSeats <= 0) {
+          alert("No seats available.");
+          return;
+        }
+
+        await addDoc(collection(db, "bookings"), {
+          userId: user.uid,
+          trainId: trainId,
+          bookedAt: new Date().toISOString()
+        });
+
+        await updateDoc(doc(db, "trains", trainId), {
+          availableSeats: selectedTrain.availableSeats - 1
+        });
+
+        alert("✅ Booking successful!");
+        document.getElementById("trainList").innerHTML = "";
+      } catch (err) {
+        console.error(err);
+        alert("Booking failed: " + err.message);
+      }
+    };
+  </script>
+</body>
+</html>
