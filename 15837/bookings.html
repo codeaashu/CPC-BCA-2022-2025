@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Bookings - Railway Ticket System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>Your Booked Tickets</h2>
+  <div id="bookingList">Loading...</div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+    import {
+      getFirestore,
+      collection,
+      getDocs,
+      doc,
+      getDoc,
+      deleteDoc,
+      query,
+      where,
+      updateDoc // ✅ Make sure this is imported!
+    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCXtHw0bDammKO2KdJzTUHZATr4Exgvh9g",
+      authDomain: "railway-management-syste-8bfe4.firebaseapp.com",
+      projectId: "railway-management-syste-8bfe4",
+      storageBucket: "railway-management-syste-8bfe4.firebasestorage.app",
+      messagingSenderId: "182948395723",
+      appId: "1:182948395723:web:b61ecb90c70b7d6732394e"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = "login.html";
+        return;
+      }
+
+      const bookingList = document.getElementById("bookingList");
+      bookingList.innerHTML = "";
+
+      const q = query(collection(db, "bookings"), where("userId", "==", user.uid));
+      const bookingDocs = await getDocs(q);
+
+      if (bookingDocs.empty) {
+        bookingList.innerHTML = "<p>No bookings found.</p>";
+        return;
+      }
+
+      for (const booking of bookingDocs.docs) {
+        const data = booking.data();
+        const trainDoc = await getDoc(doc(db, "trains", data.trainId));
+        const train = trainDoc.data();
+
+        const div = document.createElement("div");
+        div.style.border = "1px solid gray";
+        div.style.padding = "10px";
+        div.style.marginBottom = "10px";
+        div.innerHTML = `
+          <h4>${train.name}</h4>
+          <p><strong>From:</strong> ${train.source} → <strong>To:</strong> ${train.destination}</p>
+          <p><strong>Date:</strong> ${train.date}</p>
+          <p><strong>Booked At:</strong> ${new Date(data.bookedAt).toLocaleString()}</p>
+          <button onclick="cancelBooking('${booking.id}', '${data.trainId}')">Cancel Booking</button>
+        `;
+        bookingList.appendChild(div);
+      }
+    });
+
+    // ✅ Cancel booking & restore seat
+    window.cancelBooking = async function(bookingId, trainId) {
+      try {
+        await deleteDoc(doc(db, "bookings", bookingId));
+
+        // ✅ Correct way to update a Firestore document
+        const trainRef = doc(db, "trains", trainId);
+        const trainSnap = await getDoc(trainRef);
+        const trainData = trainSnap.data();
+
+        await updateDoc(trainRef, {
+          availableSeats: trainData.availableSeats + 1
+        });
+
+        alert("Booking cancelled.");
+        location.reload();
+      } catch (error) {
+        alert("Error cancelling booking: " + error.message);
+        console.error(error);
+      }
+    };
+  </script>
+</body>
+</html>
