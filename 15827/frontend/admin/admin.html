@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | LibraryPro</title>
+  <link rel="stylesheet" href="../style/admin.css">
+</head>
+<body>
+  <header>
+    <nav class="admin-navbar">
+      <div class="logo"><a href="../index.html" style="color:inherit;text-decoration:none;">📚 LibraryPro</a></div>
+    </nav>
+  </header>
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <ul>
+        <li><a href="#" class="sidebar-link active" data-section="dashboard">Dashboard</a></li>
+        <li><a href="#" class="sidebar-link" data-section="requested-books">Requested Books</a></li>
+        <li><a href="#" class="sidebar-link" data-section="add-book">Add Book</a></li>
+        <li><a href="#" class="sidebar-link" data-section="view-users">View Users</a></li>
+        <li><a href="#" class="sidebar-link" data-section="issues">Issues</a></li>
+        <li><a href="#" class="sidebar-link" data-section="fines">Fines Management</a></li>
+        <li><a href="#" class="sidebar-link" data-section="payments">Payments</a></li>
+        <li><a href="#" class="sidebar-link" data-section="contacts">Contacts</a></li>
+        <li><a href="#" class="sidebar-link" data-section="feedback">Feedback</a></li>
+        <li><a href="#" id="logoutBtn">Logout</a></li>
+      </ul>
+    </aside>
+    <main class="admin-main-content">
+      <section id="dashboard-section" class="admin-section">
+        <h2>Welcome, <span id="adminName">Admin</span>!</h2>
+        <div class="admin-stats">
+          <div class="stat-card">
+            <div class="stat-title">Total Users</div>
+            <div class="stat-value" id="totalUsers">-</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-title">Total Books</div>
+            <div class="stat-value" id="totalBooks">-</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-title">Issued Books</div>
+            <div class="stat-value" id="issuedBooks">-</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-title">Overdue Books</div>
+            <div class="stat-value" id="overdueBooks">-</div>
+          </div>
+        </div>
+        <div id="adminError" class="error-message"></div>
+      </section>
+      <section id="requested-books-section" class="admin-section" style="display:none">
+        <h2>Pending Book Requests</h2>
+        <div class="section-description">All book requests awaiting approval. Approve or reject requests as needed.</div>
+        <div id="requestedBooksContent"></div>
+      </section>
+      <section id="add-book-section" class="admin-section" style="display:none">
+        <h2>Add Book</h2>
+        <div class="section-description">Fill out the form below to add a new book to the library.</div>
+        <form id="addBookForm" class="add-book-form professional-form">
+          <div class="form-row">
+            <input type="text" id="title" placeholder="Title *" required>
+            <input type="text" id="author" placeholder="Author *" required>
+          </div>
+          <div class="form-row">
+            <input type="text" id="isbn" placeholder="ISBN *" required>
+            <input type="text" id="category" placeholder="Category *" required>
+          </div>
+          <div class="form-row">
+            <input type="number" id="publishedYear" placeholder="Year *" required>
+            <input type="number" id="totalCopies" placeholder="Total Copies *" required min="1">
+            <input type="number" id="minStock" placeholder="Min Stock" min="0" style="width:120px;">
+          </div>
+          <div class="form-row">
+            <input type="text" id="location" placeholder="Location *" required>
+          </div>
+          <div class="form-row">
+            <textarea id="description" placeholder="Description"></textarea>
+          </div>
+          <button type="submit" class="action-btn professional-btn">Add Book</button>
+        </form>
+        <div id="booksAdminError" class="error-message"></div>
+        <table class="books-table" id="booksTable">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Author</th>
+              <th>ISBN</th>
+              <th>Category</th>
+              <th>Year</th>
+              <th>Copies</th>
+              <th>Location</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="booksTableBody"></tbody>
+        </table>
+      </section>
+      <section id="view-users-section" class="admin-section" style="display:none">
+        <h2>Manage Users</h2>
+        <div id="usersError" class="error-message"></div>
+        <table class="users-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Joined</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="usersTableBody"></tbody>
+        </table>
+      </section>
+      <section id="issues-section" class="admin-section" style="display:none">
+        <h2>Issued Books</h2>
+        <div class="section-description">All books currently issued to customers. Includes customer name and email.</div>
+        <div class="issues-legend">
+          <strong>Status Legend:</strong>
+          <span class="legend-pending">Pending = Waiting for processing</span> |
+          <span class="legend-issued">Issued = Book is with user</span> |
+          <span class="legend-returned">Returned = Book returned</span> |
+          <span class="legend-overdue">Overdue = Book not returned on time</span>
+        </div>
+        <div class="issues-filter-bar">
+          <label for="statusFilter">Filter by status:</label>
+          <select id="statusFilter">
+            <option value="issued">Issued</option>
+            <option value="pending">Pending</option>
+            <option value="returned">Returned</option>
+            <option value="overdue">Overdue</option>
+            <option value="all">All</option>
+          </select>
+        </div>
+        <div id="issuesError" class="error-message"></div>
+        <table class="issues-table" id="issuesTable">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Email</th>
+              <th>Book</th>
+              <th>Status</th>
+              <th>Issued</th>
+              <th>Due</th>
+              <th>Returned</th>
+              <th>Fine</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="issuesTableBody"></tbody>
+        </table>
+      </section>
+      <section id="fines-section" class="admin-section" style="display:none">
+        <h2>Fines Management</h2>
+        <div class="section-description">Manage overdue fines and payment status for all users.</div>
+        <div class="fines-summary">
+          <div class="summary-card">
+            <h3>Total Outstanding Fines</h3>
+            <p class="amount" id="totalOutstandingFines">$0.00</p>
+          </div>
+          <div class="summary-card">
+            <h3>Overdue Books</h3>
+            <p class="amount" id="totalOverdueBooks">0</p>
+          </div>
+          <div class="summary-card">
+            <h3>Paid Fines Today</h3>
+            <p class="amount" id="paidFinesToday">$0.00</p>
+          </div>
+        </div>
+        <div class="fines-filter-bar">
+          <label for="fineStatusFilter">Filter by status:</label>
+          <select id="fineStatusFilter">
+            <option value="all">All Fines</option>
+            <option value="overdue">Overdue</option>
+            <option value="unpaid">Unpaid</option>
+            <option value="paid">Paid</option>
+          </select>
+          <button id="refreshFinesBtn" class="action-btn">Refresh</button>
+        </div>
+        <div id="finesError" class="error-message"></div>
+        <table class="fines-table" id="finesTable">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Email</th>
+              <th>Book</th>
+              <th>Due Date</th>
+              <th>Days Overdue</th>
+              <th>Fine Amount</th>
+              <th>Status</th>
+              <th>Payment Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="finesTableBody"></tbody>
+        </table>
+              </section>
+        
+        <section id="payments-section" class="admin-section" style="display:none">
+          <h2>Payment Management</h2>
+          <div class="section-description">Manage all payment transactions and verify pending payments.</div>
+          <div id="paymentsError" class="error-message"></div>
+          <table class="payments-table" id="paymentsTable">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Email</th>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Payment Method</th>
+                <th>Transaction ID</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="paymentsTableBody"></tbody>
+          </table>
+        </section>
+
+        <section id="contacts-section" class="admin-section" style="display:none">
+          <h2>Contact Management</h2>
+          <div class="section-description">Manage user contact submissions and inquiries.</div>
+          
+          <!-- Contact Statistics -->
+          <div class="contacts-stats" id="contactsStats">
+            <div class="stat-card">
+              <div class="stat-number stat-new">0</div>
+              <div class="stat-label">Total Contacts</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number stat-new">0</div>
+              <div class="stat-label">New</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number stat-progress">0</div>
+              <div class="stat-label">In Progress</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number stat-resolved">0</div>
+              <div class="stat-label">Resolved</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number stat-urgent">0</div>
+              <div class="stat-label">Urgent</div>
+            </div>
+          </div>
+
+          <!-- Contact Filters -->
+          <div class="contacts-filters">
+            <div class="filters-row">
+              <div class="filter-group">
+                <label for="statusFilter">Status</label>
+                <select id="statusFilter">
+                  <option value="all">All Status</option>
+                  <option value="new">New</option>
+                  <option value="in_progress">In Progress</option>
+                  <option value="resolved">Resolved</option>
+                  <option value="closed">Closed</option>
+                </select>
+              </div>
+              <div class="filter-group">
+                <label for="priorityFilter">Priority</label>
+                <select id="priorityFilter">
+                  <option value="all">All Priority</option>
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
+                  <option value="urgent">Urgent</option>
+                </select>
+              </div>
+              <div class="filter-group">
+                <label for="subjectFilter">Subject</label>
+                <select id="subjectFilter">
+                  <option value="all">All Subjects</option>
+                  <option value="general">General Inquiry</option>
+                  <option value="technical">Technical Support</option>
+                  <option value="billing">Billing Question</option>
+                  <option value="feedback">Feedback</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="filter-group">
+                <div class="filter-actions">
+                  <button id="clearFilters" class="btn btn-secondary">Clear Filters</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contacts Table -->
+          <div class="contacts-table">
+            <div class="table-header">
+              <h3 class="table-title">Contact Submissions</h3>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Contact</th>
+                  <th>Subject</th>
+                  <th>Message</th>
+                  <th>Status</th>
+                  <th>Priority</th>
+                  <th>Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="contactsTableBody">
+                <!-- Contact data will be loaded here -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination -->
+          <div id="pagination" class="pagination">
+            <!-- Pagination will be generated here -->
+          </div>
+        </section>
+
+        <!-- Contact Modal -->
+        <div id="contactModal" class="modal" style="display: none;">
+          <div class="modal-content">
+            <div id="contactModalContent">
+              <!-- Modal content will be loaded here -->
+            </div>
+          </div>
+        </div>
+ 
+        <section id="feedback-section" class="admin-section" style="display:none">
+        <h2>Feedback & Suggestions</h2>
+        <div id="feedbackAdminError" class="error-message"></div>
+        <table class="feedback-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Type</th>
+              <th>Message</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="feedbackTableBody"></tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+  <footer>
+    <p><a href="../about.html">About</a> | &copy; 2024 LibraryPro. All rights reserved.</p>
+  </footer>
+  <script src="../js/admin.js"></script>
+  <script src="../js/books-admin.js"></script>
+  <script src="../js/users.js"></script>
+  <script src="../js/issues.js"></script>
+  <script src="../js/admin-fines.js"></script>
+  <script src="../js/admin-payments.js"></script>
+  <script src="../js/admin-contacts.js"></script>
+  <script src="../js/request-admin.js"></script>
+  <script>
+    // Sidebar navigation logic
+    const sidebarLinks = document.querySelectorAll('.sidebar-link');
+    const sections = document.querySelectorAll('.admin-section');
+    sidebarLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        sidebarLinks.forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+        sections.forEach(section => section.style.display = 'none');
+        document.getElementById(this.dataset.section + '-section').style.display = '';
+      });
+    });
+  </script>
+  <script>
+    // Navbar login/logout logic
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+    const navLinks = document.querySelector('.nav-links');
+    if (navLinks) {
+      if (token) {
+        let adminLink = '';
+        if (user && user.role === 'admin') {
+          adminLink = '<li><a href="admin/admin.html">Admin Dashboard</a></li>';
+        }
+        navLinks.innerHTML = `
+          <li><a href="index.html">Home</a></li>
+          <li><a href="books.html">Books</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          ${adminLink}
+          <li class="user-menu">
+            <span class="user-avatar" title="Profile">
+              <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User" width="28" height="28" style="border-radius:50%;vertical-align:middle;"> 
+              <span class="user-name">${user ? user.name.split(' ')[0] : 'User'}</span>
+            </span>
+            <ul class="user-dropdown">
+              <li><a href="#" id="logoutBtn">Logout</a></li>
+            </ul>
+          </li>
+        `;
+        // Dropdown logic
+        const userMenu = document.querySelector('.user-menu');
+        const dropdown = document.querySelector('.user-dropdown');
+        if (userMenu && dropdown) {
+          userMenu.addEventListener('mouseenter', () => dropdown.style.display = 'block');
+          userMenu.addEventListener('mouseleave', () => dropdown.style.display = 'none');
+        }
+        document.getElementById('logoutBtn').onclick = function(e) {
+          e.preventDefault();
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          window.location.href = 'login.html';
+        };
+      } else {
+        navLinks.innerHTML = `
+          <li><a href="index.html">Home</a></li>
+          <li><a href="books.html">Books</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="register.html">Register</a></li>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>
