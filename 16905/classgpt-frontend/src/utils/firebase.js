@@ -11,7 +11,7 @@ import {
 } from 'firebase/auth';
 
 const firebaseConfig = {
-   apiKey: "AIzaSyAGi-Dr8dbzoNwwpjzNWRe-hdMMi35x8VY",
+   apiKey: "firebase api key here",
   authDomain: "classgpt-59006.firebaseapp.com",
   projectId: "classgpt-59006",
   storageBucket: "classgpt-59006.firebasestorage.app",
