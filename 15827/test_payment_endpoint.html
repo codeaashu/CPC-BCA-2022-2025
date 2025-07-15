@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Endpoint Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .form-group {
+            margin: 10px 0;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Payment Endpoint Test</h1>
+    
+    <div class="test-section">
+        <h2>1. Test Server Connection</h2>
+        <p>Check if the server is running and accessible.</p>
+        <button class="test-button" onclick="testServerConnection()">Test Server Connection</button>
+        <div id="server-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>2. Test Payment Endpoint</h2>
+        <p>Test the payment submission endpoint.</p>
+        <form id="paymentTestForm">
+            <div class="form-group">
+                <label for="testBookId">Book ID:</label>
+                <input type="text" id="testBookId" value="test-book-id" required>
+            </div>
+            <div class="form-group">
+                <label for="testTransactionId">Transaction ID:</label>
+                <input type="text" id="testTransactionId" value="TXN_TEST_123" required>
+            </div>
+            <div class="form-group">
+                <label for="testFile">Payment Slip (File):</label>
+                <input type="file" id="testFile" accept="image/*,application/pdf" required>
+            </div>
+            <button type="submit" class="test-button">Test Payment Submission</button>
+        </form>
+        <div id="payment-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>3. Test Payment History</h2>
+        <p>Test the payment history endpoint.</p>
+        <button class="test-button" onclick="testPaymentHistory()">Test Payment History</button>
+        <div id="history-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>4. Endpoint Status</h2>
+        <div id="endpoint-status">
+            <p>Checking endpoint status...</p>
+        </div>
+    </div>
+
+    <script>
+        // Test Server Connection
+        async function testServerConnection() {
+            const resultDiv = document.getElementById('server-result');
+            resultDiv.innerHTML = '<p class="info">Testing server connection...</p>';
+            
+            try {
+                const response = await fetch('http://localhost:5000/');
+                if (response.ok) {
+                    const data = await response.json();
+                    resultDiv.innerHTML = '<p class="success">✅ Server is running! Message: ' + data.message + '</p>';
+                } else {
+                    resultDiv.innerHTML = '<p class="error">❌ Server responded with status: ' + response.status + '</p>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = '<p class="error">❌ Server connection failed: ' + error.message + '</p>';
+            }
+        }
+
+        // Test Payment Submission
+        document.getElementById('paymentTestForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const resultDiv = document.getElementById('payment-result');
+            resultDiv.innerHTML = '<p class="info">Testing payment submission...</p>';
+            
+            try {
+                const formData = new FormData();
+                const fileInput = document.getElementById('testFile');
+                const bookId = document.getElementById('testBookId').value;
+                const transactionId = document.getElementById('testTransactionId').value;
+                
+                if (fileInput.files.length > 0) {
+                    formData.append('paymentSlip', fileInput.files[0]);
+                } else {
+                    resultDiv.innerHTML = '<p class="error">❌ Please select a file</p>';
+                    return;
+                }
+                
+                formData.append('bookId', bookId);
+                formData.append('transactionId', transactionId);
+                
+                const response = await fetch('http://localhost:5000/api/payments/borrow', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    },
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.innerHTML = '<p class="success">✅ Payment submission successful! Response: ' + JSON.stringify(data, null, 2) + '</p>';
+                } else {
+                    resultDiv.innerHTML = '<p class="error">❌ Payment submission failed: ' + data.message + '</p>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = '<p class="error">❌ Network error: ' + error.message + '</p>';
+            }
+        });
+
+        // Test Payment History
+        async function testPaymentHistory() {
+            const resultDiv = document.getElementById('history-result');
+            resultDiv.innerHTML = '<p class="info">Testing payment history...</p>';
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/payments/history', {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    resultDiv.innerHTML = '<p class="success">✅ Payment history accessible! Found ' + data.length + ' payments.</p>';
+                } else {
+                    const errorData = await response.json();
+                    resultDiv.innerHTML = '<p class="error">❌ Payment history failed: ' + errorData.message + '</p>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = '<p class="error">❌ Network error: ' + error.message + '</p>';
+            }
+        }
+
+        // Check Endpoint Status
+        async function checkEndpointStatus() {
+            const statusDiv = document.getElementById('endpoint-status');
+            
+            try {
+                const endpoints = [
+                    { name: 'Server Root', url: 'http://localhost:5000/' },
+                    { name: 'Payment Borrow', url: 'http://localhost:5000/api/payments/borrow' },
+                    { name: 'Payment History', url: 'http://localhost:5000/api/payments/history' }
+                ];
+                
+                let statusHTML = '<h3>Endpoint Status:</h3>';
+                
+                for (const endpoint of endpoints) {
+                    try {
+                        const response = await fetch(endpoint.url, { method: 'OPTIONS' });
+                        statusHTML += `<p style="color: green;">✅ ${endpoint.name}: Accessible</p>`;
+                    } catch (error) {
+                        statusHTML += `<p style="color: red;">❌ ${endpoint.name}: Not accessible</p>`;
+                    }
+                }
+                
+                statusDiv.innerHTML = statusHTML;
+            } catch (error) {
+                statusDiv.innerHTML = '<p class="error">❌ Error checking endpoints: ' + error.message + '</p>';
+            }
+        }
+
+        // Initialize tests
+        document.addEventListener('DOMContentLoaded', function() {
+            checkEndpointStatus();
+        });
+    </script>
+</body>
+</html> 

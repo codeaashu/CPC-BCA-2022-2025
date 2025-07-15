@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Console Error Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .console-output {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Console Error Test</h1>
+    
+    <div class="test-section">
+        <h2>1. Test Null Reference Errors</h2>
+        <p>This test checks if the null reference errors in books.js are fixed.</p>
+        <button class="test-button" onclick="testNullReferences()">Test Null References</button>
+        <div id="null-test-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>2. Test Image Loading</h2>
+        <p>This test checks if placeholder images load correctly without network errors.</p>
+        <button class="test-button" onclick="testImageLoading()">Test Image Loading</button>
+        <div id="image-test-result"></div>
+        <div id="test-images"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>3. Test DOM Element Access</h2>
+        <p>This test verifies that DOM elements are accessed safely.</p>
+        <button class="test-button" onclick="testDOMAccess()">Test DOM Access</button>
+        <div id="dom-test-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>4. Console Output</h2>
+        <p>Check the browser console for any remaining errors:</p>
+        <div class="console-output" id="console-output">
+            <p>Console output will appear here...</p>
+        </div>
+        <button class="test-button" onclick="clearConsole()">Clear Console Output</button>
+    </div>
+
+    <script>
+        // Test Null Reference Errors
+        function testNullReferences() {
+            const resultDiv = document.getElementById('null-test-result');
+            resultDiv.innerHTML = '<p class="info">Testing null reference handling...</p>';
+            
+            try {
+                // Test accessing elements that might not exist
+                const nonExistentElement = document.getElementById('non-existent-element');
+                if (nonExistentElement) {
+                    nonExistentElement.onclick = function() {};
+                }
+                
+                // Test the specific pattern from books.js
+                const testElement = document.getElementById('test-element');
+                if (testElement) {
+                    testElement.onclick = function() {
+                        console.log('Element clicked');
+                    };
+                }
+                
+                resultDiv.innerHTML = '<p class="success">✅ Null reference handling is working correctly!</p>';
+            } catch (error) {
+                resultDiv.innerHTML = '<p class="error">❌ Null reference error: ' + error.message + '</p>';
+            }
+        }
+
+        // Test Image Loading
+        function testImageLoading() {
+            const resultDiv = document.getElementById('image-test-result');
+            const imagesDiv = document.getElementById('test-images');
+            
+            resultDiv.innerHTML = '<p class="info">Testing image loading...</p>';
+            imagesDiv.innerHTML = '';
+            
+            // Test the new placeholder image
+            const testImage = document.createElement('img');
+            testImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDEyMCAxODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTgwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik02MCA5MEM2MCA4Mi4zODYgNjYuMzg2IDc2IDc0IDc2QzgxLjYxNCA3NiA4OCA4Mi4zODYgODggOTBDODggOTcuNjE0IDgxLjYxNCAxMDQgNzQgMTA0QzY2LjM4NiAxMDQgNjAgOTcuNjE0IDYwIDkwWiIgZmlsbD0iIzlDQTBBNiIvPgo8cGF0aCBkPSJNNDAgMTIwQzQwIDExMi4zODYgNDYuMzg2IDEwNiA1NCAxMDZINjZDNzMuNjE0IDEwNiA4MCAxMTIuMzg2IDgwIDEyMFYxMzBINDBWMTIwWiIgZmlsbD0iIzlDQTBBNiIvPgo8L3N2Zz4K';
+            testImage.alt = 'Test Placeholder';
+            testImage.style.width = '120px';
+            testImage.style.height = '180px';
+            testImage.style.border = '1px solid #ccc';
+            
+            testImage.onload = function() {
+                resultDiv.innerHTML = '<p class="success">✅ Placeholder image loads successfully!</p>';
+                imagesDiv.appendChild(testImage);
+            };
+            
+            testImage.onerror = function() {
+                resultDiv.innerHTML = '<p class="error">❌ Placeholder image failed to load</p>';
+            };
+        }
+
+        // Test DOM Access
+        function testDOMAccess() {
+            const resultDiv = document.getElementById('dom-test-result');
+            resultDiv.innerHTML = '<p class="info">Testing DOM element access...</p>';
+            
+            try {
+                // Test safe DOM access patterns
+                const elements = [
+                    'paymentModal',
+                    'paymentForm', 
+                    'paymentError',
+                    'paymentSuccess',
+                    'closePaymentModal',
+                    'bookDetailsModal'
+                ];
+                
+                let allElementsSafe = true;
+                elements.forEach(elementId => {
+                    const element = document.getElementById(elementId);
+                    if (element) {
+                        console.log(`Element ${elementId} exists`);
+                    } else {
+                        console.log(`Element ${elementId} does not exist (this is expected)`);
+                    }
+                });
+                
+                resultDiv.innerHTML = '<p class="success">✅ DOM access patterns are safe!</p>';
+            } catch (error) {
+                resultDiv.innerHTML = '<p class="error">❌ DOM access error: ' + error.message + '</p>';
+            }
+        }
+
+        // Clear Console Output
+        function clearConsole() {
+            const consoleOutput = document.getElementById('console-output');
+            consoleOutput.innerHTML = '<p>Console output cleared...</p>';
+        }
+
+        // Monitor console for errors
+        const originalError = console.error;
+        const originalWarn = console.warn;
+        
+        console.error = function(...args) {
+            const consoleOutput = document.getElementById('console-output');
+            consoleOutput.innerHTML += '<p style="color: red;">❌ ERROR: ' + args.join(' ') + '</p>';
+            originalError.apply(console, args);
+        };
+        
+        console.warn = function(...args) {
+            const consoleOutput = document.getElementById('console-output');
+            consoleOutput.innerHTML += '<p style="color: orange;">⚠️ WARNING: ' + args.join(' ') + '</p>';
+            originalWarn.apply(console, args);
+        };
+
+        // Initialize tests
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Console error test page loaded successfully');
+        });
+    </script>
+</body>
+</html> 

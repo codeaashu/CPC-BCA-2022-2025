@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Management - Library Admin</title>
+    <link rel="stylesheet" href="../style/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .payments-container {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .payments-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .payments-header h1 {
+            margin: 0 0 1rem 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .payments-header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .payments-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-card i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .stat-card.completed i { color: #10b981; }
+        .stat-card.pending i { color: #f59e0b; }
+        .stat-card.failed i { color: #ef4444; }
+        .stat-card.total i { color: #667eea; }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .payments-filters {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .filters-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            align-items: end;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .payments-table {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .table-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+            gap: 1rem;
+            font-weight: 600;
+        }
+
+        .payment-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+            gap: 1rem;
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .payment-row:hover {
+            background: #f8f9fa;
+        }
+
+        .payment-row:last-child {
+            border-bottom: none;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .status-completed {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-failed {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .payment-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+        }
+
+        .view-btn {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .view-btn:hover {
+            background: #bfdbfe;
+        }
+
+        .approve-btn {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .approve-btn:hover {
+            background: #a7f3d0;
+        }
+
+        .reject-btn {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .reject-btn:hover {
+            background: #fecaca;
+        }
+
+        .no-payments {
+            text-align: center;
+            padding: 3rem;
+            color: #6b7280;
+        }
+
+        .no-payments i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            .payments-container {
+                padding: 1rem;
+            }
+
+            .table-header,
+            .payment-row {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .table-header {
+                display: none;
+            }
+
+            .payment-row {
+                border: 1px solid #e5e7eb;
+                border-radius: 10px;
+                margin-bottom: 1rem;
+            }
+
+            .filters-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-book"></i> Library Admin</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="books.html"><i class="fas fa-book"></i> Books</a>
+                <a href="users.html"><i class="fas fa-users"></i> Users</a>
+                <a href="issues.html"><i class="fas fa-exchange-alt"></i> Issues</a>
+                <a href="payments.html" class="active"><i class="fas fa-credit-card"></i> Payments</a>
+                <a href="fines.html"><i class="fas fa-dollar-sign"></i> Fines</a>
+                <a href="reports.html"><i class="fas fa-chart-bar"></i> Reports</a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="payments-container">
+                <div class="payments-header">
+                    <h1><i class="fas fa-credit-card"></i> Payment Management</h1>
+                    <p>Monitor and manage all book request payments</p>
+                </div>
+
+                <!-- Payment Statistics -->
+                <div class="payments-stats">
+                    <div class="stat-card total">
+                        <i class="fas fa-credit-card"></i>
+                        <div class="stat-number" id="totalPayments">0</div>
+                        <div class="stat-label">Total Payments</div>
+                    </div>
+                    <div class="stat-card completed">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="stat-number" id="completedPayments">0</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                    <div class="stat-card pending">
+                        <i class="fas fa-clock"></i>
+                        <div class="stat-number" id="pendingPayments">0</div>
+                        <div class="stat-label">Pending</div>
+                    </div>
+                    <div class="stat-card failed">
+                        <i class="fas fa-times-circle"></i>
+                        <div class="stat-number" id="failedPayments">0</div>
+                        <div class="stat-label">Failed</div>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="payments-filters">
+                    <div class="filters-row">
+                        <div class="filter-group">
+                            <label for="statusFilter">Status</label>
+                            <select id="statusFilter">
+                                <option value="">All Status</option>
+                                <option value="completed">Paid</option>
+                                <option value="pending">Pending</option>
+                                <option value="failed">Failed</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="methodFilter">Method</label>
+                            <select id="methodFilter">
+                                <option value="">All Methods</option>
+                                <option value="upi">UPI</option>
+                                <option value="cash">Cash</option>
+                                <option value="card">Card</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="userFilter">User</label>
+                            <input type="text" id="userFilter" placeholder="Search by user name or email">
+                        </div>
+                        <div class="filter-group">
+                            <label for="dateFilter">Date</label>
+                            <input type="date" id="dateFilter">
+                        </div>
+                        <div class="filter-group">
+                            <button class="filter-btn" onclick="filterPayments()">
+                                <i class="fas fa-filter"></i> Filter
+                            </button>
+                        </div>
+                        <div class="filter-group">
+                            <button class="export-btn" id="exportBtn">
+                                <i class="fas fa-file-csv"></i> Export CSV
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payments Table -->
+                <div class="payments-table">
+                    <div class="table-header">
+                        <div>Transaction ID</div>
+                        <div>User</div>
+                        <div>Book</div>
+                        <div>Amount</div>
+                        <div>Status</div>
+                        <div>Actions</div>
+                    </div>
+                    <div id="paymentsTableBody">
+                        <!-- Payments will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/admin-payments.js"></script>
+</body>
+</html> 

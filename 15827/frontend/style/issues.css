@@ -1,0 +1,61 @@
+h2 {
+  color: #0d133d;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+}
+.admin-main-container {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+.issues-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(13,19,61,0.10);
+  overflow: hidden;
+}
+.issues-table th, .issues-table td {
+  padding: 1rem 0.75rem;
+  text-align: left;
+}
+.issues-table th {
+  background: #e3f2fd;
+  color: #0d133d;
+  font-weight: 700;
+}
+.issues-table tr:not(:last-child) {
+  border-bottom: 1px solid #e0e0e0;
+}
+.issues-table td {
+  font-size: 1rem;
+  color: #333;
+}
+.issues-table .action-btn {
+  background: #1a237e;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.4rem 1rem;
+  margin-right: 0.5rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.issues-table .action-btn.approve {
+  background: #43a047;
+}
+.issues-table .action-btn.return {
+  background: #ffb300;
+  color: #222;
+}
+.issues-table .action-btn:hover {
+  opacity: 0.85;
+}
+@media (max-width: 700px) {
+  .issues-table th, .issues-table td {
+    padding: 0.5rem 0.3rem;
+    font-size: 0.95rem;
+  }
+} 
