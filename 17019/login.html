@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login</title>
+<style>
+  
+  body {
+  background-image: url('Images/background.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 350px;
+  background: rgba(255, 255, 255, 0.45); /* Transparent white box */
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: .5rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: .5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  width: 100%;
+  padding: .75rem;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.toggle-link {
+  margin-top: 1rem;
+  text-align: center;
+  cursor: pointer;
+  color: #007bff;
+}
+
+.toggle-link:hover {
+  text-decoration: underline;
+}
+
+.hidden {
+  display: none;
+}
+
+.error {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: .5rem;
+}
+
+</style>
+    
+</head>
+<body>
+
+  <div class="container">
+  <!-- Login Form -->
+  <form id="loginForm">
+    <h2>Login</h2>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="email" name="email" required />
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="password" name="password" required />
+    </div>
+    <button type="submit">Login</button>
+    <div class="toggle-link" onclick="toggleForm()">Don't have an account? Signup</div>
+  </form>
+
+  <!-- Signup Form -->
+  <form id="signupForm" class="hidden" action="signup.php" method="POST" onsubmit="return handleSignup(event)">
+    <h2>Signup</h2>
+    <div class="form-group">
+      <label>Name</label>
+      <input type="text" name="name" required />
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" name="email" required />
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" name="password" id="signupPassword" required />
+    </div>
+    <div class="form-group">
+      <label>Confirm Password</label>
+      <input type="password" name="confirm" id="confirmPassword" required />
+      <div id="errorMsg" class="error"></div>
+    </div>
+    <button type="submit">Signup</button>
+    <div class="toggle-link" onclick="toggleForm()">Already have an account? Login</div>
+  </form>
+</div>
+
+
+<script>
+  // LOGIN HANDLER
+  document.getElementById("loginForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    if (!email || !password) {
+      alert("Please fill all fields.");
+      return;
+    }
+
+    fetch("login.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: new URLSearchParams({
+        email,
+        password
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === "success") {
+        sessionStorage.setItem("username", data.username);
+        sessionStorage.setItem("role", data.role);
+        window.location.href = data.redirect;
+      } else {
+        alert("Login failed: " + data.message);
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Network error. Please try again.");
+    });
+  });
+
+  // TOGGLE LOGIN/SIGNUP FORMS
+  function toggleForm() {
+    const loginForm = document.getElementById("loginForm");
+    const signupForm = document.getElementById("signupForm");
+
+    loginForm.classList.toggle("hidden");
+    signupForm.classList.toggle("hidden");
+  }
+
+  // SIGNUP VALIDATION
+   function handleSignup(e) {
+    e.preventDefault();
+
+    const name = document.querySelector('#signupForm [name="name"]').value.trim();
+    const email = document.querySelector('#signupForm [name="email"]').value.trim();
+    const password = document.getElementById("signupPassword").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+    const errorMsg = document.getElementById("errorMsg");
+
+    if (password !== confirmPassword) {
+      errorMsg.textContent = "Passwords do not match!";
+      return false;
+    }
+
+    errorMsg.textContent = "";
+
+    fetch("signup.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: new URLSearchParams({
+        name,
+        email,
+        password
+      })
+    })
+    .then(res => res.text())
+    .then(response => {
+      if (response.includes("Signup successful")) {
+        alert("Signup successful. Please login now.");
+        toggleForm(); // Go back to login form
+      } else {
+        alert("Signup failed: " + response);
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Network error during signup.");
+    });
+
+    return false;
+  }
+
+
+</script>
+
+
+
+
+</body>
+
+
+</html>

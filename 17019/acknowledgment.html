@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Booking Confirmation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: url('Images/background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .confirmation {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    h2 {
+      color: #28a745;
+    }
+
+    .booking-id {
+      font-size: 1.2rem;
+      margin: 20px 0;
+      color: #333;
+    }
+
+    .btn {
+      background-color: #007bff;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <noscript>
+  <p style="color:red;text-align:center;">JavaScript is required to view this page.</p>
+</noscript>
+
+
+<div class="confirmation">
+  <h2>🎉 Booking Successful!</h2>
+  <div class="booking-id">Your Booking ID is <strong id="bookingId"></strong></div>
+  <button class="btn" onclick="goToDashboard()">Go to Dashboard</button>
+</div>
+
+<script>
+  const bookingId = sessionStorage.getItem("bookingId");
+  if (!bookingId) {
+    window.location.href = "booking.html"; // Prevent access without booking
+  } else {
+    document.getElementById("bookingId").innerText = bookingId;
+  }
+
+  function goToDashboard() {
+    window.location.href = "dashboard.html";
+  }
+</script>
+
+</body>
+</html>

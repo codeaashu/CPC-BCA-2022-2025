@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Book Your Event</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .booking-form {
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      width: 100%;
+    }
+
+    .booking-form h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .submit-btn:hover {
+      background-color: #0056b3;
+    }
+
+    .error {
+      color: red;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <form class="booking-form" id="eventBookingForm">
+    <h2><i class="fa-solid fa-calendar-check"></i> Book Your Event</h2>
+
+    <div class="form-group">
+      <label for="eventType">Event Type</label>
+      <select name="eventType" id="eventType" required>
+        <option value="">-- Select Event --</option>
+        <option value="Birthday">Birthday</option>
+        <option value="Wedding">Wedding</option>
+        <option value="Concert">Concert</option>
+        <option value="Others">Others</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="eventDate">Date of Event</label>
+      <input type="date" name="eventDate" id="eventDate" required>
+    </div>
+
+    <div class="form-group">
+      <label for="venue">Venue</label>
+      <select name="venue" id="venue" required>
+        <option value="">-- Choose Venue --</option>
+        <option value="Grand Palace Hall">Grand Palace Hall</option>
+        <option value="Sunset Garden">Sunset Garden</option>
+        <option value="Royal Banquet">Royal Banquet</option>
+        <option value="Ocean View Lounge">Ocean View Lounge</option>
+        <option value="City Center Club">City Center Club</option>
+        <option value="Elite Convention Center">Elite Convention Center</option>
+        <option value="Dreamland Resort">Dreamland Resort</option>
+        <option value="Crystal Ballroom">Crystal Ballroom</option>
+        <option value="Paradise Lawn">Paradise Lawn</option>
+        <option value="Vintage Villa">Vintage Villa</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Phone Number</label>
+      <input type="tel" name="phone" id="phone" required maxlength="10" pattern="[0-9]{10}" placeholder="Enter 10-digit number">
+      <div class="error" id="phoneError"></div>
+    </div>
+
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" name="username" id="username" readonly>
+    </div>
+
+    <button type="submit" class="submit-btn">Submit Booking</button>
+  </form>
+
+  <script>
+    // Prevent selecting past dates
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById("eventDate").setAttribute("min", today);
+
+    // Load username from sessionStorage
+    window.onload = () => {
+      const user = sessionStorage.getItem("username");
+      if (!user) {
+        alert("Session expired. Please login again.");
+        window.location.href = "login.html";
+      } else {
+        document.getElementById("username").value = user;
+      }
+    };
+
+    const form = document.getElementById("eventBookingForm");
+    const phoneInput = document.getElementById("phone");
+    const phoneError = document.getElementById("phoneError");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const eventType = document.getElementById("eventType").value;
+      const eventDate = document.getElementById("eventDate").value;
+      const venue = document.getElementById("venue").value;
+      const phone = phoneInput.value.trim();
+      const username = document.getElementById("username").value;
+
+      if (!eventType || !eventDate || !venue || !phone || !username) {
+        alert("All fields are required.");
+        return;
+      }
+
+      if (!/^\d{10}$/.test(phone)) {
+        phoneError.textContent = "Phone number must be exactly 10 digits.";
+        return;
+      } else {
+        phoneError.textContent = "";
+      }
+
+      const formData = new URLSearchParams();
+      formData.append("eventType", eventType);
+      formData.append("eventDate", eventDate);
+      formData.append("venue", venue);
+      formData.append("phone", phone);
+      formData.append("username", username);
+
+      fetch("booking.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: formData.toString()
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "success") {
+          sessionStorage.setItem("bookingId", data.booking_id);
+          window.location.href = "acknowledgment.html";
+        } else {
+          alert("Booking failed: " + data.message);
+        }
+      })
+      .catch(err => {
+        alert("Network error while submitting booking.");
+        console.error(err);
+      });
+    });
+  </script>
+
+</body>
+</html>

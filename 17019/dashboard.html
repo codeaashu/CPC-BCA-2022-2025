@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <!-- optional if you have your own CSS -->
+  <style>
+  body {
+    font-family: Arial, sans-serif;
+    background: url('Images/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    padding: 0;
+    margin: 0;
+  }
+
+  .dashboard {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  .logout {
+    display: block;
+    margin-bottom: 20px;
+    color: white;
+    background-color: #dc3545;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 6px;
+    text-align: center;
+    width: 100px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 16px;
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+  }
+
+  th {
+    background-color: #007bff;
+    color: white;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  tr:hover {
+    background-color: hsl(210, 16%, 93%);
+  }
+
+  .admin-badge {
+  display: inline-block;
+  background-color: #ffc107;
+  color: black;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.user-badge {
+  display: inline-block;
+  background-color: #17a2b8;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+</style>
+
+</head>
+
+<body>
+  <div class="dashboard">
+    <button class="logout" onclick="logout()">Logout</button>
+    <h2 id="dashboardTitle">Dashboard</h2>
+    <div id="roleBadge"></div>
+    <div id="adminControls" style="margin: 10px 0; display: none;">
+      <button onclick="window.location.href='booking.html'" style="background-color: #28a745; color: white; padding: 8px 12px; border: none; border-radius: 5px;">+ Add Event</button>
+    </div>
+
+    <table id="bookingTable" style="display: none;">
+      <thead>
+        <tr>
+          <th>Booking ID</th>
+          <th>Event Type</th>
+          <th>Date</th>
+          <th>Venue</th>
+          <th>Phone</th>
+          <th>User</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="bookingBody"></tbody>
+    </table>
+  </div>
+
+  <script>
+    const role = sessionStorage.getItem("role");
+    const username = sessionStorage.getItem("username");
+
+    const badge = document.getElementById("roleBadge");
+    const title = document.getElementById("dashboardTitle");
+    const table = document.getElementById("bookingTable");
+    const body = document.getElementById("bookingBody");
+    const adminControls = document.getElementById("adminControls");
+
+    if (!role || !username) {
+      alert("Unauthorized access. Please login.");
+      window.location.href = "login.html";
+    } else {
+      if (role === "admin") {
+        title.textContent = "Admin Dashboard";
+        badge.innerHTML = `<span class="admin-badge">Logged in as Admin</span>`;
+        adminControls.style.display = "block";
+      } else {
+        title.textContent = "User Dashboard";
+        badge.innerHTML = `<span class="user-badge">Logged in as ${username}</span>`;
+      }
+
+      fetch("get_bookings.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: new URLSearchParams({ role, username })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "success") {
+          table.style.display = "table";
+          data.bookings.forEach(b => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+              <td>${b.booking_id}</td>
+              <td>${b.event_type}</td>
+              <td>${b.event_date}</td>
+              <td>${b.venue}</td>
+              <td>${b.phone}</td>
+              <td>${b.username}</td>
+              <td>${
+                role === "admin"
+                  ? `<button onclick="deleteBooking('${b.booking_id}')" style="color: red; background: none; border: none; font-size: 16px;">🗑️</button>`
+                  : "-"
+              }</td>
+            `;
+            body.appendChild(row);
+          });
+        } else {
+          alert("Failed to fetch bookings: " + data.message);
+        }
+      })
+      .catch(error => {
+        console.error("Fetch error:", error);
+        alert("Error loading bookings.");
+      });
+    }
+
+    function deleteBooking(id) {
+      if (confirm("Are you sure you want to delete this booking?")) {
+        fetch("delete_booking.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: new URLSearchParams({ booking_id: id })
+        })
+        .then(res => res.text())
+        .then(response => {
+          alert(response);
+          location.reload();
+        })
+        .catch(err => {
+          alert("Error deleting booking.");
+          console.error(err);
+        });
+      }
+    }
+
+    function logout() {
+      sessionStorage.clear();
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+
+</html>
