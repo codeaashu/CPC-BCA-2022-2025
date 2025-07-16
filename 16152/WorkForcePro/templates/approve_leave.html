@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}Review Leave Application - WorkForce Pro{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">
+        <i class="bi bi-calendar-check me-2"></i>Review Leave Application
+    </h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="{% url 'leave_applications' %}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-1"></i>Back to Leave Applications
+        </a>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
+                    <i class="bi bi-calendar-week me-2"></i>Leave Application Details
+                </h6>
+            </div>
+            <div class="card-body p-4">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h6 class="text-primary">Employee Information</h6>
+                        <p><strong>Name:</strong> {{ leave.employee.get_full_name }}</p>
+                        <p><strong>Department:</strong> {{ leave.employee.profile.department|default:"Not set" }}</p>
+                        <p><strong>Position:</strong> {{ leave.employee.profile.position|default:"Not set" }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-primary">Leave Details</h6>
+                        <p><strong>Start Date:</strong> {{ leave.start_date|date:"M d, Y" }}</p>
+                        <p><strong>End Date:</strong> {{ leave.end_date|date:"M d, Y" }}</p>
+                        <p><strong>Duration:</strong> {{ leave.start_date|timesince:leave.end_date }}</p>
+                        <p><strong>Status:</strong> 
+                            {% if leave.status == 'pending' %}
+                                <span class="badge bg-warning">Pending</span>
+                            {% elif leave.status == 'approved' %}
+                                <span class="badge bg-success">Approved</span>
+                            {% else %}
+                                <span class="badge bg-danger">Rejected</span>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <h6 class="text-primary">Reason for Leave</h6>
+                    <div class="alert alert-light">
+                        {{ leave.reason|linebreaks }}
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <h6 class="text-primary">Application Timeline</h6>
+                    <p><strong>Applied On:</strong> {{ leave.applied_on|date:"M d, Y H:i" }}</p>
+                    {% if leave.reviewed_on %}
+                        <p><strong>Reviewed On:</strong> {{ leave.reviewed_on|date:"M d, Y H:i" }}</p>
+                        <p><strong>Reviewed By:</strong> {{ leave.reviewed_by.get_full_name }}</p>
+                    {% endif %}
+                </div>
+                
+                {% if leave.status == 'pending' %}
+                    <hr class="my-4">
+                    <h6 class="text-primary mb-3">Take Action</h6>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-center gap-3">
+                            <button type="submit" name="action" value="approve" class="btn btn-success">
+                                <i class="bi bi-check-circle me-2"></i>Approve Leave
+                            </button>
+                            <button type="submit" name="action" value="reject" class="btn btn-danger">
+                                <i class="bi bi-x-circle me-2"></i>Reject Leave
+                            </button>
+                            <a href="{% url 'leave_applications' %}" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left me-2"></i>Back
+                            </a>
+                        </div>
+                    </form>
+                {% else %}
+                    <div class="text-center">
+                        <a href="{% url 'leave_applications' %}" class="btn btn-primary">
+                            <i class="bi bi-arrow-left me-2"></i>Back to Leave Applications
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    border-radius: 15px;
+}
+
+.btn {
+    border-radius: 8px;
+    padding: 10px 20px;
+}
+</style>
+{% endblock %} 

@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Leave Applications - WorkForce Pro{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">
+        <i class="bi bi-calendar-check me-2"></i>Leave Applications
+    </h1>
+</div>
+
+<div class="card shadow">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">
+            <i class="bi bi-calendar-week me-2"></i>All Leave Applications
+        </h6>
+    </div>
+    <div class="card-body">
+        {% if leaves %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                            <th>Applied On</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for leave in leaves %}
+                        <tr>
+                            <td>{{ leave.employee.get_full_name }}</td>
+                            <td>{{ leave.start_date|date:"M d, Y" }}</td>
+                            <td>{{ leave.end_date|date:"M d, Y" }}</td>
+                            <td>{{ leave.reason|truncatechars:50 }}</td>
+                            <td>
+                                {% if leave.status == 'pending' %}
+                                    <span class="badge bg-warning">Pending</span>
+                                {% elif leave.status == 'approved' %}
+                                    <span class="badge bg-success">Approved</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Rejected</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ leave.applied_on|date:"M d, Y" }}</td>
+                            <td>
+                                <a href="{% url 'approve_leave' leave.id %}" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-eye"></i> Review
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <i class="bi bi-calendar text-muted" style="font-size: 3rem;"></i>
+                <h5 class="text-muted mt-3">No Leave Applications</h5>
+                <p class="text-muted">No leave applications have been submitted yet.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %} 
