@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap');
+body {
+    font-family: "Outfit";
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    text-align: left;
+    color: #343a40;
+    margin-bottom: 10px;
+}
+
+
+.user-details {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ced4da;
+    padding-bottom: 10px;
+}
+
+.user-details p {
+    margin: 0;
+}
+
+form {
+    margin-bottom: 30px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #343a40;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color:red;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.text {
+    flex: 1;
+    margin-right: 20px;
+    font-family: "outfit";
+}
+
+.text h2 {
+    font-size: 8vmin; 
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.text p {
+    font-size: 18px;
+    color: #666;
+    line-height: 1.6;
+}
+.text img {
+    max-width: 100%; 
+    height: auto; 
+}
+.active-vehicles img{
+    max-width: 100%;
+    height: auto; 
+}
+
+.container {
+    flex: 1;
+    max-width: 600px;
+} 
+
+input[type="submit"]:hover {
+    background-color: #ff6c4e;
+}
+
+@media (max-width: 768px) {
+    .container {
+        max-width: 90%;
+    }
+}
+

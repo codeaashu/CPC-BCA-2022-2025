@@ -1,0 +1,76 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+.admin-content {
+    padding: 20px;
+}
+
+.admin-list {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.admin-list h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.admin-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.admin-list ul li {
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+}
+
+.admin-list ul li:last-child {
+    border-bottom: none;
+}
+
+.admin-list ul li strong {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.admin-list ul li form {
+    display: inline-block;
+}
+
+.admin-list ul li form button {
+    background-color: #ff0000;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    margin-top: 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.admin-list ul li form button:hover {
+    background-color: #cc0000;
+}
+
+.admin-list ul li form input[type="hidden"] {
+    display: none;
+}
+
+.admin-list ul li:nth-child(even) {
+    background-color: #f2f2f2;
+}

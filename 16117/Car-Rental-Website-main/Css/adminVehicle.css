@@ -1,0 +1,79 @@
+main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.vehicle-container {
+    width: 45%;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.vehicle-details,
+.rental-details {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    margin-bottom: 20px;
+}
+
+.vehicle-details h2,
+.rental-details h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.vehicle-details ul,
+.rental-details ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.vehicle-details ul li,
+.rental-details ul li {
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+}
+
+.vehicle-details ul li:last-child,
+.rental-details ul li:last-child {
+    border-bottom: none;
+}
+
+.vehicle-details ul li strong,
+.rental-details ul li strong {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.vehicle-details ul li form {
+    display: inline-block;
+}
+
+.vehicle-details ul li form button {
+    background-color: red;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.vehicle-details ul li form button:hover {
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+.vehicle-details ul li form input[type="hidden"] {
+    display: none;
+}
+
+.vehicle-details ul li:nth-child(even),
+.rental-details ul li:nth-child(even) {
+    background-color: #f2f2f2;
+}

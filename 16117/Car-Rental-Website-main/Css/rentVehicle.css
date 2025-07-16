@@ -1,0 +1,221 @@
+
+.vehicle-details {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    display: flex;
+    height: fit-content;
+}
+
+
+.vehicle-image {
+    flex: 0 0 40%; 
+    margin-right: 20px;
+ 
+}
+
+.vehicle-image img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+
+.vehicle-info {
+    flex: 1;
+    margin-left: 50px;
+}
+
+.vehicle-info h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.vehicle-info p {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+.rent-form {
+    max-width: 800px;
+    margin: 0 auto 40px;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.form-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+.form-section h3 {
+    color: #333;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.rent-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #495057;
+}
+
+.rent-form input[type="text"],
+.rent-form input[type="tel"],
+.rent-form input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 2px solid #e9ecef;
+    border-radius: 6px;
+    transition: border-color 0.3s ease;
+}
+
+.rent-form input[type="text"]:focus,
+.rent-form input[type="tel"]:focus,
+.rent-form input[type="number"]:focus {
+    border-color: #80bdff;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+.payment-method {
+    margin-bottom: 20px;
+}
+
+.payment-options {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.payment-options label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.payment-options input[type="radio"] {
+    margin: 0;
+}
+
+.card-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+#bank-transfer-fields {
+    background-color: #e9ecef;
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 15px;
+}
+
+#bank-transfer-fields p {
+    margin: 5px 0;
+    color: #495057;
+}
+
+.total-amount {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #e9ecef;
+    border-radius: 6px;
+    text-align: right;
+}
+
+.total-amount h4 {
+    color: #212529;
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #f5c6cb;
+    border-radius: 6px;
+}
+
+.rent-form button {
+    display: block;
+    width: 100%;
+    padding: 15px 30px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.rent-form button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+.rent-form button:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .rent-form {
+        padding: 20px;
+    }
+
+    .card-details {
+        grid-template-columns: 1fr;
+    }
+
+    .payment-options {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+.form-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.rent-form {
+    width: calc(70% - 20px);
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.terms {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.terms h3 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.terms ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.terms li {
+    margin-bottom: 8px;
+    margin-top: 20px;
+    font-size: 0.9rem;
+}

@@ -1,0 +1,55 @@
+
+.wrapper {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.active-vehicles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.vehicle {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.vehicle img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+}
+.actions {
+    margin-top: 10px;
+}
+
+.actions a {
+    display: inline-block;
+    padding: 8px 16px;
+    margin-right: 10px;
+    background-color: red;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.actions a:hover {
+    background-color: rgba(255,0,0,0.5);
+}
