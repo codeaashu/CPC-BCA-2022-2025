@@ -157,7 +157,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 **Ashutosh Kumar**  
 [🌐 www.ashutoshkumar.me](https://www.ashutoshkumar.me)  
 [💻 GitHub: @codeaashu](https://github.com/codeaashu)  
-🆔 College ID: **17427**
+🆔 College ID: **17427** <br>
 ⚡ Reg No: 22303310028
 
 <hr>
