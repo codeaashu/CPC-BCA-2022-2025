@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Exam Monitoring</title>
+    <style>
+      body {
+        text-align: center;
+      }
+      video {
+        border: 2px solid #333;
+        margin-top: 20px;
+      }
+      canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Secure Exam Proctoring</h1>
+    <video id="video" width="720" height="560" autoplay muted></video>
+    <br />
+    <input type="text" id="student_id" placeholder="Enter Student ID" />
+    <br /><br />
+    <button onclick="startMonitoring()">Start Monitoring</button>
+
+    <script
+      defer
+      src="https://unpkg.com/face-api.js@0.22.2/dist/face-api.min.js"
+    ></script>
+    <script defer src="js/script.js"></script>
+  </body>
+</html>

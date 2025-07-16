@@ -1,0 +1,405 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:700,900");
+.normal-container {
+  height: 5rem;
+  width: 8rem;
+}
+
+.smile-rating-container {
+  position: relative;
+  height: 3rem;
+  
+  margin: auto;
+  font-family: "Roboto", sans-serif;
+  
+}
+
+.submit-rating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rating-label {
+  position: relative;
+  font-size: 1.6em;
+  text-align: center;
+  flex: 0.34;
+  z-index: 3;
+  font-weight: bold;
+  cursor: pointer;
+  color: grey;
+  transition: 500ms;
+}
+
+.rating-label:hover, .rating-label:active {
+  color: orange;
+}
+
+.rating-label-fun {
+  left: 66px;
+  top: 12px;
+  text-align: right;
+}
+
+.rating-label-meh {
+  left: 24px;
+  top: 12px;
+  text-align: left;
+  color: grey;
+}
+
+.smile-rating-container input {
+  display: none;
+}
+
+.toggle-rating-pill {
+  position: relative;
+  height: 65px;
+  width: 168px;
+  left: 3.3rem;
+  background: rgba(22,34,57,0.95);
+  border-radius: 500px;
+  border-style: ridge;
+  border-width: 9px;
+  border-color: white;
+  transition: all 500ms;
+}
+
+.smile-rating-toggle {
+  position: absolute;
+  width: 54px;
+  height: 54px;
+  top: 0.4em;
+  background-color: white;
+  left: 119px;
+  border-radius: 500px;
+  transition: all 500ms;
+  z-index: 4;
+}
+
+.rating-eye {
+  position: absolute;
+  height: 12px;
+  width: 8px;
+  background: rgba(22,34,57,0.95);
+  border-radius: 500px;
+  z-index: 5;
+  transition: all 440ms;
+  -webkit-animation: blink-eye 3s infinite;
+          animation: blink-eye 3s infinite;
+}
+
+@-webkit-keyframes blink-eye {
+  0% {
+    height: 12px;
+    width: 8px;
+    top: 22px;
+  }
+  20% {
+    height: 12px;
+    width: 8px;
+    top: 22px;
+  }
+  40% {
+    height: 12px;
+    width: 8px;
+    top: 22px;
+  }
+  60% {
+    height: 12px;
+    width: 8px;
+    top: 22px;
+  }
+  80% {
+    height: 12px;
+    width: 8px;
+    top: 22px;
+  }
+  90% {
+    height: 12px;
+    width: 8px;
+    top: 22px;
+  }
+  95% {
+    height: 2px;
+    width: 8px;
+    top: 30px;
+  }
+  100% {
+    height: 12px;
+    width: 8px;
+    top: 22px;
+  }
+}
+
+@keyframes blink-eye {
+  0% {
+    height: 12px;
+    width: 8px;
+    top: 22px;
+  }
+  20% {
+    height: 12px;
+    width: 8px;
+    top: 22px;
+  }
+  40% {
+    height: 12px;
+    width: 8px;
+    top: 22px;
+  }
+  60% {
+    height: 12px;
+    width: 8px;
+    top: 22px;
+  }
+  80% {
+    height: 12px;
+    width: 8px;
+    top: 22px;
+  }
+  90% {
+    height: 12px;
+    width: 8px;
+    top: 22px;
+  }
+  95% {
+    height: 2px;
+    width: 8px;
+    top: 30px;
+  }
+  100% {
+    height: 12px;
+    width: 8px;
+    top: 22px;
+  }
+}
+.rating-eye-left {
+  left: 130px;
+}
+
+.rating-eye-right {
+  left: 153px;
+}
+
+.mouth {
+  position: absolute;
+  width: 40px;
+  height: 63px;
+  z-index: 6;
+  border: 4px solid rgba(22,34,57,0.95);
+  border-radius: 10%;
+  border-bottom-color: rgba(1, 1, 1, 0);
+  border-right-color: rgba(1, 1, 1, 0);
+  border-left-color: rgba(1, 1, 1, 0);
+  top: -0.8rem;
+  left: 7.8rem;
+  transition: all 500ms;
+  transform: rotateX(180deg);
+    border-radius: 100%;
+}
+
+/*
+Toggle Changes
+*/
+#meh:checked ~ .rating-label-meh {
+  color: #555e63;
+}
+
+#fun:checked ~ .rating-label-meh {
+  color: #d0cccd;
+}
+
+#fun:checked ~ .mouth {
+  border: 4px solid orange;
+  border-bottom-color: rgba(1, 1, 1, 0);
+  border-right-color: rgba(1, 1, 1, 0);
+  border-left-color: rgba(1, 1, 1, 0);
+  top: -10px;
+  left: 13.9rem;
+  transform: rotateX(180deg);
+  border-radius: 100%;
+}
+
+#fun:checked ~ .rating-label-fun {
+  color: orange;
+}
+
+#fun:checked ~ .smile-rating-toggle {
+  left: 216px;
+}
+
+#fun:checked ~ .rating-eye-left {
+  left: 227px;
+}
+
+#fun:checked ~ .rating-eye-right {
+  left: 250px;
+}
+
+#fun:checked ~ .toggle-rating-pill {
+  background-color: orange;
+  border-color: orange;
+}
+
+#fun:checked ~ .rating-eye {
+  background-color: orange;
+}
+
+@media only screen and (max-width: 524px) {
+  .normal-container {
+    position: relative;
+    height: 5rem;
+    width: 17rem;
+}
+
+  .smile-rating-container {
+    position: relative;
+    height: 10%;
+    width: 490px;
+    margin: auto;
+    font-family: "Roboto", sans-serif;
+    top: 20%;
+  }
+
+  .submit-rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .rating-label {
+    position: relative;
+    font-size: 1.6em;
+    text-align: center;
+    flex: 0.34;
+    z-index: 3;
+    font-weight: bold;
+    cursor: pointer;
+    color: #d0cccd;
+    transition: 500ms;
+  }
+
+  .rating-label:hover, .rating-label:active {
+    color: #d0cccd;
+  }
+
+  .rating-label-fun {
+    left: 20px;
+    text-align: right;
+  }
+
+  .rating-label-meh {
+    left: 8px;
+    text-align: left;
+    color: grey;
+  }
+
+  .smile-rating-container input {
+    display: none;
+  }
+
+  .toggle-rating-pill {
+    position: relative;
+    height: 65px;
+    width: 170px;
+    background: #d0cccd;
+    border-radius: 500px;
+    transition: all 500ms;
+    left: 13px;
+  }
+
+  .smile-rating-toggle {
+    position: absolute;
+    width: 54px;
+    height: 54px;
+    background-color: white;
+    left: 85px;
+    border-radius: 500px;
+    transition: all 500ms;
+    z-index: 4;
+  }
+
+  .rating-eye {
+    position: absolute;
+    height: 12px;
+    width: 8px;
+    background: #d0cccd;
+    border-radius: 500px;
+    top: 22px;
+    z-index: 5;
+    transition: all 440ms;
+  }
+
+  .rating-eye-left {
+    left: 95px;
+  }
+
+  .rating-eye-right {
+    left: 119px;
+  }
+
+  .mouth {
+    position: absolute;
+    width: 28px;
+    height: 20px;
+    z-index: 6;
+    border: 4px solid rgb(208 204 205);
+    border-radius: 10%;
+    border-bottom-color: transparent;
+    border-right-color: transparent;
+    border-left-color: transparent;
+    top: 30px;
+    left: 98px;
+    transition: all 500ms;
+    transform: rotateX(180deg);
+    border-radius: 100%;
+  }
+
+  /*
+  Toggle Changes
+  */
+  #meh:checked ~ .rating-label-meh {
+    color: #555e63;
+    left: 6px;
+  }
+
+  #fun:checked ~ .rating-label-meh {
+    color: #d0cccd;
+  }
+
+  #fun:checked ~ .mouth {
+    border: 4px solid orange;
+    border-bottom-color: rgba(1, 1, 1, 0);
+    border-right-color: rgba(1, 1, 1, 0);
+    border-left-color: rgba(1, 1, 1, 0);
+    top: 29px;
+    left: 198px;
+    transform: rotateX(180deg);
+    border-radius: 100%;
+  }
+
+  #fun:checked ~ .rating-label-fun {
+    color: orange;;
+  }
+
+  #fun:checked ~ .smile-rating-toggle {
+    left: 183px;
+  }
+
+  #fun:checked ~ .rating-eye-left {
+    left: 195px;
+  }
+
+  #fun:checked ~ .rating-eye-right {
+    left: 220px;
+  }
+
+  #fun:checked ~ .toggle-rating-pill {
+    background-color: orange;
+  }
+
+  #fun:checked ~ .rating-eye {
+    background-color: orange;
+  }
+}
