@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.2dc8752f.css",
+    "main.js": "/static/js/main.738104d2.js",
+    "static/media/cimage-building.jpg": "/static/media/cimage-building.c9b9d0705a7c75b0437d.jpg",
+    "index.html": "/index.html",
+    "main.2dc8752f.css.map": "/static/css/main.2dc8752f.css.map",
+    "main.738104d2.js.map": "/static/js/main.738104d2.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2dc8752f.css",
+    "static/js/main.738104d2.js"
+  ]
+}
