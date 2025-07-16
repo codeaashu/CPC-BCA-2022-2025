@@ -1,0 +1,56 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 50;
+}
+
+.modal-container {
+  position: fixed;
+  inset: 0;
+  overflow-y: auto;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+}
+
+.modal-content {
+  position: relative;
+  background: white;
+  width: 90%;
+  max-width: 500px;
+  margin: 1.5rem;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  z-index: 51;
+}
+
+/* Dark mode support */
+.dark .modal-content {
+  background: #1e293b;
+  color: white;
+}
+
+.dark .modal-content button {
+  color: #94a3b8;
+}
+
+.dark .modal-content button:hover {
+  background-color: #334155;
+  color: #e2e8f0;
+}
+
+/* Reset stacking context for video items */
+.video-list-item {
+  position: relative;
+  z-index: 1;
+}
+
+/* Prevent thumbnail overlap */
+.video-thumbnail {
+  position: relative;
+  z-index: 1;
+}
