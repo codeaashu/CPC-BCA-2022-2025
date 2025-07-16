@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block title %}My Exam Results{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="bi bi-file-text"></i> My Exam Results
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="card bg-info text-white text-center">
+                                <div class="card-body">
+                                    <h5>{{ total_exams }}</h5>
+                                    <p class="mb-0">Total Exams</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-success text-white text-center">
+                                <div class="card-body">
+                                    <h5>{{ passed_exams }}</h5>
+                                    <p class="mb-0">Passed</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-warning text-dark text-center">
+                                <div class="card-body">
+                                    <h5>{{ average_percentage }}%</h5>
+                                    <p class="mb-0">Average</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-secondary text-white text-center">
+                                <div class="card-body">
+                                    <h5>{{ results|length }}</h5>
+                                    <p class="mb-0">Recent Results</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% if results %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Exam</th>
+                                        <th>Subject</th>
+                                        <th>Date</th>
+                                        <th>Marks</th>
+                                        <th>Grade</th>
+                                        <th>Status</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for result in results %}
+                                    <tr>
+                                        <td>{{ result.exam.title }}</td>
+                                        <td>{{ result.exam.subject.name }}</td>
+                                        <td>{{ result.exam.exam_date }}</td>
+                                        <td>{{ result.obtained_marks }}/{{ result.exam.total_marks }}</td>
+                                        <td>{{ result.grade }}</td>
+                                        <td>
+                                            {% if result.is_pass %}
+                                                <span class="badge bg-success">Pass</span>
+                                            {% else %}
+                                                <span class="badge bg-danger">Fail</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ result.remarks|default:'-' }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-5">
+                            <i class="bi bi-file-x display-1 text-muted"></i>
+                            <h4 class="text-muted mt-3">No results found</h4>
+                            <p class="text-muted">Your exam results will appear here once entered by teachers.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

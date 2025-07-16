@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}Exams{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">
+                        <i class="bi bi-book"></i> Exams
+                    </h4>
+                    <a href="{% url 'exams:exam_create' %}" class="btn btn-light">
+                        <i class="bi bi-plus-circle"></i> Add Exam
+                    </a>
+                </div>
+                <div class="card-body">
+                    {% if exams %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Subject</th>
+                                        <th>Type</th>
+                                        <th>Date</th>
+                                        <th>Total Marks</th>
+                                        <th>Passing Marks</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for exam in exams %}
+                                    <tr>
+                                        <td><a href="{% url 'exams:exam_detail' exam.pk %}" class="text-decoration-none">{{ exam.title }}</a></td>
+                                        <td>{{ exam.subject.name }}</td>
+                                        <td>{{ exam.get_exam_type_display }}</td>
+                                        <td>{{ exam.exam_date }}</td>
+                                        <td>{{ exam.total_marks }}</td>
+                                        <td>{{ exam.passing_marks }}</td>
+                                        <td>
+                                            {% if exam.is_active %}
+                                                <span class="badge bg-success">Active</span>
+                                            {% else %}
+                                                <span class="badge bg-danger">Inactive</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <a href="{% url 'exams:exam_update' exam.pk %}" class="btn btn-sm btn-outline-warning"><i class="bi bi-pencil"></i></a>
+                                                <a href="{% url 'exams:exam_delete' exam.pk %}" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-5">
+                            <i class="bi bi-book display-1 text-muted"></i>
+                            <h4 class="text-muted mt-3">No exams found</h4>
+                            <p class="text-muted">Start by adding a new exam.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

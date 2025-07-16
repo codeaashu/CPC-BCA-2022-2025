@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Exam Form{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="bi bi-book"></i> {% if exam %}Edit Exam{% else %}Add Exam{% endif %}
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="mb-3 text-end">
+                            <a href="{% url 'courses:subject_create' %}" target="_blank" class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-plus-circle"></i> Add New Subject
+                            </a>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-save"></i> Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

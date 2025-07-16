@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ announcement.title }} - Announcement{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">
+                        <i class="bi bi-megaphone"></i> {{ announcement.title }}
+                    </h4>
+                    <div>
+                        <a href="{% url 'announcements:announcement_update' announcement.pk %}" class="btn btn-light btn-sm">
+                            <i class="bi bi-pencil"></i> Edit
+                        </a>
+                        <a href="{% url 'announcements:announcement_delete' announcement.pk %}" class="btn btn-danger btn-sm">
+                            <i class="bi bi-trash"></i> Delete
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="d-flex gap-2 mb-2">
+                                {% if announcement.priority == 'high' %}
+                                    <span class="badge bg-danger">High Priority</span>
+                                {% elif announcement.priority == 'medium' %}
+                                    <span class="badge bg-warning text-dark">Medium Priority</span>
+                                {% else %}
+                                    <span class="badge bg-info">Low Priority</span>
+                                {% endif %}
+                                
+                                <span class="badge bg-secondary">{{ announcement.get_category_display }}</span>
+                                <span class="badge bg-primary">{{ announcement.get_target_audience_display }}</span>
+                                
+                                {% if announcement.is_featured %}
+                                    <span class="badge bg-warning text-dark">
+                                        <i class="bi bi-star-fill"></i> Featured
+                                    </span>
+                                {% endif %}
+                                
+                                {% if announcement.is_active %}
+                                    <span class="badge bg-success">Active</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Inactive</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <h6 class="text-primary">Announcement Information</h6>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td><strong>Title:</strong></td>
+                                    <td>{{ announcement.title }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Category:</strong></td>
+                                    <td>{{ announcement.get_category_display }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Priority:</strong></td>
+                                    <td>{{ announcement.get_priority_display }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Target Audience:</strong></td>
+                                    <td>{{ announcement.get_target_audience_display }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <h6 class="text-primary">Timeline Information</h6>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td><strong>Publish Date:</strong></td>
+                                    <td>{{ announcement.publish_date|date:"F d, Y" }}</td>
+                                </tr>
+                                {% if announcement.expiry_date %}
+                                <tr>
+                                    <td><strong>Expiry Date:</strong></td>
+                                    <td>{{ announcement.expiry_date|date:"F d, Y" }}</td>
+                                </tr>
+                                {% endif %}
+                                <tr>
+                                    <td><strong>Created:</strong></td>
+                                    <td>{{ announcement.created_at|date:"F d, Y" }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Last Updated:</strong></td>
+                                    <td>{{ announcement.updated_at|date:"F d, Y" }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-12">
+                            <h6 class="text-primary">Content</h6>
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    {{ announcement.content|linebreaks }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'announcements:announcement_update' announcement.pk %}" class="btn btn-primary">
+                            <i class="bi bi-pencil"></i> Edit Announcement
+                        </a>
+                        <a href="{% url 'announcements:announcement_list' %}" class="btn btn-outline-secondary">
+                            <i class="bi bi-list"></i> View All Announcements
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            {% if announcement.is_active and announcement.publish_date <= today %}
+            <div class="card shadow mt-3">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Status</h5>
+                </div>
+                <div class="card-body">
+                    <div class="text-center">
+                        <i class="bi bi-check-circle text-success" style="font-size: 2rem;"></i>
+                        <p class="mb-0 mt-2">This announcement is currently active and visible to users.</p>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="row mt-4">
+        <div class="col-12">
+            <a href="{% url 'announcements:announcement_list' %}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Back to Announcements
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %} 

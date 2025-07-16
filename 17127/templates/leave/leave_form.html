@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if form.instance.pk %}Edit Leave Application{% else %}Apply for Leave{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="bi bi-calendar-event"></i>
+                        {% if form.instance.pk %}Edit Leave Application{% else %}Apply for Leave{% endif %}
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.leave_type.id_for_label }}" class="form-label">
+                                        <strong>Leave Type *</strong>
+                                    </label>
+                                    {{ form.leave_type }}
+                                    {% if form.leave_type.errors %}
+                                        <div class="text-danger small">
+                                            {{ form.leave_type.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.start_date.id_for_label }}" class="form-label">
+                                        <strong>Start Date *</strong>
+                                    </label>
+                                    {{ form.start_date }}
+                                    {% if form.start_date.errors %}
+                                        <div class="text-danger small">
+                                            {{ form.start_date.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.end_date.id_for_label }}" class="form-label">
+                                        <strong>End Date *</strong>
+                                    </label>
+                                    {{ form.end_date }}
+                                    {% if form.end_date.errors %}
+                                        <div class="text-danger small">
+                                            {{ form.end_date.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.reason.id_for_label }}" class="form-label">
+                                        <strong>Reason *</strong>
+                                    </label>
+                                    {{ form.reason }}
+                                    {% if form.reason.errors %}
+                                        <div class="text-danger small">
+                                            {{ form.reason.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {% if user.is_staff %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.status.id_for_label }}" class="form-label">
+                                        <strong>Status</strong>
+                                    </label>
+                                    {{ form.status }}
+                                    {% if form.status.errors %}
+                                        <div class="text-danger small">
+                                            {{ form.status.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.approved_by.id_for_label }}" class="form-label">
+                                        <strong>Approved By</strong>
+                                    </label>
+                                    {{ form.approved_by }}
+                                    {% if form.approved_by.errors %}
+                                        <div class="text-danger small">
+                                            {{ form.approved_by.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.admin_remarks.id_for_label }}" class="form-label">
+                                <strong>Admin Remarks</strong>
+                            </label>
+                            {{ form.admin_remarks }}
+                            {% if form.admin_remarks.errors %}
+                                <div class="text-danger small">
+                                    {{ form.admin_remarks.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{% url 'leave_management:leave_list' %}" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle"></i>
+                                {% if form.instance.pk %}Update Application{% else %}Submit Application{% endif %}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Auto-select applicant if passed in URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const applicantId = urlParams.get('applicant');
+    if (applicantId) {
+        document.getElementById('{{ form.applicant.id_for_label }}').value = applicantId;
+    }
+    
+    // Calculate number of days when dates change
+    const startDateField = document.getElementById('{{ form.start_date.id_for_label }}');
+    const endDateField = document.getElementById('{{ form.end_date.id_for_label }}');
+    const daysField = document.getElementById('{{ form.number_of_days.id_for_label }}');
+    
+    function calculateDays() {
+        if (startDateField.value && endDateField.value) {
+            const start = new Date(startDateField.value);
+            const end = new Date(endDateField.value);
+            const diffTime = Math.abs(end - start);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+            daysField.value = diffDays;
+        }
+    }
+    
+    startDateField.addEventListener('change', calculateDays);
+    endDateField.addEventListener('change', calculateDays);
+});
+</script>
+{% endblock %} 

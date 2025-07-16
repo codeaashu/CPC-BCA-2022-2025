@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard - Student Management System{% endblock %}
+{% block page_title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Statistics Cards -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card stats-card h-100">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="text-white-50 text-uppercase mb-1">Total Students</div>
+                        <div class="h5 mb-0 text-white">{{ total_students }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="bi bi-people-fill fa-2x text-white-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card stats-card-secondary h-100">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="text-white-50 text-uppercase mb-1">Total Teachers</div>
+                        <div class="h5 mb-0 text-white">{{ total_teachers }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="bi bi-person-badge fa-2x text-white-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card stats-card-success h-100">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="text-white-50 text-uppercase mb-1">Total Courses</div>
+                        <div class="h5 mb-0 text-white">{{ total_courses }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="bi bi-book fa-2x text-white-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card stats-card-warning h-100">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="text-white-50 text-uppercase mb-1">Total Subjects</div>
+                        <div class="h5 mb-0 text-white">{{ total_subjects }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="bi bi-journal-text fa-2x text-white-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Quick Actions -->
+    <div class="col-lg-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="bi bi-lightning"></i> Quick Actions
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <a href="{% url 'students:student_create' %}" class="btn btn-outline-primary w-100">
+                            <i class="bi bi-person-plus"></i> Add Student
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{% url 'teachers:teacher_create' %}" class="btn btn-outline-secondary w-100">
+                            <i class="bi bi-person-badge"></i> Add Teacher
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{% url 'courses:course_create' %}" class="btn btn-outline-success w-100">
+                            <i class="bi bi-book"></i> Add Course
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{% url 'courses:subject_create' %}" class="btn btn-outline-info w-100">
+                            <i class="bi bi-journal-text"></i> Add Subject
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{% url 'announcements:announcement_create' %}" class="btn btn-outline-warning w-100">
+                            <i class="bi bi-megaphone"></i> Post Announcement
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{% url 'leave_management:leave_list' %}" class="btn btn-outline-danger w-100">
+                            <i class="bi bi-calendar-x"></i> Review Leaves
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Recent Activities -->
+    <div class="col-lg-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="bi bi-clock-history"></i> Recent Activities
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group list-group-flush">
+                    {% for announcement in recent_announcements %}
+                    <div class="list-group-item border-0 px-0">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">{{ announcement.title }}</h6>
+                            <small class="text-muted">{{ announcement.created_at|date:"M d" }}</small>
+                        </div>
+                        <p class="mb-1 text-muted small">{{ announcement.content|truncatewords:10 }}</p>
+                        <small class="text-muted">By {{ announcement.author.get_full_name }}</small>
+                    </div>
+                    {% empty %}
+                    <div class="text-center text-muted py-3">
+                        <i class="bi bi-inbox fs-1"></i>
+                        <p class="mt-2">No recent activities</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Pending Leave Applications -->
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="bi bi-calendar-x"></i> Pending Leave Applications
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if recent_leaves %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Applicant</th>
+                                <th>Type</th>
+                                <th>Duration</th>
+                                <th>Applied Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for leave in recent_leaves %}
+                            <tr>
+                                <td>{{ leave.get_applicant_name }}</td>
+                                <td>
+                                    <span class="badge bg-info">{{ leave.get_leave_type_display }}</span>
+                                </td>
+                                <td>{{ leave.duration_days }} days</td>
+                                <td>{{ leave.applied_date|date:"M d, Y" }}</td>
+                                <td>
+                                    <a href="{% url 'leave_management:leave_approve' leave.pk %}" class="btn btn-sm btn-primary">
+                                        Review
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center text-muted py-4">
+                    <i class="bi bi-check-circle fs-1 text-success"></i>
+                    <p class="mt-2">No pending leave applications</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

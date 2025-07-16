@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}Exam Results{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">
+                        <i class="bi bi-file-text"></i> Exam Results
+                    </h4>
+                    <a href="{% url 'exams:bulk_result_entry' %}" class="btn btn-light">
+                        <i class="bi bi-plus-circle"></i> Enter Results
+                    </a>
+                </div>
+                <div class="card-body">
+                    {% if results %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Exam</th>
+                                        <th>Student</th>
+                                        <th>Marks</th>
+                                        <th>Grade</th>
+                                        <th>Status</th>
+                                        <th>Remarks</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for result in results %}
+                                    <tr>
+                                        <td>{{ result.exam.title }}</td>
+                                        <td>{{ result.student.full_name }}</td>
+                                        <td>{{ result.obtained_marks }}/{{ result.exam.total_marks }}</td>
+                                        <td>{{ result.grade }}</td>
+                                        <td>
+                                            {% if result.is_pass %}
+                                                <span class="badge bg-success">Pass</span>
+                                            {% else %}
+                                                <span class="badge bg-danger">Fail</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ result.remarks|default:'-' }}</td>
+                                        <td><small class="text-muted">{{ result.created_at|date:"M d, Y" }}</small></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-5">
+                            <i class="bi bi-file-x display-1 text-muted"></i>
+                            <h4 class="text-muted mt-3">No results found</h4>
+                            <p class="text-muted">Start by entering results for your exams.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

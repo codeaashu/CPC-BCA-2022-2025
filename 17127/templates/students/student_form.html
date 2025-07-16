@@ -1,0 +1,238 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+
+{% block title %}{{ title|default:'Student Form' }} - Student Management System{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="bi bi-person-plus"></i> {{ title|default:'Student Form' }}
+                    </h4>
+                </div>
+                <div class="card-body">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    
+                    <form method="post" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5 class="text-primary mb-3">Personal Information</h5>
+                                
+                                <div class="mb-3">
+                                    <label for="{{ form.first_name.id_for_label }}" class="form-label">First Name</label>
+                                    {{ form.first_name|add_class:"form-control" }}
+                                    {% if form.first_name.errors %}
+                                        <div class="text-danger small">{{ form.first_name.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="{{ form.last_name.id_for_label }}" class="form-label">Last Name</label>
+                                    {{ form.last_name|add_class:"form-control" }}
+                                    {% if form.last_name.errors %}
+                                        <div class="text-danger small">{{ form.last_name.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
+                                    {{ form.email|add_class:"form-control" }}
+                                    {% if form.email.errors %}
+                                        <div class="text-danger small">{{ form.email.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
+                                    {{ form.username|add_class:"form-control" }}
+                                    {% if form.username.errors %}
+                                        <div class="text-danger small">{{ form.username.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                {% if not form.instance.pk %}
+                                <!-- Password fields only for new students -->
+                                <div class="mb-3">
+                                    <label for="{{ form.password1.id_for_label }}" class="form-label">Password</label>
+                                    {{ form.password1|add_class:"form-control" }}
+                                    <button type="button" class="btn btn-sm btn-outline-secondary mt-1 toggle-password" data-target="{{ form.password1.auto_id }}">Show</button>
+                                    {% if form.password1.help_text %}
+                                        <div class="form-text">{{ form.password1.help_text }}</div>
+                                    {% endif %}
+                                    {% if form.password1.errors %}
+                                        <div class="text-danger small">{{ form.password1.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="{{ form.password2.id_for_label }}" class="form-label">Confirm Password</label>
+                                    {{ form.password2|add_class:"form-control" }}
+                                    <button type="button" class="btn btn-sm btn-outline-secondary mt-1 toggle-password" data-target="{{ form.password2.auto_id }}">Show</button>
+                                    {% if form.password2.help_text %}
+                                        <div class="form-text">{{ form.password2.help_text }}</div>
+                                    {% endif %}
+                                    {% if form.password2.errors %}
+                                        <div class="text-danger small">{{ form.password2.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                                {% endif %}
+                                
+                                <div class="mb-3">
+                                    <label for="{{ form.gender.id_for_label }}" class="form-label">Gender</label>
+                                    {{ form.gender|add_class:"form-select" }}
+                                    {% if form.gender.errors %}
+                                        <div class="text-danger small">{{ form.gender.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="{{ form.date_of_birth.id_for_label }}" class="form-label">Date of Birth</label>
+                                    {{ form.date_of_birth|add_class:'form-control' }}
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            var dob = document.getElementById('{{ form.date_of_birth.id_for_label }}');
+                                            if (dob) dob.max = new Date().toISOString().split('T')[0];
+                                        });
+                                    </script>
+                                    {% if form.date_of_birth.errors %}
+                                        <div class="text-danger fw-bold">{{ form.date_of_birth.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <h5 class="text-primary mb-3">Academic Information</h5>
+                                <div class="mb-3">
+                                    <label for="{{ form.course.id_for_label }}" class="form-label">Course</label>
+                                    {{ form.course|add_class:"form-select" }}
+                                    {% if form.course.errors %}
+                                        <div class="text-danger small">{{ form.course.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="{{ form.phone.id_for_label }}" class="form-label">Phone</label>
+                                    {{ form.phone|add_class:"form-control" }}
+                                    <small class="form-text text-muted">Enter 10-digit phone number</small>
+                                    {% if form.phone.errors %}
+                                        <div class="text-danger small">{{ form.phone.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="{{ form.parent_name.id_for_label }}" class="form-label">Parent Name</label>
+                                    {{ form.parent_name|add_class:"form-control" }}
+                                    {% if form.parent_name.errors %}
+                                        <div class="text-danger small">{{ form.parent_name.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="{{ form.parent_phone.id_for_label }}" class="form-label">Parent Phone</label>
+                                    {{ form.parent_phone|add_class:"form-control" }}
+                                    <small class="form-text text-muted">Enter 10-digit phone number</small>
+                                    {% if form.parent_phone.errors %}
+                                        <div class="text-danger small">{{ form.parent_phone.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="{{ form.emergency_contact.id_for_label }}" class="form-label">Emergency Contact</label>
+                                    {{ form.emergency_contact|add_class:"form-control" }}
+                                    <small class="form-text text-muted">Enter 10-digit phone number</small>
+                                    {% if form.emergency_contact.errors %}
+                                        <div class="text-danger small">{{ form.emergency_contact.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <label for="{{ form.address.id_for_label }}" class="form-label">Address</label>
+                                    {{ form.address|add_class:"form-control" }}
+                                    {% if form.address.errors %}
+                                        <div class="text-danger small">{{ form.address.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        {{ form.is_active }}
+                                        <label class="form-check-label" for="{{ form.is_active.id_for_label }}">
+                                            Active Student
+                                        </label>
+                                    </div>
+                                    {% if form.is_active.errors %}
+                                        <div class="text-danger small">{{ form.is_active.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'students:student_list' %}" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Back to List
+                            </a>
+                            <button type="submit" class="btn btn-primary" id="submitBtn">
+                                <i class="bi bi-check-circle"></i> Save Student
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-control, .form-select {
+        border-radius: 0.375rem;
+    }
+    .form-control:focus, .form-select:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Password visibility toggle
+        const togglePasswordButtons = document.querySelectorAll('.toggle-password');
+        togglePasswordButtons.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                const input = document.getElementById(this.dataset.target);
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    this.innerHTML = 'Hide';
+                } else {
+                    input.type = 'password';
+                    this.innerHTML = 'Show';
+                }
+            });
+        });
+
+        // Limit phone inputs to 10 digits
+        const phoneInputs = document.querySelectorAll('input[type="tel"], input[name$="phone"]');
+        phoneInputs.forEach(function (input) {
+            input.addEventListener('input', function () {
+                this.value = this.value.replace(/\D/g, '').slice(0, 10);
+            });
+        });
+    });
+</script>
+{% endblock %}
