@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Dancing+Script:wght@600;700&display=swap');
+
+.font-dancingscript {
+    font-family: 'Dancing Script', cursive;
+}
+
+.font-cinzel {
+    font-family: 'Cinzel', serif;
+}
+
+@keyframes cardEntrance {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    background: #2a1e14;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #4a3728;
+    border-radius: 4px;
+}
