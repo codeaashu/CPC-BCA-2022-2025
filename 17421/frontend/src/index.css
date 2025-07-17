@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@100;400&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Poppins:wght@300&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    font-family: outfit;
+   
+   
+}
+
+.active hr{
+    @apply block
+}
+
+::-webkit-scrollbar{
+    @apply hidden
+}
+
+@media (max-width:740px) {
+    .active{
+        @apply text-white bg-primary
+    }
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    /* ... more CSS variables */
+  }
+}
