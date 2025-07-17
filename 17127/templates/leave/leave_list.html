@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+
+{% block title %}Leave Applications{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">
+                        <i class="bi bi-calendar-event"></i> Leave Applications
+                    </h4>
+                    <a href="{% url 'leave_management:leave_create' %}" class="btn btn-light">
+                        <i class="bi bi-plus-circle"></i> Apply for Leave
+                    </a>
+                </div>
+                <div class="card-body">
+                    <!-- Filters -->
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <select class="form-select" id="applicantFilter">
+                                <option value="">All Applicants</option>
+                                {% for applicant in applicants %}
+                                    <option value="{{ applicant.id }}" {% if selected_applicant == applicant.id %}selected{% endif %}>
+                                        {{ applicant.user.get_full_name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select" id="leaveTypeFilter">
+                                <option value="">All Types</option>
+                                {% for type_choice in leave_types %}
+                                    <option value="{{ type_choice.0 }}" {% if selected_type == type_choice.0 %}selected{% endif %}>
+                                        {{ type_choice.1 }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select class="form-select" id="statusFilter">
+                                <option value="">All Status</option>
+                                <option value="pending" {% if selected_status == 'pending' %}selected{% endif %}>Pending</option>
+                                <option value="approved" {% if selected_status == 'approved' %}selected{% endif %}>Approved</option>
+                                <option value="rejected" {% if selected_status == 'rejected' %}selected{% endif %}>Rejected</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="date" class="form-control" id="dateFilter" placeholder="Date" value="{{ selected_date|default:'' }}">
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-outline-primary w-100" onclick="applyFilters()">
+                                <i class="bi bi-funnel"></i> Filter
+                            </button>
+                        </div>
+                    </div>
+
+                    {% if leave_applications %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Applicant</th>
+                                        <th>Leave Type</th>
+                                        <th>Duration</th>
+                                        <th>Reason</th>
+                                        <th>Status</th>
+                                        <th>Applied Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for application in leave_applications %}
+                                    <tr>
+                                        <td>
+{% if application.student %}
+    <a href="{% url 'students:student_detail' application.student.pk %}" class="text-decoration-none">
+        {{ application.student.user.get_full_name }}
+    </a>
+    <br>
+    <small class="text-muted">{{ application.student.roll_number }}</small>
+{% elif application.teacher %}
+    <a href="{% url 'teachers:teacher_detail' application.teacher.pk %}" class="text-decoration-none">
+        {{ application.teacher.user.get_full_name }}
+    </a>
+    <br>
+    <small class="text-muted">{{ application.teacher.employee_id }}</small>
+{% endif %}
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-info">{{ application.get_leave_type_display }}</span>
+                                        </td>
+                                        <td>
+                                            <strong>{{ application.start_date|date:"M d" }} - {{ application.end_date|date:"M d, Y" }}</strong>
+                                            <br>
+                                            <small class="text-muted">{{ application.number_of_days }} days</small>
+                                        </td>
+                                        <td>
+                                            <span class="text-muted">{{ application.reason|truncatechars:30 }}</span>
+                                        </td>
+                                        <td>
+                                            {% if application.status == 'pending' %}
+                                                <span class="badge bg-warning text-dark">Pending</span>
+                                            {% elif application.status == 'approved' %}
+                                                <span class="badge bg-success">Approved</span>
+                                            {% elif application.status == 'rejected' %}
+                                                <span class="badge bg-danger">Rejected</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <small class="text-muted">{{ application.applied_date|date:"M d, Y" }}</small>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <a href="{% url 'leave_management:leave_detail' application.pk %}" class="btn btn-sm btn-outline-primary">
+                                                    <i class="bi bi-eye"></i>
+                                                </a>
+                                                <a href="{% url 'leave_management:leave_update' application.pk %}" class="btn btn-sm btn-outline-warning">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
+                                                <a href="{% url 'leave_management:leave_delete' application.pk %}" class="btn btn-sm btn-outline-danger">
+                                                    <i class="bi bi-trash"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Pagination -->
+                        {% if is_paginated %}
+                        <nav aria-label="Leave application pagination">
+                            <ul class="pagination justify-content-center">
+                                {% if page_obj.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page=1">&laquo; First</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                                    </li>
+                                {% endif %}
+                                
+                                <li class="page-item active">
+                                    <span class="page-link">
+                                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                                    </span>
+                                </li>
+                                
+                                {% if page_obj.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                        {% endif %}
+                    {% else %}
+                        <div class="text-center py-5">
+                            <i class="bi bi-calendar-x display-1 text-muted"></i>
+                            <h4 class="text-muted mt-3">No leave applications found</h4>
+                            <p class="text-muted">Start managing leave applications.</p>
+                            <a href="{% url 'leave_management:leave_create' %}" class="btn btn-primary">
+                                <i class="bi bi-plus-circle"></i> Apply for Leave
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function applyFilters() {
+    const applicantFilter = document.getElementById('applicantFilter').value;
+    const leaveTypeFilter = document.getElementById('leaveTypeFilter').value;
+    const statusFilter = document.getElementById('statusFilter').value;
+    const dateFilter = document.getElementById('dateFilter').value;
+    
+    let url = '{% url "leave_management:leave_list" %}?';
+    const params = [];
+    
+    if (applicantFilter) params.push(`applicant=${applicantFilter}`);
+    if (leaveTypeFilter) params.push(`leave_type=${leaveTypeFilter}`);
+    if (statusFilter) params.push(`status=${statusFilter}`);
+    if (dateFilter) params.push(`date=${dateFilter}`);
+    
+    if (params.length > 0) {
+        url += params.join('&');
+    }
+    
+    window.location.href = url;
+}
+</script>
+{% endblock %} 

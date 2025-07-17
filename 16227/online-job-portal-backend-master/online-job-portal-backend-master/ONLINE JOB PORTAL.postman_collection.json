@@ -1,0 +1,1108 @@
+{
+	"info": {
+		"_postman_id": "d82851a4-2683-4a24-baa8-0f111f1efdc5",
+		"name": "ONLINE JOB PORTAL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19508727"
+	},
+	"item": [
+		{
+			"name": "USER MODULE",
+			"item": [
+				{
+					"name": "ADMIN LOGIN",
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"emailId\": \"demo.admin@demo.com\",\r\n  \"password\": \"123456\",\r\n  \"role\": \"Admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/user/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EMPLOYEE LOGIN",
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"emailId\": \"irfan@gmail.com\",\r\n  \"password\": \"123456\",\r\n  \"role\": \"Employee\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/user/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADMIN REGISTER",
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vLmFkbWluQGRlbW8uY29tIiwiaWF0IjoxNjk5Mzc4MjE1LCJleHAiOjE2OTkzODAwMTV9.yj0SQAx7XDCDRiSKU9aD6RsotGSc5h1NGYxS81hVgZE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"emailId\": \"demo.admin2@demo.com\",\r\n  \"password\": \"123456\",\r\n  \"role\":\"Admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/user/admin/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"admin",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EMPLOYEE REGISTER",
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"Irfan\",\r\n  \"lastName\": \"Khan\",\r\n  \"emailId\": \"irfan@gmail.com\",\r\n  \"password\": \"123456\",\r\n  \"phoneNo\": \"1234567890\",\r\n  \"role\": \"Employee\",\r\n  \"street\": \"Demo Street\",\r\n  \"city\": \"Demo City\",\r\n  \"pincode\": \"123456\",\r\n  \"state\": \"Maharashtra\",\r\n  \"country\": \"India\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/user/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EMPLOYER REGISTER",
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"Shreya\",\r\n  \"lastName\": \"Sawant\",\r\n  \"emailId\": \"shreya@gmail.com\",\r\n  \"password\": \"123456\",\r\n  \"phoneNo\": \"7894561230\",\r\n  \"role\": \"Employer\",\r\n  \"street\": \"Demo Street\",\r\n  \"city\": \"Demo City\",\r\n  \"pincode\": \"123456\",\r\n  \"state\": \"Maharashtra\",\r\n  \"country\": \"India\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/user/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FETCH USERS ROLE-WISE",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/user/fetch/role-wise?role=Employer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"fetch",
+								"role-wise"
+							],
+							"query": [
+								{
+									"key": "role",
+									"value": "Employer"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FETCH USER BY ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/user/fetch?userId=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"fetch"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE EMPLOYEE PROFILE",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "userId",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "bio",
+									"value": "I'm Software Developer with 3 years of experience in Java Developent",
+									"type": "text"
+								},
+								{
+									"key": "website",
+									"value": "https://www.codewithmurad.com/",
+									"type": "text"
+								},
+								{
+									"key": "linkedlnProfileLink",
+									"value": "https://www.codewithmurad.com/",
+									"type": "text"
+								},
+								{
+									"key": "githubProfileLink",
+									"value": "https://www.codewithmurad.com/",
+									"type": "text"
+								},
+								{
+									"key": "resume",
+									"type": "file",
+									"src": "/E:/Resume_Murad.pdf"
+								},
+								{
+									"key": "profilePic",
+									"type": "file",
+									"src": "/C:/Users/admin/Downloads/Eating-Food-PNG-Images.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/user/profile/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"profile",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE EMPLOYEE SKILLS",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"skill\": \"React JS\",\r\n    \"experience\": 1.0,\r\n    \"userId\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/user/profile/skill/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"profile",
+								"skill",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE EMPLOYEE EDUCATIONS",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"degree\": \"HSC\",\r\n    \"institution\": \"Mumbai Unversity\",\r\n    \"startDate\": \"01-01-2014\",\r\n    \"endDate\": \"01-01-2016\",\r\n    \"userId\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/user/profile/education/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"profile",
+								"education",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE EMPLOYEE EDUCATIONS",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"experience\": 2.6,\r\n    \"jobPosition\": \"Java Developer\",\r\n    \"company\": \"Brontoo Technology PVT LTD\",\r\n    \"startDate\": \"01-04-2021\",\r\n    \"endDate\": \"01-11-2023\",\r\n    \"userId\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/user/profile/work-experience/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"profile",
+								"work-experience",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE USER BY ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/user/delete?userId=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "HELPER MODULE",
+			"item": [
+				{
+					"name": "FETCH USER ROLES",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/helper/user/role/fetch/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"helper",
+								"user",
+								"role",
+								"fetch",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FETCH JOB TYPES",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/helper/job/type/fetch/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"helper",
+								"job",
+								"type",
+								"fetch",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FETCH JOB APPLICATIONS STATUS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/helper/job/application/status/fetch/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"helper",
+								"job",
+								"application",
+								"status",
+								"fetch",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FETCH ALL EXPERIENCE",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/helper/job/expereince/fetch/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"helper",
+								"job",
+								"expereince",
+								"fetch",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FETCH SALARY RANGE",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/helper/job/salary/range/fetch/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"helper",
+								"job",
+								"salary",
+								"range",
+								"fetch",
+								"all"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "JOB CATEGORY MODULE",
+			"item": [
+				{
+					"name": "ADD  JOB CATEGORY",
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"DBA\",\r\n    \"description\": \"Database Administrator\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/job/category/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"job",
+								"category",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE JOB CATEGORY",
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":1,\r\n    \"name\": \"Software Developer\",\r\n    \"description\": \"Software Developer\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/job/category/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"job",
+								"category",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FETCH ALL CATEGORY",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/job/category/fetch/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"job",
+								"category",
+								"fetch",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE CATEGORY BY ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/job/category/delete?categoryId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"job",
+								"category",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "categoryId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "JOB MODULE",
+			"item": [
+				{
+					"name": "ADD JOB",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "employerId",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "jobCategoryId",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "Senior Java Developer",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Senior developer with min 6 years of exp",
+									"type": "text"
+								},
+								{
+									"key": "companyName",
+									"value": "Google",
+									"type": "text"
+								},
+								{
+									"key": "jobType",
+									"value": "Full-time",
+									"type": "text"
+								},
+								{
+									"key": "salaryRange",
+									"value": "18 - 25 lpa",
+									"type": "text"
+								},
+								{
+									"key": "experienceLevel",
+									"value": "5 - 8 Years",
+									"type": "text"
+								},
+								{
+									"key": "requiredSkills",
+									"value": "Excellet ",
+									"type": "text"
+								},
+								{
+									"key": "street",
+									"value": "Demo Street",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "Demo City",
+									"type": "text"
+								},
+								{
+									"key": "pincode",
+									"value": "124657",
+									"type": "text"
+								},
+								{
+									"key": "state",
+									"value": "Maharashtra",
+									"type": "text"
+								},
+								{
+									"key": "country",
+									"value": "India",
+									"type": "text"
+								},
+								{
+									"key": "companyLogo",
+									"type": "file",
+									"src": "/C:/Users/admin/Downloads/images.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/job/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"job",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FETCH ALL JOBS POSTED",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/job/fetch/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"job",
+								"fetch",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FETCH JOB BY ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/job/fetch?jobId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"job",
+								"fetch"
+							],
+							"query": [
+								{
+									"key": "jobId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FETCH JOB BY EMPLOYER",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/job/fetch/employer-wise?employerId=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"job",
+								"fetch",
+								"employer-wise"
+							],
+							"query": [
+								{
+									"key": "employerId",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SEARCH JOBS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/job/search?categoryId=1&jobType=Full-time&salaryRange=6 - 12 lpa",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"job",
+								"search"
+							],
+							"query": [
+								{
+									"key": "categoryId",
+									"value": "1"
+								},
+								{
+									"key": "jobType",
+									"value": "Full-time"
+								},
+								{
+									"key": "salaryRange",
+									"value": "6 - 12 lpa"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE JOB BY ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/job/delete?jobId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"job",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "jobId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "JOB APPLICATION MODULE",
+			"item": [
+				{
+					"name": "ADD JOB APPLICATION",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"jobId\": 1,\r\n    \"employeeId\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/job/application/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"job",
+								"application",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE JOB APPLICATION",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"status\": \"Shortlisted\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/job/application/update/status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"job",
+								"application",
+								"update",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FETCH ALL JOB APPLICATIONS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/job/application/fetch/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"job",
+								"application",
+								"fetch",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FETCH JOB APPLICATIONS BY EMPLOYEE",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/job/application/fetch/all/employee?employeeId=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"job",
+								"application",
+								"fetch",
+								"all",
+								"employee"
+							],
+							"query": [
+								{
+									"key": "employeeId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FETCH JOB APPLICATIONS BY EMPLOYER",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/job/application/fetch/all/employer?employerId=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"job",
+								"application",
+								"fetch",
+								"all",
+								"employer"
+							],
+							"query": [
+								{
+									"key": "employerId",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FETCH JOB APPLICATIONS BY EMPLOYER AND STATUS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/job/application/fetch/status-wise/employer?employerId=4&status=Shortlisted",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"job",
+								"application",
+								"fetch",
+								"status-wise",
+								"employer"
+							],
+							"query": [
+								{
+									"key": "employerId",
+									"value": "4"
+								},
+								{
+									"key": "status",
+									"value": "Shortlisted"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

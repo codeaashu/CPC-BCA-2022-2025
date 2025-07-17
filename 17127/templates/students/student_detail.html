@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ student.full_name }} - Student Details{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-body text-center">
+                    <h4>{{ student.full_name }}</h4>
+                    <p class="text-muted">{{ student.student_id }}</p>
+                    {% if student.is_active %}
+                        <span class="badge bg-success">Active</span>
+                    {% else %}
+                        <span class="badge bg-danger">Inactive</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Student Information</h5>
+                    <div>
+                        <a href="{% url 'students:student_update' student.pk %}" class="btn btn-light btn-sm">
+                            <i class="bi bi-pencil"></i> Edit
+                        </a>
+                        <a href="{% url 'students:student_delete' student.pk %}" class="btn btn-danger btn-sm">
+                            <i class="bi bi-trash"></i> Delete
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="text-primary">Personal Information</h6>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td><strong>Full Name:</strong></td>
+                                    <td>{{ student.full_name }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Email:</strong></td>
+                                    <td>{{ student.email }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Gender:</strong></td>
+                                    <td>{{ student.get_gender_display }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Date of Birth:</strong></td>
+                                    <td>{{ student.date_of_birth|date:"F j, Y" }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Phone:</strong></td>
+                                    <td>{{ student.phone|default:"Not provided" }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Parent Name:</strong></td>
+                                    <td>{{ student.parent_name|default:"Not provided" }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Parent Phone:</strong></td>
+                                    <td>{{ student.parent_phone|default:"Not provided" }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Emergency Contact:</strong></td>
+                                    <td>{{ student.emergency_contact|default:"Not provided" }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <h6 class="text-primary">Academic Information</h6>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td><strong>Student ID:</strong></td>
+                                    <td>{{ student.student_id }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Course:</strong></td>
+                                    <td>{{ student.course.name }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Enrollment Date:</strong></td>
+                                    <td>{{ student.enrollment_date|date:"F j, Y" }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Status:</strong></td>
+                                    <td>
+                                        {% if student.is_active %}
+                                            <span class="badge bg-success">Active</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">Inactive</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    {% if student.address %}
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <h6 class="text-primary">Address</h6>
+                            <p>{{ student.address }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-4">
+        <div class="col-12">
+            <a href="{% url 'students:student_list' %}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Back to Students
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}Bulk Result Entry{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="bi bi-list-check"></i> Bulk Result Entry
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.exam.id_for_label }}" class="form-label">
+                                        <strong>Select Exam *</strong>
+                                    </label>
+                                    {{ form.exam }}
+                                    {% if form.exam.errors %}
+                                        <div class="text-danger small">{{ form.exam.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Students List -->
+                        <div id="studentsList">
+                            <h5 class="text-primary mb-3">Enter Results for Students</h5>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>Student</th>
+                                            <th>Marks Obtained</th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for student in form.exam.field.queryset.first.subject.course.student_set.all %}
+                                        <tr>
+                                            <td>{{ student.full_name }}</td>
+                                            <td><input type="number" name="marks_{{ student.id }}" class="form-control form-control-sm" placeholder="Enter marks" min="0" max="100"></td>
+                                            <td><input type="text" name="remarks_{{ student.id }}" class="form-control form-control-sm" placeholder="Optional remarks"></td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="d-flex justify-content-end mt-4">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="bi bi-save"></i> Save Results
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome - Student Management System{% endblock %}
+
+{% block auth_content %}
+<div class="min-vh-100 d-flex align-items-center" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow-lg border-0">
+                    <div class="card-body p-5">
+                        <div class="text-center mb-4">
+                            <h1 class="display-4 text-primary mb-3">🎓</h1>
+                            <h2 class="fw-bold text-dark mb-2">Student Management System</h2>
+                            <p class="text-muted">Comprehensive platform for managing students, teachers, courses, and more</p>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <div class="d-grid">
+                                    <a href="{% url 'accounts:login' %}" class="btn btn-primary btn-lg">
+                                        <i class="bi bi-box-arrow-in-right"></i> Login
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="my-4">
+                        <div class="row text-center">
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <i class="bi bi-people-fill text-primary fs-1"></i>
+                                </div>
+                                <h5>Student Management</h5>
+                                <p class="text-muted small">Manage student profiles, attendance, and academic records</p>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <i class="bi bi-person-badge text-primary fs-1"></i>
+                                </div>
+                                <h5>Teacher Portal</h5>
+                                <p class="text-muted small">Mark attendance, enter grades, and manage classes</p>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <i class="bi bi-graph-up text-primary fs-1"></i>
+                                </div>
+                                <h5>Reports & Analytics</h5>
+                                <p class="text-muted small">Generate comprehensive reports and track performance</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

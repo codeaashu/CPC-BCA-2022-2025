@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}My Attendance - WorkForce Pro{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">
+        <i class="bi bi-clock-history me-2"></i>My Attendance History
+    </h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="{% url 'employee_dashboard' %}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-1"></i>Back to Dashboard
+        </a>
+    </div>
+</div>
+
+<div class="card shadow">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">
+            <i class="bi bi-calendar-week me-2"></i>Attendance Records
+        </h6>
+    </div>
+    <div class="card-body">
+        {% if attendance %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Check-in Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for record in attendance %}
+                        <tr>
+                            <td>{{ record.date|date:"l, M d, Y" }}</td>
+                            <td>{{ record.check_in_time|time:"H:i" }}</td>
+                            <td><span class="badge bg-success">Present</span></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <i class="bi bi-clock text-muted" style="font-size: 3rem;"></i>
+                <h5 class="text-muted mt-3">No Attendance Records</h5>
+                <p class="text-muted">Your attendance records will appear here once you start checking in.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %} 

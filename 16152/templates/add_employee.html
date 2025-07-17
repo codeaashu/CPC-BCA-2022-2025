@@ -1,0 +1,399 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Employee - WorkForce Pro{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">
+        <i class="bi bi-person-plus me-2"></i>Add New Employee
+    </h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="{% url 'employee_list' %}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-1"></i>Back to Employees
+        </a>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
+                    <i class="bi bi-person-check me-2"></i>Employee Information
+                </h6>
+            </div>
+            <div class="card-body p-4">
+                {% if user_form.non_field_errors or profile_form.non_field_errors %}
+                    <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+                        <i class="bi bi-exclamation-triangle me-2"></i>
+                        <strong>Please correct the following errors:</strong>
+                        <ul class="mb-0 mt-2">
+                            {% for error in user_form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                            {% for error in profile_form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endif %}
+                
+                <form method="post" id="addEmployeeForm">
+                    {% csrf_token %}
+                    
+                    <!-- Personal Information Section -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h6 class="text-primary border-bottom pb-2">
+                                <i class="bi bi-person me-2"></i>Personal Information
+                            </h6>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ user_form.username.id_for_label }}" class="form-label">
+                                <i class="bi bi-person me-1"></i>Username *
+                            </label>
+                            {{ user_form.username }}
+                            {% if user_form.username.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in user_form.username.errors %}
+                                        <i class="bi bi-exclamation-circle me-1"></i>{{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">Username must be unique and contain only letters, numbers, and underscores.</div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ user_form.email.id_for_label }}" class="form-label">
+                                <i class="bi bi-envelope me-1"></i>Email Address *
+                            </label>
+                            {{ user_form.email }}
+                            {% if user_form.email.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in user_form.email.errors %}
+                                        <i class="bi bi-exclamation-circle me-1"></i>{{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">Enter a valid email address (e.g., john.doe@company.com)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ user_form.first_name.id_for_label }}" class="form-label">
+                                <i class="bi bi-person me-1"></i>First Name *
+                            </label>
+                            {{ user_form.first_name }}
+                            {% if user_form.first_name.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in user_form.first_name.errors %}
+                                        <i class="bi bi-exclamation-circle me-1"></i>{{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">Only letters and spaces allowed.</div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ user_form.last_name.id_for_label }}" class="form-label">
+                                <i class="bi bi-person me-1"></i>Last Name *
+                            </label>
+                            {{ user_form.last_name }}
+                            {% if user_form.last_name.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in user_form.last_name.errors %}
+                                        <i class="bi bi-exclamation-circle me-1"></i>{{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">Only letters and spaces allowed.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ user_form.password1.id_for_label }}" class="form-label">
+                                <i class="bi bi-lock me-1"></i>Password *
+                            </label>
+                            <div class="input-group">
+                                {{ user_form.password1 }}
+                                <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('id_password1')">
+                                    <i class="fas fa-eye" id="id_password1_icon"></i>
+                                </button>
+                            </div>
+                            {% if user_form.password1.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in user_form.password1.errors %}
+                                        <i class="bi bi-exclamation-circle me-1"></i>{{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ user_form.password2.id_for_label }}" class="form-label">
+                                <i class="bi bi-lock me-1"></i>Confirm Password *
+                            </label>
+                            <div class="input-group">
+                                {{ user_form.password2 }}
+                                <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('id_password2')">
+                                    <i class="fas fa-eye" id="id_password2_icon"></i>
+                                </button>
+                            </div>
+                            {% if user_form.password2.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in user_form.password2.errors %}
+                                        <i class="bi bi-exclamation-circle me-1"></i>{{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <hr class="my-4">
+                    
+                    <!-- Professional Information Section -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h6 class="text-primary border-bottom pb-2">
+                                <i class="bi bi-briefcase me-2"></i>Professional Information
+                            </h6>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ profile_form.department.id_for_label }}" class="form-label">
+                                <i class="bi bi-building me-1"></i>Department *
+                            </label>
+                            {{ profile_form.department }}
+                            {% if profile_form.department.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in profile_form.department.errors %}
+                                        <i class="bi bi-exclamation-circle me-1"></i>{{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">Select the appropriate department for the employee.</div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ profile_form.position.id_for_label }}" class="form-label">
+                                <i class="bi bi-briefcase me-1"></i>Job Position *
+                            </label>
+                            {{ profile_form.position }}
+                            {% if profile_form.position.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in profile_form.position.errors %}
+                                        <i class="bi bi-exclamation-circle me-1"></i>{{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">Enter the employee's job title or position.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ profile_form.date_joined.id_for_label }}" class="form-label">
+                                <i class="bi bi-calendar-check me-1"></i>Joining Date *
+                            </label>
+                            {{ profile_form.date_joined }}
+                            {% if profile_form.date_joined.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in profile_form.date_joined.errors %}
+                                        <i class="bi bi-exclamation-circle me-1"></i>{{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">Select the date when employee joined the company.</div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ profile_form.salary.id_for_label }}" class="form-label">
+                                <i class="bi bi-cash me-1"></i>Salary *
+                            </label>
+                            {{ profile_form.salary }}
+                            {% if profile_form.salary.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in profile_form.salary.errors %}
+                                        <i class="bi bi-exclamation-circle me-1"></i>{{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">Enter the annual salary amount.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ profile_form.dob.id_for_label }}" class="form-label">
+                                <i class="bi bi-calendar me-1"></i>Date of Birth *
+                            </label>
+                            {{ profile_form.dob }}
+                            {% if profile_form.dob.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in profile_form.dob.errors %}
+                                        <i class="bi bi-exclamation-circle me-1"></i>{{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">Employee must be at least 18 years old.</div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ profile_form.phone.id_for_label }}" class="form-label">
+                                <i class="bi bi-telephone me-1"></i>Phone Number *
+                            </label>
+                            {{ profile_form.phone }}
+                            {% if profile_form.phone.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in profile_form.phone.errors %}
+                                        <i class="bi bi-exclamation-circle me-1"></i>{{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">Enter 10-digit Indian mobile number (starts with 6, 7, 8, or 9).</div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ profile_form.address.id_for_label }}" class="form-label">
+                                <i class="bi bi-geo-alt me-1"></i>Address
+                            </label>
+                            {{ profile_form.address }}
+                            {% if profile_form.address.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in profile_form.address.errors %}
+                                        <i class="bi bi-exclamation-circle me-1"></i>{{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">Enter the complete residential address.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="{% url 'employee_list' %}" class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle me-2"></i>Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-circle me-2"></i>Add Employee
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Validation Information -->
+        <div class="card shadow mt-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-info">
+                    <i class="bi bi-info-circle me-2"></i>Validation Requirements
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="text-primary">Personal Information</h6>
+                        <ul class="list-unstyled small">
+                            <li><i class="bi bi-check text-success me-2"></i>Username must be unique</li>
+                            <li><i class="bi bi-check text-success me-2"></i>Email must be valid and unique</li>
+                            <li><i class="bi bi-check text-success me-2"></i>Names can only contain letters and spaces</li>
+                            <li><i class="bi bi-check text-success me-2"></i>Password must be strong (8+ characters)</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-primary">Professional Information</h6>
+                        <ul class="list-unstyled small">
+                            <li><i class="bi bi-check text-success me-2"></i>Phone must be 10-digit Indian number</li>
+                            <li><i class="bi bi-check text-success me-2"></i>Date of birth cannot be in the future</li>
+                            <li><i class="bi bi-check text-success me-2"></i>Employee must be at least 18 years old</li>
+                            <li><i class="bi bi-check text-success me-2"></i>Salary must be a positive number</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    border-radius: 15px;
+}
+
+.form-control, .form-select {
+    border-radius: 8px;
+}
+
+.btn {
+    border-radius: 8px;
+    padding: 10px 20px;
+}
+
+.form-text {
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+</style>
+
+<script>
+// Password toggle functionality
+function togglePassword(fieldId) {
+    const field = document.getElementById(fieldId);
+    const icon = document.getElementById(fieldId + '_icon');
+    
+    if (field.type === 'password') {
+        field.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        field.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    }
+}
+
+// Real-time validation feedback
+document.addEventListener('DOMContentLoaded', function() {
+    const phoneInput = document.querySelector('#id_phone');
+    const dobInput = document.querySelector('#id_dob');
+    const dateJoinedInput = document.querySelector('#id_date_joined');
+    
+    // Phone number validation
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function() {
+            const value = this.value;
+            if (value.length > 10) {
+                this.value = value.slice(0, 10);
+            }
+        });
+    }
+    
+    // Date of birth validation
+    if (dobInput) {
+        const today = new Date().toISOString().split('T')[0];
+        dobInput.setAttribute('max', today);
+    }
+    
+    // Date joined validation
+    if (dateJoinedInput) {
+        const today = new Date().toISOString().split('T')[0];
+        dateJoinedInput.setAttribute('max', today);
+    }
+    
+    // Highlight form errors
+    const errorFields = document.querySelectorAll('.is-invalid');
+    errorFields.forEach(field => {
+        field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+});
+</script>
+{% endblock %} 

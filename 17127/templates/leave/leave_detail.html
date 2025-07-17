@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+
+{% block title %}Leave Application Details{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">
+                        <i class="bi bi-calendar-event"></i> Leave Application Details
+                    </h4>
+                    <div>
+                        <a href="{% url 'leave_management:leave_update' leave_application.pk %}" class="btn btn-light btn-sm">
+                            <i class="bi bi-pencil"></i> Edit
+                        </a>
+                        <a href="{% url 'leave_management:leave_delete' leave_application.pk %}" class="btn btn-danger btn-sm">
+                            <i class="bi bi-trash"></i> Delete
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="text-primary">Application Information</h6>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td><strong>Applicant:</strong></td>
+                                    <td>
+{% if leave_application.student %}
+    <a href="{% url 'students:student_detail' leave_application.student.pk %}" class="text-decoration-none">
+        {{ leave_application.student.user.get_full_name }}
+    </a>
+{% elif leave_application.teacher %}
+    <a href="{% url 'teachers:teacher_detail' leave_application.teacher.pk %}" class="text-decoration-none">
+        {{ leave_application.teacher.user.get_full_name }}
+    </a>
+{% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Roll Number:</strong></td>
+                                    <td>{{ leave_application.applicant.roll_number }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Leave Type:</strong></td>
+                                    <td>
+                                        <span class="badge bg-info">{{ leave_application.get_leave_type_display }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Start Date:</strong></td>
+                                    <td>{{ leave_application.start_date|date:"F d, Y (l)" }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>End Date:</strong></td>
+                                    <td>{{ leave_application.end_date|date:"F d, Y (l)" }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Duration:</strong></td>
+                                    <td>{{ leave_application.number_of_days }} days</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Reason:</strong></td>
+                                    <td>{{ leave_application.reason }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <h6 class="text-primary">Status Information</h6>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card {% if leave_application.status == 'pending' %}bg-warning{% elif leave_application.status == 'approved' %}bg-success{% else %}bg-danger{% endif %} text-white text-center mb-3">
+                                        <div class="card-body">
+                                            <h5>{{ leave_application.get_status_display }}</h5>
+                                            <p class="mb-0">Status</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td><strong>Applied Date:</strong></td>
+                                    <td>{{ leave_application.applied_date|date:"F d, Y" }}</td>
+                                </tr>
+                                {% if leave_application.approved_by %}
+                                <tr>
+                                    <td><strong>Approved By:</strong></td>
+                                    <td>{{ leave_application.approved_by.get_full_name }}</td>
+                                </tr>
+                                {% endif %}
+                                {% if leave_application.approved_date %}
+                                <tr>
+                                    <td><strong>Approved Date:</strong></td>
+                                    <td>{{ leave_application.approved_date|date:"F d, Y" }}</td>
+                                </tr>
+                                {% endif %}
+                            </table>
+                        </div>
+                    </div>
+                    
+                    {% if leave_application.description %}
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <h6 class="text-primary">Detailed Description</h6>
+                            <p>{{ leave_application.description }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if leave_application.admin_remarks %}
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <h6 class="text-primary">Admin Remarks</h6>
+                            <div class="alert alert-info">
+                                {{ leave_application.admin_remarks }}
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        {% if user.is_staff and leave_application.status == 'pending' %}
+                            <a href="{% url 'leave_management:leave_approve' leave_application.pk %}" class="btn btn-success">
+                                <i class="bi bi-check-circle"></i> Approve
+                            </a>
+                            <a href="{% url 'leave_management:leave_reject' leave_application.pk %}" class="btn btn-danger">
+                                <i class="bi bi-x-circle"></i> Reject
+                            </a>
+                        {% endif %}
+                        <a href="{% url 'students:student_detail' leave_application.applicant.pk %}" class="btn btn-outline-primary">
+                            <i class="bi bi-person"></i> View Student Profile
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-4">
+        <div class="col-12">
+            <a href="{% url 'leave_management:leave_list' %}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Back to Leave Applications
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %} 

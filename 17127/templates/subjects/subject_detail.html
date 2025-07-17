@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ subject.name }} - Subject Details{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">
+                        <i class="bi bi-journal-text"></i> {{ subject.name }}
+                    </h4>
+                    <div>
+                        <a href="{% url 'courses:subject_update' subject.pk %}" class="btn btn-light btn-sm">
+                            <i class="bi bi-pencil"></i> Edit
+                        </a>
+                        <a href="{% url 'courses:subject_delete' subject.pk %}" class="btn btn-danger btn-sm">
+                            <i class="bi bi-trash"></i> Delete
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="text-primary">Subject Information</h6>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td><strong>Subject Code:</strong></td>
+                                    <td>{{ subject.code }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Subject Name:</strong></td>
+                                    <td>{{ subject.name }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Course:</strong></td>
+                                    <td>
+                                        <a href="{% url 'courses:course_detail' subject.course.pk %}" class="text-decoration-none">
+                                            {{ subject.course.name }}
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Semester:</strong></td>
+                                    <td>Semester {{ subject.semester }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Credits:</strong></td>
+                                    <td>{{ subject.credits }} Credits</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Type:</strong></td>
+                                    <td>
+                                        {% if subject.is_elective %}
+                                            <span class="badge bg-warning text-dark">Elective</span>
+                                        {% else %}
+                                            <span class="badge bg-info">Core</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Status:</strong></td>
+                                    <td>
+                                        {% if subject.is_active %}
+                                            <span class="badge bg-success">Active</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">Inactive</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <h6 class="text-primary">Teacher Information</h6>
+                            {% if subject.teacher %}
+                                <div class="card">
+                                    <div class="card-body text-center">
+                                        {% if subject.teacher.profile_picture %}
+                                            <img src="{{ subject.teacher.profile_picture.url }}" alt="Teacher" class="rounded-circle mb-3" width="80" height="80">
+                                        {% else %}
+                                            <div class="bg-secondary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                                                <i class="bi bi-person text-white" style="font-size: 2rem;"></i>
+                                            </div>
+                                        {% endif %}
+                                        <h6>{{ subject.teacher.user.get_full_name }}</h6>
+                                        <p class="text-muted mb-2">{{ subject.teacher.department }}</p>
+                                        <a href="{% url 'teachers:teacher_detail' subject.teacher.pk %}" class="btn btn-outline-primary btn-sm">
+                                            View Profile
+                                        </a>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="alert alert-warning">
+                                    <i class="bi bi-exclamation-triangle"></i>
+                                    <strong>No teacher assigned</strong>
+                                    <p class="mb-0">This subject doesn't have an assigned teacher yet.</p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    {% if subject.description %}
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <h6 class="text-primary">Description</h6>
+                            <p>{{ subject.description }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        {% if not subject.teacher %}
+                            <a href="{% url 'courses:subject_update' subject.pk %}" class="btn btn-primary">
+                                <i class="bi bi-person-plus"></i> Assign Teacher
+                            </a>
+                        {% endif %}
+                        <a href="{% url 'attendance:attendance_list' %}?subject={{ subject.pk }}" class="btn btn-outline-primary">
+                            <i class="bi bi-calendar-check"></i> View Attendance
+                        </a>
+                        <a href="{% url 'exams:exam_list' %}?subject={{ subject.pk }}" class="btn btn-outline-success">
+                            <i class="bi bi-file-text"></i> View Exams
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-4">
+        <div class="col-12">
+            <a href="{% url 'courses:subject_list' %}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Back to Subjects
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %} 

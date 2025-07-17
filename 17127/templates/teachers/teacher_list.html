@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+
+{% block title %}Teachers - Student Management System{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">
+                        <i class="bi bi-person-badge"></i> Teachers
+                    </h4>
+                    <a href="{% url 'teachers:teacher_create' %}" class="btn btn-light">
+                        <i class="bi bi-plus-circle"></i> Add Teacher
+                    </a>
+                </div>
+                <div class="card-body">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    
+                    <!-- Search Form -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <form method="get" class="row g-3">
+                                <div class="col-md-3">
+                                    <label for="{{ search_form.search.id_for_label }}" class="form-label">Search</label>
+                                    {{ search_form.search }}
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="{{ search_form.qualification.id_for_label }}" class="form-label">Qualification</label>
+                                    {{ search_form.qualification }}
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="{{ search_form.gender.id_for_label }}" class="form-label">Gender</label>
+                                    {{ search_form.gender }}
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="{{ search_form.is_active.id_for_label }}" class="form-label">Status</label>
+                                    {{ search_form.is_active }}
+                                </div>
+                                <div class="col-md-2 d-flex align-items-end">
+                                    <button type="submit" class="btn btn-primary me-2">
+                                        <i class="bi bi-search"></i> Search
+                                    </button>
+                                    <a href="{% url 'teachers:teacher_list' %}" class="btn btn-secondary">
+                                        <i class="bi bi-arrow-clockwise"></i> Reset
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- Teachers Table -->
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Qualification</th>
+                                    <th>Specialization</th>
+                                    <th>Experience</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for teacher in teachers %}
+                                <tr>
+                                    <td>{{ teacher.teacher_id }}</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            {{ teacher.full_name }}
+                                        </div>
+                                    </td>
+                                    <td>{{ teacher.email }}</td>
+                                    <td>{{ teacher.get_qualification_display }}</td>
+                                    <td>{{ teacher.specialization }}</td>
+                                    <td>{{ teacher.experience_years }} years</td>
+                                    <td>
+                                        {% if teacher.is_active %}
+                                            <span class="badge bg-success">Active</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">Inactive</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a href="{% url 'teachers:teacher_detail' teacher.pk %}" class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                            <a href="{% url 'teachers:teacher_update' teacher.pk %}" class="btn btn-sm btn-outline-warning">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <a href="{% url 'teachers:teacher_delete' teacher.pk %}" class="btn btn-sm btn-outline-danger">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="8" class="text-center text-muted py-4">
+                                        <i class="bi bi-inbox display-4"></i>
+                                        <p class="mt-2">No teachers found.</p>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    {% if teachers.has_other_pages %}
+                    <nav aria-label="Teachers pagination">
+                        <ul class="pagination justify-content-center">
+                            {% if teachers.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ teachers.previous_page_number }}">Previous</a>
+                                </li>
+                            {% endif %}
+                            
+                            {% for num in teachers.paginator.page_range %}
+                                {% if teachers.number == num %}
+                                    <li class="page-item active">
+                                        <span class="page-link">{{ num }}</span>
+                                    </li>
+                                {% elif num > teachers.number|add:'-3' and num < teachers.number|add:'3' %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                            
+                            {% if teachers.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ teachers.next_page_number }}">Next</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

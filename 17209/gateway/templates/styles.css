@@ -1,0 +1,127 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: url('new_york_weather_widget.jpg') no-repeat center center/cover;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  backdrop-filter: blur(4px);
+}
+
+.weather-widget {
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 20px;
+  max-width: 800px;
+  width: 90%;
+  text-align: center;
+  border-radius: 12px;
+}
+
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.input-tab {
+  margin-bottom: 20px;
+}
+
+.input-tab input {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  width: 200px;
+}
+
+.input-tab button {
+  padding: 8px 12px;
+  margin-left: 5px;
+  background: #fff;
+  color: #333;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.widget-box {
+  display: flex;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.left,
+.right {
+  flex: 1 1 300px;
+  padding: 20px;
+}
+
+.left img {
+  width: 100%;
+  border-radius: 10px;
+  opacity: 0.8;
+}
+
+.location h2 {
+  margin: 10px 0 5px;
+}
+
+.location p {
+  margin: 0;
+  font-size: 0.9em;
+}
+
+.temp-time {
+  margin-top: 20px;
+}
+
+.time {
+  font-size: 1.4em;
+  margin-bottom: 5px;
+}
+
+.date {
+  font-size: 0.9em;
+  margin-bottom: 10px;
+}
+
+.temp {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.weather-icon {
+  font-size: 4em;
+  margin-bottom: 10px;
+}
+
+.forecast {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.forecast div {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  padding: 6px 0;
+  font-size: 0.95em;
+}
+
+footer {
+  margin-top: 20px;
+  font-size: 0.8em;
+  color: #ccc;
+}

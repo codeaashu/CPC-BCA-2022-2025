@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+
+{% block title %}Announcements{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">
+                        <i class="bi bi-megaphone"></i> Announcements
+                    </h4>
+                    <a href="{% url 'announcements:announcement_create' %}" class="btn btn-light">
+                        <i class="bi bi-plus-circle"></i> Create Announcement
+                    </a>
+                </div>
+                <div class="card-body">
+                    <!-- Filters -->
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <select class="form-select" id="categoryFilter">
+                                <option value="">All Categories</option>
+                                {% for category_choice in categories %}
+                                    <option value="{{ category_choice.0 }}" {% if selected_category == category_choice.0 %}selected{% endif %}>
+                                        {{ category_choice.1 }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select" id="priorityFilter">
+                                <option value="">All Priorities</option>
+                                {% for priority_choice in priorities %}
+                                    <option value="{{ priority_choice.0 }}" {% if selected_priority == priority_choice.0 %}selected{% endif %}>
+                                        {{ priority_choice.1 }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select class="form-select" id="audienceFilter">
+                                <option value="">All Audiences</option>
+                                {% for audience_choice in audiences %}
+                                    <option value="{{ audience_choice.0 }}" {% if selected_audience == audience_choice.0 %}selected{% endif %}>
+                                        {{ audience_choice.1 }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select class="form-select" id="statusFilter">
+                                <option value="">All Status</option>
+                                <option value="active" {% if selected_status == 'active' %}selected{% endif %}>Active</option>
+                                <option value="inactive" {% if selected_status == 'inactive' %}selected{% endif %}>Inactive</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-outline-primary w-100" onclick="applyFilters()">
+                                <i class="bi bi-funnel"></i> Filter
+                            </button>
+                        </div>
+                    </div>
+
+                    {% if announcements %}
+                        <div class="row">
+                            {% for announcement in announcements %}
+                            <div class="col-md-6 mb-4">
+                                <div class="card h-100 shadow-sm {% if announcement.is_featured %}border-warning{% endif %}">
+                                    {% if announcement.is_featured %}
+                                    <div class="card-header bg-warning text-dark">
+                                        <i class="bi bi-star-fill"></i> Featured
+                                    </div>
+                                    {% endif %}
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <h5 class="card-title mb-0">
+                                                <a href="{% url 'announcements:announcement_detail' announcement.pk %}" class="text-decoration-none">
+                                                    {{ announcement.title }}
+                                                </a>
+                                            </h5>
+                                            <div class="btn-group" role="group">
+                                                <a href="{% url 'announcements:announcement_detail' announcement.pk %}" class="btn btn-sm btn-outline-primary">
+                                                    <i class="bi bi-eye"></i>
+                                                </a>
+                                                <a href="{% url 'announcements:announcement_update' announcement.pk %}" class="btn btn-sm btn-outline-warning">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
+                                                <a href="{% url 'announcements:announcement_delete' announcement.pk %}" class="btn btn-sm btn-outline-danger">
+                                                    <i class="bi bi-trash"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-2">
+                                            {% if announcement.priority == 'high' %}
+                                                <span class="badge bg-danger">High Priority</span>
+                                            {% elif announcement.priority == 'medium' %}
+                                                <span class="badge bg-warning text-dark">Medium Priority</span>
+                                            {% else %}
+                                                <span class="badge bg-info">Low Priority</span>
+                                            {% endif %}
+                                            
+                                            <span class="badge bg-secondary">{{ announcement.get_category_display }}</span>
+                                            <span class="badge bg-primary">{{ announcement.get_target_audience_display }}</span>
+                                        </div>
+                                        
+                                        <p class="card-text text-muted">
+                                            {{ announcement.content|truncatewords:20 }}
+                                        </p>
+                                        
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <small class="text-muted">
+                                                <i class="bi bi-calendar"></i> {{ announcement.publish_date|date:"M d, Y" }}
+                                            </small>
+                                            {% if announcement.is_active %}
+                                                <span class="badge bg-success">Active</span>
+                                            {% else %}
+                                                <span class="badge bg-danger">Inactive</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        
+                        <!-- Pagination -->
+                        {% if is_paginated %}
+                        <nav aria-label="Announcement pagination">
+                            <ul class="pagination justify-content-center">
+                                {% if page_obj.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page=1">&laquo; First</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                                    </li>
+                                {% endif %}
+                                
+                                <li class="page-item active">
+                                    <span class="page-link">
+                                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                                    </span>
+                                </li>
+                                
+                                {% if page_obj.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                        {% endif %}
+                    {% else %}
+                        <div class="text-center py-5">
+                            <i class="bi bi-megaphone display-1 text-muted"></i>
+                            <h4 class="text-muted mt-3">No announcements found</h4>
+                            <p class="text-muted">Create your first announcement to get started.</p>
+                            <a href="{% url 'announcements:announcement_create' %}" class="btn btn-primary">
+                                <i class="bi bi-plus-circle"></i> Create Announcement
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function applyFilters() {
+    const categoryFilter = document.getElementById('categoryFilter').value;
+    const priorityFilter = document.getElementById('priorityFilter').value;
+    const audienceFilter = document.getElementById('audienceFilter').value;
+    const statusFilter = document.getElementById('statusFilter').value;
+    
+    let url = '{% url "announcements:announcement_list" %}?';
+    const params = [];
+    
+    if (categoryFilter) params.push(`category=${categoryFilter}`);
+    if (priorityFilter) params.push(`priority=${priorityFilter}`);
+    if (audienceFilter) params.push(`audience=${audienceFilter}`);
+    if (statusFilter) params.push(`status=${statusFilter}`);
+    
+    if (params.length > 0) {
+        url += params.join('&');
+    }
+    
+    window.location.href = url;
+}
+</script>
+{% endblock %} 

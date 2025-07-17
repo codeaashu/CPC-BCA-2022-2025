@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+
+{% block title %}Student Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Welcome Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h3 class="mb-2">Welcome back, {{ student.user.get_full_name }}!</h3>
+                            <p class="mb-0">
+                                <strong>Roll Number:</strong> {{ student.roll_number }} | 
+                                <strong>Course:</strong> {{ student.course.name }} | 
+                                <strong>Semester:</strong> {{ student.course.duration }} years
+                            </p>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <!-- Photo section removed -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card bg-info text-white text-center">
+                <div class="card-body">
+                    <i class="bi bi-book fs-1"></i>
+                    <h4 class="mt-2">{{ subjects.count }}</h4>
+                    <p class="mb-0">Subjects</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-dark text-center">
+                <div class="card-body">
+                    <i class="bi bi-file-text fs-1"></i>
+                    <h4 class="mt-2">{{ recent_results.count }}</h4>
+                    <p class="mb-0">Recent Exams</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-secondary text-white text-center">
+                <div class="card-body">
+                    <i class="bi bi-megaphone fs-1"></i>
+                    <h4 class="mt-2">{{ recent_announcements.count }}</h4>
+                    <p class="mb-0">Announcements</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Recent Exam Results -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-file-text"></i> Recent Exam Results
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if recent_results %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Subject</th>
+                                        <th>Exam</th>
+                                        <th>Score</th>
+                                        <th>Percentage</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for result in recent_results %}
+                                    <tr>
+                                        <td>{{ result.exam.subject.name }}</td>
+                                        <td>{{ result.exam.title }}</td>
+                                        <td>{{ result.obtained_marks }}/{{ result.exam.total_marks }}</td>
+                                        <td>
+                                            {% if result.percentage is not None %}
+                                                {% if result.percentage >= 40 %}
+                                                    <span class="badge bg-success">{{ result.percentage|floatformat:1 }}%</span>
+                                                {% else %}
+                                                    <span class="badge bg-danger">{{ result.percentage|floatformat:1 }}%</span>
+                                                {% endif %}
+                                            {% else %}
+                                                <span class="badge bg-secondary">N/A</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-center mt-3">
+                            <a href="{% url 'exams:student_results' %}" class="btn btn-outline-primary">
+                                View All Results
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="bi bi-file-x display-4 text-muted"></i>
+                            <p class="text-muted mt-2">No exam results available yet.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Announcements -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-megaphone"></i> Recent Announcements
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if recent_announcements %}
+                        {% for announcement in recent_announcements %}
+                        <div class="border-bottom pb-3 mb-3">
+                            <h6 class="text-primary">{{ announcement.title }}</h6>
+                            <p class="text-muted small mb-1">{{ announcement.content|truncatechars:100 }}</p>
+                            <small class="text-muted">
+                                <i class="bi bi-calendar"></i> {{ announcement.created_at|date:"M d, Y" }}
+                                {% if announcement.target_audience != 'all' %}
+                                    <span class="badge bg-secondary ms-2">{{ announcement.get_target_audience_display }}</span>
+                                {% endif %}
+                            </small>
+                        </div>
+                        {% endfor %}
+                        <div class="text-center mt-3">
+                            <a href="{% url 'announcements:announcement_list' %}" class="btn btn-outline-info">
+                                View All Announcements
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="bi bi-megaphone display-4 text-muted"></i>
+                            <p class="text-muted mt-2">No announcements available.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-lightning"></i> Quick Actions
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <a href="{% url 'exams:student_results' %}" class="btn btn-outline-success w-100">
+                                <i class="bi bi-file-text"></i><br>
+                                Exam Results
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{% url 'leave_management:leave_create' %}" class="btn btn-outline-warning w-100">
+                                <i class="bi bi-calendar-event"></i><br>
+                                Apply for Leave
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{% url 'announcements:announcement_list' %}" class="btn btn-outline-info w-100">
+                                <i class="bi bi-megaphone"></i><br>
+                                Announcements
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

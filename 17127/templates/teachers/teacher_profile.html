@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}My Profile - Student Management System{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-body text-center">
+                    <h4>{{ teacher.full_name }}</h4>
+                    <p class="text-muted">{{ teacher.teacher_id }}</p>
+                    <p class="text-muted">{{ teacher.specialization }}</p>
+                    {% if teacher.is_active %}
+                        <span class="badge bg-success">Active Teacher</span>
+                    {% else %}
+                        <span class="badge bg-danger">Inactive</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">My Profile Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="text-primary">Personal Information</h6>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td><strong>Full Name:</strong></td>
+                                    <td>{{ teacher.full_name }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Email:</strong></td>
+                                    <td>{{ teacher.email }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Gender:</strong></td>
+                                    <td>{{ teacher.get_gender_display }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Date of Birth:</strong></td>
+                                    <td>{{ teacher.date_of_birth|date:"F j, Y" }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Phone:</strong></td>
+                                    <td>{{ teacher.phone|default:"Not provided" }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <h6 class="text-primary">Professional Information</h6>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td><strong>Teacher ID:</strong></td>
+                                    <td>{{ teacher.teacher_id }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Qualification:</strong></td>
+                                    <td>{{ teacher.get_qualification_display }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Specialization:</strong></td>
+                                    <td>{{ teacher.specialization }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Experience:</strong></td>
+                                    <td>{{ teacher.experience_years }} years</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Joining Date:</strong></td>
+                                    <td>{{ teacher.joining_date|date:"F j, Y" }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Status:</strong></td>
+                                    <td>
+                                        {% if teacher.is_active %}
+                                            <span class="badge bg-success">Active</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">Inactive</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    {% if teacher.address %}
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <h6 class="text-primary">Address</h6>
+                            <p>{{ teacher.address }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
