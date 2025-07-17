@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" type="LOGO" href="./images/LOGO.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#000000">
+    <meta
+      name="description"
+      content="Play Cross Road Advanced - an enhanced challenging game with multiple modes, power-ups, achievements, and stunning graphics!"
+    />
+    <meta
+      name="keywords"
+      content="game, cross road, car game, cross road game, adventure, fun, challenging, leaderboard, power-ups, mobile game"
+    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="styles.css">
+    <title>Cross Road - Advanced Gaming Experience</title>
+  </head>
+  <body>
+    <!-- Killer Intro Screen -->
+    <div id="introScreen" class="screen">
+      <div class="intro-container">
+        <div class="intro-sparkles" id="sparkles"></div>
+        <h1 class="intro-logo">CROSS ROAD</h1>
+        <p class="intro-subtitle">Advanced Gaming Experience</p>
+        <div class="intro-loading">
+          <div class="intro-progress"></div>
+        </div>
+        <p style="opacity: 0.7; margin-top: 2rem; font-size: 1rem;">Initializing Gaming Engine...</p>
+      </div>
+    </div>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="screen">
+      <div class="login-container animate__animated animate__fadeIn">
+        <div class="login-header">
+          <img src="images/LOGO.png" alt="Game Logo" class="game-logo">
+          <h1>Cross Road - Advanced</h1>
+          <p>Your Ultimate Road Crossing Adventure</p>
+        </div>
+        
+        <div class="login-form">
+          <div class="form-group">
+            <label for="playerName">Enter Your Name:</label>
+            <input type="text" id="playerName" placeholder="Player Name" maxlength="20" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="playerAvatar">Choose Avatar:</label>
+            <div class="avatar-selection">
+              <img src="images/man.jpg" class="avatar-option selected" data-avatar="man.jpg" alt="Avatar 1">
+              <img src="images/car1.jpg" class="avatar-option" data-avatar="car1.jpg" alt="Avatar 2">
+              <img src="images/car2.jpg" class="avatar-option" data-avatar="car2.jpg" alt="Avatar 3">
+            </div>
+          </div>
+          
+          <button class="btn-primary" onclick="startGame()">
+            <i class="fas fa-play"></i> Start Game
+          </button>
+        </div>
+        
+        <div class="login-footer">
+          <button class="btn-secondary" onclick="showLeaderboard()">
+            <i class="fas fa-trophy"></i> Leaderboard
+          </button>
+          <button class="btn-secondary" onclick="showSettings()">
+            <i class="fas fa-cog"></i> Settings
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Menu -->
+    <div id="mainMenu" class="screen hidden">
+      <div class="menu-container">
+        <div class="player-info">
+          <img id="playerAvatarDisplay" src="images/man.jpg" class="player-avatar">
+          <span id="playerNameDisplay">Player</span>
+          <div class="player-stats">
+            <span>High Score: <span id="highScoreDisplay">0</span></span>
+            <span>Games Played: <span id="gamesPlayedDisplay">0</span></span>
+          </div>
+        </div>
+        
+        <div class="game-modes">
+          <h2>Select Game Mode</h2>
+          <button class="game-mode-btn" onclick="selectGameMode('classic')">
+            <i class="fas fa-road"></i>
+            <span>Classic Mode</span>
+            <small>Traditional gameplay</small>
+          </button>
+          <button class="game-mode-btn" onclick="selectGameMode('time-attack')">
+            <i class="fas fa-clock"></i>
+            <span>Time Attack</span>
+            <small>60 seconds challenge</small>
+          </button>
+          <button class="game-mode-btn" onclick="selectGameMode('endless')">
+            <i class="fas fa-infinity"></i>
+            <span>Endless Mode</span>
+            <small>Survive as long as possible</small>
+          </button>
+        </div>
+        
+        <div class="menu-footer">
+          <button class="btn-secondary" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i> Change Player
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="gameScreen" class="screen hidden">
+      <!-- Game HUD -->
+      <div class="game-hud">
+        <div class="hud-left">
+          <div class="player-info-small">
+            <img id="gamePlayerAvatar" src="images/man.jpg" class="mini-avatar">
+            <span id="gamePlayerName">Player</span>
+          </div>
+          <div class="game-stats">
+            <div class="stat">
+              <label>Score:</label>
+              <span id="currentScore">0</span>
+            </div>
+            <div class="stat">
+              <label>Level:</label>
+              <span id="currentLevel">1</span>
+            </div>
+            <div class="stat" id="timeDisplay">
+              <label>Time:</label>
+              <span id="timeLeft">60</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="hud-center">
+          <h2 id="gameStatus">Press "SPACE" to Start</h2>
+        </div>
+        
+        <div class="hud-right">
+          <div class="power-ups-display">
+            <div class="power-up-slot" id="shieldSlot">
+              <i class="fas fa-shield-alt"></i>
+              <span id="shieldCount">0</span>
+            </div>
+            <div class="power-up-slot" id="speedSlot">
+              <i class="fas fa-bolt"></i>
+              <span id="speedCount">0</span>
+            </div>
+          </div>
+          <button class="btn-small" onclick="pauseGame()">
+            <i class="fas fa-pause"></i>
+          </button>
+          <button class="btn-small" onclick="showMainMenu()">
+            <i class="fas fa-home"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Game Canvas -->
+      <div class="game-container">
+        <div class="game" id="gameBoard">
+          <div class="man_div">
+            <img class="man" id="playerCharacter" src="images/man.jpg">
+            <div class="shield-effect hidden" id="shieldEffect"></div>
+          </div>
+        </div>
+        
+        <!-- Mobile Touch Controls -->
+        <div class="mobile-controls" id="mobileControls">
+          <div class="control-pad">
+            <button class="control-btn control-up" ontouchstart="mobileMove('up')" ontouchend="stopMobileMove()">
+              <i class="fas fa-chevron-up"></i>
+            </button>
+            <div class="control-middle">
+              <button class="control-btn control-left" ontouchstart="mobileMove('left')" ontouchend="stopMobileMove()">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <button class="control-btn control-center" onclick="useShield()">
+                <i class="fas fa-shield-alt"></i>
+              </button>
+              <button class="control-btn control-right" ontouchstart="mobileMove('right')" ontouchend="stopMobileMove()">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+            <button class="control-btn control-down" ontouchstart="mobileMove('down')" ontouchend="stopMobileMove()">
+              <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+          <div class="control-actions">
+            <button class="control-btn control-action" onclick="activateSpeedBoost()">
+              <i class="fas fa-bolt"></i>
+              <span>BOOST</span>
+            </button>
+            <button class="control-btn control-action" onclick="pauseGame()">
+              <i class="fas fa-pause"></i>
+              <span>PAUSE</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Game Instructions -->
+      <div class="game-instructions">
+        <p><i class="fas fa-arrow-up"></i> Arrow Keys to Move | <i class="fas fa-keyboard"></i> SPACE to Start | <i class="fas fa-pause"></i> P to Pause</p>
+      </div>
+    </div>
+
+    <!-- Leaderboard Screen -->
+    <div id="leaderboardScreen" class="screen hidden">
+      <div class="leaderboard-container">
+        <div class="screen-header">
+          <h1><i class="fas fa-trophy"></i> Leaderboard</h1>
+          <button class="btn-close" onclick="hideLeaderboard()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        
+        <div class="leaderboard-content">
+          <div class="leaderboard-tabs">
+            <button class="tab-btn active" onclick="showLeaderboardTab('classic')">Classic</button>
+            <button class="tab-btn" onclick="showLeaderboardTab('time-attack')">Time Attack</button>
+            <button class="tab-btn" onclick="showLeaderboardTab('endless')">Endless</button>
+          </div>
+          
+          <div class="leaderboard-list" id="leaderboardList">
+            <!-- Leaderboard entries will be populated here -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Screen -->
+    <div id="settingsScreen" class="screen hidden">
+      <div class="settings-container">
+        <div class="screen-header">
+          <h1><i class="fas fa-cog"></i> Settings</h1>
+          <button class="btn-close" onclick="hideSettings()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        
+        <div class="settings-content">
+          <div class="setting-group">
+            <label>Music Volume</label>
+            <input type="range" id="musicVolume" min="0" max="100" value="50">
+            <span id="musicVolumeValue">50%</span>
+          </div>
+          
+          <div class="setting-group">
+            <label>Sound Effects Volume</label>
+            <input type="range" id="sfxVolume" min="0" max="100" value="50">
+            <span id="sfxVolumeValue">50%</span>
+          </div>
+          
+          <div class="setting-group">
+            <label>Game Difficulty</label>
+            <select id="gameDifficulty">
+              <option value="easy">Easy</option>
+              <option value="normal" selected>Normal</option>
+              <option value="hard">Hard</option>
+            </select>
+          </div>
+          
+          <div class="setting-group">
+            <button class="btn-danger" onclick="resetGameData()">
+              <i class="fas fa-trash"></i> Reset All Data
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="gameOverScreen" class="screen hidden">
+      <div class="game-over-container animate__animated animate__zoomIn">
+        <h1>Game Over!</h1>
+        <div class="game-over-stats">
+          <div class="stat-item">
+            <label>Final Score:</label>
+            <span id="finalScore">0</span>
+          </div>
+          <div class="stat-item">
+            <label>Level Reached:</label>
+            <span id="finalLevel">1</span>
+          </div>
+          <div class="stat-item">
+            <label>Time Survived:</label>
+            <span id="timeSurvived">0s</span>
+          </div>
+          <div class="stat-item" id="newRecordMessage" style="display: none;">
+            <span class="new-record">🎉 New Personal Record! 🎉</span>
+          </div>
+        </div>
+        
+        <div class="game-over-actions">
+          <button class="btn-primary" onclick="restartGame()">
+            <i class="fas fa-redo"></i> Play Again
+          </button>
+          <button class="btn-secondary" onclick="showMainMenu()">
+            <i class="fas fa-home"></i> Main Menu
+          </button>
+          <button class="btn-secondary" onclick="showLeaderboard()">
+            <i class="fas fa-trophy"></i> Leaderboard
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pause Screen -->
+    <div id="pauseScreen" class="screen hidden">
+      <div class="pause-container">
+        <h1><i class="fas fa-pause"></i> Game Paused</h1>
+        <div class="pause-actions">
+          <button class="btn-primary" onclick="resumeGame()">
+            <i class="fas fa-play"></i> Resume
+          </button>
+          <button class="btn-secondary" onclick="restartGame()">
+            <i class="fas fa-redo"></i> Restart
+          </button>
+          <button class="btn-secondary" onclick="showMainMenu()">
+            <i class="fas fa-home"></i> Main Menu
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Achievement Notification -->
+    <div id="achievementNotification" class="achievement-popup hidden">
+      <div class="achievement-content">
+        <i class="fas fa-trophy achievement-icon"></i>
+        <div class="achievement-text">
+          <h3>Achievement Unlocked!</h3>
+          <p id="achievementMessage"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="gameLogic.js" charset="utf-8"></script>
+    <script src="userManager.js" charset="utf-8"></script>
+    <script src="achievements.js" charset="utf-8"></script>
+    <script src="index.js" charset="utf-8"></script>
+  </body>
+</html>
