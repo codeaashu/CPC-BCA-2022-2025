@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+  font-family: Outfit;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+::-webkit-scrollbar{
+  display: none;
+}
+
+.rich-text { font-size: 15px; color: #7A7B7D; }
+
+.rich-text p { margin-bottom: 16px; }
+
+.rich-text h1 { font-size: 36px; font-weight: 800; color: #252525; margin: 32px 0; }
+
+.rich-text h2 { font-size: 22px; font-weight: 700; color: #252525; margin: 24px 0; }
+
+.rich-text h3 { font-size: 18px; font-weight: 600; color: #333333; margin: 20px 0; }
+
+.rich-text h4 { font-size: 16px; font-weight: 500; color: #444444; margin: 16px 0; }
+
+.rich-text h5 { font-size: 14px; font-weight: 400; color: #555555; margin: 12px 0; }
+
+.rich-text h6 { font-size: 12px; font-weight: 400; color: #666666; margin: 8px 0; }
+
+.rich-text strong { font-weight: 700; }
+
+.rich-text ol { margin-left: 30px; list-style-type: decimal; }
+
+.rich-text ul { margin-left: 30px; list-style-type: disc; }
+
+.rich-text li { margin-bottom: 8px; }
+.input {
+  @apply w-full px-4 py-2 rounded-lg border dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition;
+}
+
+.btn {
+  @apply bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition;
+}
+.input {
+  @apply w-full border px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+.btn-primary {
+  @apply w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition;
+}
