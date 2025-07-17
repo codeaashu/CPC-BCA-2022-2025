@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tour Feedback Form</title>
+    <link rel="stylesheet" href="feed.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="feed.js" defer></script>
+    <script
+      src="https://kit.fontawesome.com/b08b6de27e.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <form method="post" id="feedback-form">
+        <div class="row-mb-3">
+          <div class="col-md-12">
+            <h2>Tour Feedback Form</h2>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <div class="icon"><i class="fas fa-map-marked-alt"></i></div>
+            <input
+              type="text"
+              name="event_name"
+              placeholder="Name the tour you attended:"
+              id="event_name"
+              class="form-control"
+              required
+            />
+          </div>
+          <div class="col-md-6">
+            <div class="icon"><i class="fas fa-calendar-alt"></i></div>
+            <input
+              type="date"
+              class="form-control"
+              placeholder="Tour Date:"
+              name="event_date"
+              id="event_date"
+              required
+            />
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <div class="icon"><i class="fas fa-user"></i></div>
+            <input
+              type="text"
+              name="FullName"
+              id="FullName"
+              placeholder="Your Name"
+              class="form-control"
+              required
+            />
+          </div>
+          <br />
+          <div class="col-md-6">
+            <div class="icon"><i class="fas fa-envelope"></i></div>
+            <input
+              type="email"
+              class="form-control"
+              placeholder="Email Id"
+              name="Email"
+              id="Email"
+              required
+            />
+          </div>
+        </div>
+
+        <h3>What's your opinion about:</h3>
+
+        <div class="group">
+          <div class="row mb-3">
+            <div class="col-md-12">
+              <label>Ease of navigation?</label>
+              <div class="d-flex flex-wrap" id="navigationEase" required></div>
+              <p id="navigationEase-rating-text">Rating: 0</p>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-12">
+              <label>Booking process</label>
+              <div class="d-flex flex-wrap" id="bookingProcess" required></div>
+              <p id="bookingProcess-rating-text">Rating: 0</p>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-12">
+              <label>Accuracy of information provided</label>
+              <div
+                class="d-flex flex-wrap"
+                id="accuracyInformation"
+                required
+              ></div>
+              <p id="accuracyInformation-rating-text">Rating: 0</p>
+            </div>
+          </div>
+        </div>
+
+        <h3>How would you rate the following aspects?</h3>
+        <div class="group">
+          <div class="row mb-3">
+            <div class="col-md-12">
+              <label>Payment options</label>
+              <div class="d-flex flex-wrap" id="paymentOptions" required></div>
+              <p id="paymentOptions-rating-text">Rating: 0</p>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-12">
+              <label>Security Measures</label>
+              <div
+                class="d-flex flex-wrap"
+                id="securityMeasures"
+                required
+              ></div>
+              <p id="securityMeasures-rating-text">Rating: 0</p>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-12">
+              <label>Customer Support</label>
+              <div class="d-flex flex-wrap" id="customerSupport" required></div>
+              <p id="customerSupport-rating-text">Rating: 0</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <textarea
+              name="comments"
+              class="form-control"
+              placeholder="Your suggestions for improving future events"
+              id="comments"
+              rows="6"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6 d-flex align-items-center">
+            <button type="submit" class="btn btn-lg px-4">Submit</button>
+          </div>
+        </div>
+
+        <div class="icons">
+          <a
+            href="https://www.linkedin.com/in/arpan-Thakur-775294251/?original_referer=https%3A%2F%2Fin%2Esearch%2Eyahoo%2Ecom%2F&originalSubdomain=in"
+          >
+            <div class="icon">
+              <i
+                class="fab fa-linkedin"
+                title="linkedin"
+                style="cursor: pointer"
+              ></i>
+            </div>
+          </a>
+
+          <a href="https://x.com/ArpanCh40193288" target="_blank" title="X">
+            <div class="icon">
+              <i class="fab fa-twit" title="X" style="cursor: pointer">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  x="0px"
+                  y="0px"
+                  width="35"
+                  height="40"
+                  viewBox="0 0 50 50"
+                >
+                  <path
+                    d="M 11 4 C 7.134 4 4 7.134 4 11 L 4 39 C 4 42.866 7.134 46 11 46 L 39 46 C 42.866 46 46 42.866 46 39 L 46 11 C 46 7.134 42.866 4 39 4 L 11 4 z M 13.085938 13 L 21.023438 13 L 26.660156 21.009766 L 33.5 13 L 36 13 L 27.789062 22.613281 L 37.914062 37 L 29.978516 37 L 23.4375 27.707031 L 15.5 37 L 13 37 L 22.308594 26.103516 L 13.085938 13 z M 16.914062 15 L 31.021484 35 L 34.085938 35 L 19.978516 15 L 16.914062 15 z"
+                  ></path>
+                </svg>
+              </i>
+            </div>
+          </a>
+
+          <a href="https://www.instagram.com/anuragbasu1973/">
+            <div class="icon">
+              <i
+                class="fab fa-instagram"
+                title="Instagram"
+                style="cursor: pointer"
+              ></i>
+            </div>
+          </a>
+
+          <a href="https://www.youtube.com/@arpanThakur53" title="YouTube">
+            <div class="icon">
+              <i class="fab fa-youtube" style="cursor: pointer"></i>
+            </div>
+          </a>
+
+          <a href="https://github.com/apu52" title="GitHub">
+            <div class="icon">
+              <i class="fab fa-github" style="cursor: pointer"></i>
+            </div>
+          </a>
+        </div>
+      </form>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        //for date check and preventing future selection
+        // Get today's date in ISO format (YYYY-MM-DD)
+        const today = new Date().toISOString().split("T")[0];
+
+        // Set min attribute for all date inputs to today's date
+        const dateInputs = document.querySelectorAll('input[type="date"]');
+        dateInputs.forEach((input) => {
+          input.setAttribute("max", today);
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,256 @@
+div.niha {
+
+
+    border: 2px solid rgb(151, 228, 240);
+    display: inline-block;
+    color: rgb(151, 228, 240);
+    font-size: small;
+}
+
+body {
+    background-color: lightskyblue;
+}
+
+.headingfonts {
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 40px;
+    font-style: normal;
+    font-variation-settings:
+        "wdth" 100;
+    text-align: center;
+}
+
+
+/* Typing Effect CSS */
+/* 
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink-caret {
+    from , to { border-color: transparent; }
+    50% { border-color: transparent; }
+} */
+
+#heading2 {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 2em;
+    color: #d6cece;
+    border-right: 0.15em solid #f5f3f3;
+    white-space: nowrap;
+    overflow: hidden;
+    /* width: 0; Ensures the text is hidden initially */
+    /* animation: 
+        typing 10s steps(2000, end) forwards,
+        blink-caret 0.75s step-end infinite; */
+}
+
+
+
+#heading2 {
+    color: #36fe9a;
+    font-size: 60px;
+    font-weight: bold;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-align: center;
+
+}
+
+.buttons {
+    background: linear-gradient(135deg, #007BFF, #1E90FF);
+    /* Gradient blue background */
+    color: white;
+    /* Text color */
+    border-radius: 30px;
+    /* Softer, more elegant rounded corners */
+    text-decoration: none;
+    /* Remove underline */
+    width: 120px;
+    /* Increased width for better readability */
+    height: 40px;
+    /* Increased height */
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    /* Classic font */
+    font-size: 16px;
+    /* Slightly larger text for better readability */
+    font-weight: bold;
+    /* Make text bold */
+    text-align: center;
+    /* Center text horizontally */
+    line-height: 40px;
+    /* Center text vertically */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Soft shadow for depth */
+    cursor: pointer;
+    /* Pointer on hover */
+    margin: 10px;
+    /* Add spacing around button */
+}
+
+/* Hover effect */
+.buttons:hover {
+    background: linear-gradient(135deg, #1E90FF, #007BFF);
+    /* Reverse gradient on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    /* Deeper shadow on hover */
+    transform: translateY(-3px);
+    /* Slight lift on hover */
+}
+
+/* Active effect (when button is clicked) */
+.buttons:active {
+    background: linear-gradient(135deg, #0056b3, #004080);
+    /* Darker gradient on click */
+    transform: translateY(0);
+    /* Reset lift on click */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    /* Slightly reduced shadow */
+}
+
+.buttons a {
+    color: white;
+    /* Change link text color */
+    text-decoration: none;
+    /* Remove underline from link */
+    display: block;
+    /* Make the link a block element to fill the button */
+    width: 100%;
+    /* Make link fill the button width */
+    height: 100%;
+    /* Make link fill the button height */
+    text-align: center;
+    /* Center text */
+}
+
+.buttons:hover {
+    background-color: black;
+    color: white;
+}
+
+
+.bottom-background {
+    position: fixed;
+    top: 0;
+    bottom: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    /* Adjust height as needed */
+    /* background-image: url(""); */
+    /* Your moving background image */
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: -1;
+    /* Ensure it stays behind other content */
+    right: 0%;
+}
+
+.card-container {
+    display: flex;
+    overflow-x: auto;
+    padding: 16px;
+    gap: 16px;
+    overflow-x: hidden;
+    /* Hides horizontal scrollbar */
+
+
+}
+
+.cards {
+    flex: 0 1 50px;
+    /* Ensure each card has a base width of 350px */
+    margin: 8px;
+    /* Add some space around each card */
+    border: 1px solid #eaeaea;
+    /* Border for the card */
+    border-radius: 8px;
+    /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Shadow for depth */
+    background-color: white;
+}
+
+.cards:hover {
+    background: linear-gradient(to bottom, blue, white);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    transform: scale(1.02);
+}
+
+.card-image {
+    border: 1px solid #eaeaea;
+    /* Card border */
+    border-radius: 8px;
+    /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Shadow for depth */
+    overflow: hidden;
+    /* Prevent overflow */
+}
+
+/* Button container for centering at the bottom */
+.button-container {
+    display: flex;
+    justify-content: center;
+    /* Center horizontally */
+    align-items: flex-end;
+    /* Align button at the bottom */
+    position: fixed;
+    bottom: 20px;
+    /* Distance from the bottom */
+    left: 0;
+    right: 0;
+    width: 100%;
+    /* Ensure it spans the entire width */
+    padding: 10px;
+}
+
+.button1 {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    /* Button height */
+    width: 200px;
+    /* Button width */
+    cursor: pointer;
+    /* Pointer on hover */
+    background: linear-gradient(45deg, #36fe9a, #28a745);
+    /* Gradient color */
+    color: white;
+    /* Text color */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    /* More prominent shadow */
+    border: none;
+    /* Remove border */
+    border-radius: 50px;
+    /* Rounded button */
+    margin: 0 auto;
+    /* Centering in the flex container */
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+/* Make sure anchor tag inside button matches style */
+.button1 a {
+    text-decoration: none;
+    color: white;
+    /* Ensures link text is white */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    /* Fill the entire button */
+    height: 100%;
+}
+
+/* Hover effect */
+.button1:hover {
+    background: linear-gradient(45deg, #28a745, #36fe9a);
+    /* Reverse gradient on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    /* Deepen the shadow */
+    transform: translateY(-3px);
+    /* Lift the button slightly */
+}

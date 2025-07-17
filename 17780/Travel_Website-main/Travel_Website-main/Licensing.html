@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Licensing Page</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <style>
+      body {
+        font-family: "Lato", sans-serif;
+        background: linear-gradient(to bottom, #080f21, #06255b);
+        color: #ffffff;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 70%;
+        margin: 50px auto;
+        padding: 20px;
+        border-radius: 10px;
+      }
+
+      .container .title {
+        font-size: 4.3em;
+        color: #13b8e6;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin-bottom: 20px;
+        font-weight: 700;
+        text-align: center;
+      }
+
+      .container .section-title {
+        text-align: left;
+        font-size: 2em;
+        color: #0dcaf0;
+        margin-top: 20px;
+      }
+
+      .container .license-text {
+        font-size: 1.2em;
+        line-height: 1.6;
+        color: #f0f0f0;
+        margin-bottom: 20px;
+        text-align: left;
+      }
+
+      .container hr {
+        width: 50%;
+        color: #d56fa1;
+        opacity: 0.3;
+        margin: 20px auto;
+      }
+
+      @media (max-width: 768px) {
+        .container .title {
+          font-size: 2em;
+        }
+
+        .container .section-title {
+          font-size: 1.5em;
+        }
+
+        .container .license-text {
+          font-size: 1em;
+        }
+      }
+
+      .copyright-footer {
+        display: flex;
+        justify-content: center;
+        margin-top: 25px;
+        font-size: 17px;
+        color: rgb(185, 185, 185);
+      }
+
+      .Lastupdate {
+        margin-bottom: 55px;
+        font-size: 19px !important;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif, serif !important;
+        font-weight: 500;
+        margin-top: 0px;
+        color: rgb(255, 255, 255) !important;
+      }
+
+      #last-updated-date {
+        font-size: 18px;
+        color: rgb(255, 255, 255) !important;
+        font-weight: 400 !important;
+      }
+    </style>
+    <style>
+      #progress-container {
+        position: fixed;
+        top: 0px;
+        left: 0;
+        width: 100%;
+        height: 15px;
+        z-index: 99990;
+        /* background: #f3f3f3; */
+      }
+
+      #progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0%;
+        height: 7px;
+        width: 0;
+        background: linear-gradient(
+          90deg,
+          rgb(0, 72, 255) 0%,
+          rgb(153, 187, 255) 50%,
+          rgb(0, 184, 250) 100%
+        );
+        box-shadow: 0 0 4px rgba(0, 166, 255, 0.7),
+          0 0 10px rgba(255, 255, 255, 0.7);
+        transition: width 0.09s ease-in-out;
+        border-radius: 10px;
+      }
+
+      ::-webkit-scrollbar {
+        width: 15px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #d1e5ff;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(
+          90deg,
+          rgb(63, 120, 244),
+          rgb(245, 89, 239)
+        );
+        border-radius: 10px;
+        height: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <video autoplay muted loop id="video-background">
+      <source src="./licensing.mp4" type="video/mp4" />
+    </video>
+    <div class="overlay"></div>
+
+    <div class="container">
+      <header>
+        <div class="logo">
+          <img src="./img/tour1.png" alt="Logo" />
+          <span style="margin-left: -1rem">TripTailor</span>
+        </div>
+        <h1>Licensing Information</h1>
+        <p class="subtitle">Understanding Your Rights and Responsibilities</p>
+      </header>
+
+      <div class="content-wrapper">
+        <main class="main-content">
+          <h2 style="text-decoration: underline !important">License Terms</h2>
+          <div class="license-text">
+            <p>Copyright (c) 2023 Your Company Name</p>
+            <p>
+              Permission is hereby granted, free of charge, to any person
+              obtaining a copy of this software and associated documentation
+              files (the "Software"), to deal in the Software without
+              restriction, including without limitation the rights to use, copy,
+              modify, merge, publish, distribute, sublicense, and/or sell copies
+              of the Software, and to permit persons to whom the Software is
+              furnished to do so, subject to the following conditions:
+            </p>
+            <p>
+              The above copyright notice and this permission notice shall be
+              included in all copies or substantial portions of the Software.
+            </p>
+            <p>
+              THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+              EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+              MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+              NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+              HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+              WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+              OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+              DEALINGS IN THE SOFTWARE.
+            </p>
+          </div>
+          <div class="last-update">
+            Last updated: <span id="last-updated-date"></span>
+          </div>
+        </main>
+        <aside class="sidebar">
+          <h2 style="text-decoration: underline !important">Quick Links</h2>
+          <ul>
+            <li><a href="./tnc.html">Terms of Service</a></li>
+            <li><a href="./privacy.html">Privacy Policy</a></li>
+            <li><a href="./faq.html">FAQ</a></li>
+            <li><a href="./index.html#cnt-form">Contact Us</a></li>
+          </ul>
+        </aside>
+      </div>
+    </div>
+
+    <footer class="copyright">
+      <p>&copy; Copyright ©2024 PayalThakur. All rights reserved.</p>
+    </footer>
+
+    <script>
+      function updateLastUpdatedDate() {
+        const dateElement = document.getElementById("last-updated-date");
+        const now = new Date();
+        const options = { year: "numeric", month: "long", day: "numeric" };
+        dateElement.textContent = now.toLocaleDateString("en-US", options);
+      }
+
+      document.addEventListener("DOMContentLoaded", updateLastUpdatedDate);
+    </script>
+  </body>
+</html>

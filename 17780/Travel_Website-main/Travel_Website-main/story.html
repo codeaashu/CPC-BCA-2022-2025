@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="./Image-Gallery/style.css">
+    <title>PayalCodes | TripTailor</title>
+    <!-- adding a fav-icon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+    
+    <script src="index.js"></script>
+    <link rel="stylesheet" href="style.css">
+
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js">
+</script>
+<script type="text/javascript">
+   (function(){
+      emailjs.init("WB9rAyWwwLZube-er");
+   })();
+</script>
+
+  <style>
+  html {
+    scroll-behavior: smooth;
+  }
+  </style>
+
+  </head>
+  <body>
+    <!-- <nav>
+      <div class="nav__logo">TripTailor<span>.</span></div>
+      <ul class="nav__links">
+        <li class="link"><a href="#Home">Home</a></li>
+        <li class="link"><a href="#Destinations">Destinations</a></li>
+        <li class="link"><a href="#trip">Pricing</a></li>
+        <li class="link"><a href="#ReviewGallery">Reviews</a></li>
+      </ul>
+      <a href="#contact"><button class="btn">Contact Us</button></a>
+    </nav> -->
+    
+    <div class="nav-container" id="top">
+      <nav class="newNav">
+        <img src="./img/tour1.png" class="sitelogo">
+
+        <a href="#" class="nav__logo" data-aos="fade-right">TripTailor</span></a>
+
+        <ul class="navLinks">
+
+          <li class="link" id="View-link" data-aos=""><a href="mapa.html">View</a></li>
+          <li class="link" id="LogIn-link" data-aos=""><a href="newLogin.html">Log In</a></li>
+          <li class="link" data-aos=""><a href="index.html/#Home">Home</a></li>
+          <li class="link" data-aos=""><a href="index.html/#AboutUs">About</a></li>
+          <li class="link" data-aos=""><a href="index.html/#Destinations">Destination</a></li>
+          <li class="link" data-aos=""><a href="index.html/#trip">Prices</a></li>
+          <li class="link" data-aos=""><a href="index.html/#ReviewGallery">Trip Gallery</a></li>
+          <li class="link" data-aos=""><a href="index.html/#tourist">Tourist Guide</a></li>
+          <li class="link" data-aos=""><a href="index.html/#hotel">Hotel & Resort</a></li>
+          <li class="link" data-aos=""><a href="index.html/#testimonials">Testimonial</a></li>
+          <li class="link" data-aos=""><a href="feedback.html">Rate Us</a></li>
+          <li class="link" data-aos=""><a href="index.html/#cnt-form">Contact Us</a></li>
+        </ul>
+
+
+
+        <a href="login-modified.html" class="contact-btn"><button class="btn" id="btn-style" style="margin: 0;"
+          data-aos="fade-down">Login</button></a>
+
+        <a href="loginPage.html" class="contact-btn"><button class="btn" id="logout-btn"
+            style="margin: 0; display: none;" data-aos="fade-down" disabled>Log Out</button></a>
+
+        <!-- <a href="login-modified.html" class="contact-btn"><button class="btn" id="btn-style"
+            style="margin: 0; box-shadow:1.5px 1.5px 6px red;" data-aos="fade-down">Login</button></a> -->
+
+        <div class="toggle-container" data-aos="fade-down">
+          <input id="themeToggle" class="toggle" type="checkbox">
+        </div>
+        <div class="hamburger" data-aos="fade-down">
+	@@ -78,6 +94,19 @@
+      </nav>
+    </div>
+
+
+    <style>
+      .nav-container .newNav {
+        display: flex;
+        justify-content: space-around;
+        gap: 0;
+      }
+
+      .nav-container .newNav .navLinks {
+        padding: 20px;
+      }
+    </style>
+
+    <!-- inserted a video in the header section to reflect "watch our story" -->
+    <header>
+      <section class="section__container" style="margin-top: 20px; margin-bottom: -28px;background:rgb(241, 239, 239);">
+        <video class="sized-video" autoplay controls>
+          <source src="img/travel_video.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <!-- </div> -->
+      </section>
+    </header>
+
+    <!-- omitted uneccessary sections -->
+
+    
+<!-- footer  -->
+
+<footer class="footer" data-aos="fade-up">
+  <div class="footer__container">
+    <div class="footer__col">
+      <h3 class="footer-head" class="footer__title">TripTailor<span>.</span></h3>
+      <p>
+        Ready for your next adventure? Let's make it unforgettable.<br>
+      </p>
+      <p class="footer__text">
+        Start planning your dream trip with us and explore the world.
+      </p>
+    </div>
+    <div class="footer__col">
+      <h3 class="footer-head" class="footer__title">Places You May Want to Visit<span>.</span></h3>
+      <p class="footer__text">
+
+        <a href="Cultural_Exp.html">Cultural Experiences</a>
+
+        <a href="HoneyMoon.html">Honeymoon Places</a>
+        <a href="Adventure.html">Adventure travel</a>
+
+
+      </p>
+    </div>
+    <div class="footer__col">
+      <div class="footer__area">
+        <h4 class="footer-head" class="footer__subtitle">Support</h4>
+        <p><a href="./faq.html" class="footer__link">FAQs</a></p>
+        <p><a href="./tnc.html" class="footer__link">Terms & Conditions</a></p>
+        <p><a href="./privacy.html" class="footer__link">Privacy Policy</a></p>
+        <p><a href="index.html/#cnt-form" class="footer__link">Contact Us</a></p>
+      </div>
+    </div>
+    <div class="footer__col">
+      <h4 class="footer-head" style="padding-left: 35px;"> Address</h4>
+      <div class="mapouter">
+        <div class="gmap_canvas"><iframe width="200" height="200" id="gmap_canvas"
+            src="https://maps.google.com/maps?q=wellington%20street%20kolkata&t=k&z=11&ie=UTF8&iwloc=&output=embed"
+            frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a
+            href="https://embedgooglemap.net/124/">invincible 123movies</a><br>
+          <style>
+            .mapouter {
+              position: relative;
+              text-align: right;
+              height: 200px;
+              width: 200px;
+            }
+          </style><a href="https://www.embedgooglemap.net">embed google map on website</a>
+          <style>
+            .gmap_canvas {
+              overflow: hidden;
+              background: none !important;
+              height: 200px;
+              width: 200px;
+            }
+          </style>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="footer__col">
+      <div class="footer__area">
+        <h4>Contact Us</h4>
+        <div class="d-flex align-items-center mb-2">
+          <a href="mailto:tour@TripTailor.com" class="text-nowrap">tour@TripTailor.com</a>
+        </div>
+        <div class="d-flex align-items-center">
+          <a href="tel:8562145852" class="text-nowrap">+91 8562145852</a>
+        </div>
+        <div class="icons">
+          <a href="">
+            <div class="icon">
+              <i class="fab fa-linkedin" title="linkedin" style="cursor: pointer;"></i>
+            </div>
+          </a>
+
+          <a href="https://x.com/ArpanCh40193288">
+            <div class="icon">
+              <i class="fab fa-x-twitter" title="X" style="cursor: pointer;"></i>
+            </div>
+          </a>
+
+          <a href="">
+            <div class="icon">
+              <i class="fab fa-instagram" title="Instagram" style="cursor: pointer;"></i>
+            </div>
+          </a>
+
+
+          <a href="" title="YouTube">
+            <div class="icon">
+              <i class="fab fa-youtube" style="cursor: pointer;"></i>
+            </div>
+          </a>
+
+          <a href="">
+            <div class="icon">
+              <i class="fab fa-github" title="Github"></i>
+            </div>
+          </a>
+
+        </div>
+        <!-- Visitor Widget -->
+        <div class="visitor-widget mt-3">
+          <a>
+            <img alt="Hits" src="https://hits.sh/apu52.github.io/Travel_Website.svg?style=for-the-badge&label=Visitors&extraCount=786&color=526180&labelColor=9bbbff"/>
+          </a>
+        </div>
+      </div>
+
+     
+
+    </div>
+    <div class="footer__col">
+      <div id="google_element" style="z-index: 1;"></div>
+      <script src="https://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate"></script>
+      <script>
+        function loadGoogleTranslate() {
+          new google.translate.TranslateElement({
+            pageLanguage: 'en'
+          }, 'google_element');
+        }
+      </script>
+    </div>
+   
+
+    
+    </div>
+  
+   
+
+    <!--  New copyright code to make it dynamic and display current year -->
+   
+    <div class="footer__bar">
+      <div>
+        <li>Copyright &copy;<span id="year"></span> </span> PayalThakur. All rights reserved. </li>
+      </div>
+    </div>
+</footer>
+
+    <!-- adding a btn -->
+    <button id="goToTopBtn" onclick="goToTop()">Go to Top</button>
+    <script>
+      // Get the button
+      var mybutton = document.getElementById("goToTopBtn");
+    
+      // When the user scrolls down 20px from the top of the document, show the button
+      window.onscroll = function () {
+        scrollFunction();
+      };
+    
+      function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+          mybutton.style.display = "block";
+        } else {
+          mybutton.style.display = "none";
+        }
+      }
+    
+      // When the user clicks on the button, scroll to the top of the document
+      function goToTop() {
+        document.body.scrollTop = 0; 
+        document.documentElement.scrollTop = 0; 
+      }
+    </script>
+  </body>
+  <script>
+    function replaceDivs() {
+      // Get references to the original and new divs
+      var originalDiv = document.getElementById("originalDiv");
+      var newDiv = document.getElementById("newDiv");
+
+      // Check if the original div exists
+      if (originalDiv) {
+          // Hide the original div
+          originalDiv.style.display = "none";
+
+          // Show the new div
+          newDiv.style.display = "block";
+      }
+  }
+  </script>
+  <script src="./Image-Gallery/script.js"></script>
+</html>

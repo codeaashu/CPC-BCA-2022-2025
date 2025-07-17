@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TripTailor Checkout</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+  
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="payment.css">
+</head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="footer.css">
+  <link rel="stylesheet" href="./Image-Gallery/style.css">
+  <link rel="stylesheet" href="./Image-Gallery/stylecaptions.css">
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+  
+  <!-- sticky animation  -->
+ <script type="text/javascript">
+  window.addEventListener("scroll", function () {
+    var header = document.querySelector("nav");
+    header.classList.toggle("sticky", window.scrollY > 50)
+  })
+</script>
+<body>
+  <div class="nav-container" id="top">
+    <nav class="newNav">
+      <div style="display: flex; flex-direction: row; align-items: center;">
+      <img src="favicon.ico" class="sitelogo">
+      
+      <a href="#" class="nav__logo" data-aos="fade-right">TripTailor<span>.</span></a>
+    </div>
+
+      <ul class="navLinks">
+        <li class="link" id="View-link" data-aos=""><a href="mapa.html">View</a></li>
+        <li class="link" id="LogIn-link" data-aos=""><a href="newLogin.html">Log In</a></li>
+        <li class="link" data-aos=""><a href="index.html">Home</a></li>
+        <li class="link" data-aos=""><a href="about.html">About</a></li>
+        <li class="link dropdown" data-aos="">
+            <a href="#Services" class="dropdown">Services</a>
+            <ul class="dropdown-menu">
+                <li><a href="index.html#Destinations">Destination</a></li>
+                <li><a href="index.html#trip">Prices</a></li>
+                <li><a href="index.html#ReviewGallery">Trip Gallery</a></li>
+                <li><a href="index.html#tourist">Tourist Guide</a></li>
+                <li><a href="index.html#hotel">Hotel & Resort</a></li>
+            </ul>
+        </li>
+        <li class="link" data-aos=""><a href="./packages.html">Packages</a></li>
+        <li class="link" data-aos=""><a href="index.html#testimonial">Testimonial</a></li>
+        <li class="link" data-aos=""><a href="feedback.html">Rate Us?</a></li>
+        <li class="link" data-aos=""><a href="index.html#cnt-form">Contact Us</a></li>
+    </ul>
+
+    <a href="newLogin.html" class="contact-btn" id="nav-login-btn"><button class="btn login" id="btn-style"
+        data-aos="fade-down">Login/SignUp</button></a>
+    <a href="mapa.html" class="contact-btn" id="nav-view-btn"><button class="btn" id="btn-style" style="margin: 0;"
+        data-aos="fade-down">view <map name=""></map></button></a>
+
+    <a href="loginPage.html" class="contact-btn"><button class="btn" id="logout-btn"
+        style="margin: 0; display: none;" data-aos="fade-down" disabled>Log Out</button></a>
+
+      <!-- <a href="login-modified.html" class="contact-btn"><button class="btn" id="btn-style"
+          style="margin: 0; box-shadow:1.5px 1.5px 6px red;" data-aos="fade-down">Login</button></a> -->
+
+      <div class="toggle-container" data-aos="fade-down">
+        <input id="themeToggle" class="toggle" type="checkbox">
+      </div>
+      <div class="hamburger" data-aos="fade-down">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </nav>
+  </div>
+
+  <div class="container" style="margin-top: 70px;">
+    <main>
+
+        
+      <div class="py-4 text-left guide">
+        
+      <div class=" text-center">
+
+        <h2 style="text-decoration: underline ;" >Guide</h2>
+
+      </div>
+
+        <div id="inst" style="border:2px solid #a1a1a1; padding: 2rem;border-radius: 12px;">
+          <p >Before you proceed to checkout, here are some instructions : </p>
+          <ul class="connected list no2">
+            <li>Fill in the required fields with your personal details (name, email, username etc.)</li>
+            <li>Don't forget to double-check your travel packages, dates, and address.</li>
+            <li>Select your preferred payment method -
+  
+              <ul>
+                <li>Credit Card</li>
+                <li>Debit Card</li>
+                <li>PayPal</li> 
+              </ul>
+  
+               Enter your payment details securely.</li>
+  
+            <li>Select your preferred shipping method - </li>
+  
+            <ul>
+              <li>Standard Shipping</li>
+              <li>Express shipping</li>
+            </ul>
+  
+            <li>Check your email for any follow-up instructions or updates regarding your booking.</li>
+            <li>Contact customer support if you encounter any issues or have questions</li>
+          </ul>
+
+        </div>
+        <br>
+      </div>
+
+
+        <hr class="hr">
+        <br>
+
+        <div class="py-5 text-center">
+          <h2>Checkout</h2>
+        </div>
+  
+        <div class="row g-5">
+          <div class="col-md-5 col-lg-4 order-md-last">
+            <!-- Cart Summary -->
+            <h4 class="d-flex justify-content-between align-items-center mb-3 ">
+              <span class="text-primary">Your cart</span>
+              <span class="badge bg-primary rounded-pill">1</span>
+            </h4>
+            <ul class="list-group mb-3 cart">
+              <!-- (Cart Items) -->
+              <li class="list-group-item d-flex justify-content-between lh-sm">
+                <div>
+                  <h6 class="my-0">Your Package</h6>
+                  <small id="brief-description" class="text-body-secondary">Brief description</small>
+                </div>
+                <span id="package-cost" class="text-body-secondary">15000/-</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
+                <div class="text-success">
+                  <h6 class="my-0">Promo code</h6>
+                  <small>JWOC</small>
+                </div>
+                <span class="text-success">−1000/-</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <span>Total (INR)</span>
+                <strong id="total-cost">14000/-</strong>
+              </li>
+            </ul>
+  
+            <!-- Promo code form -->
+            <form class="card p-2">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Promo code">
+                <button type="submit" class="btn btn-secondary">Redeem</button>
+              </div>
+            </form>
+            <hr class="my-4">
+  
+            <!-- Continue to Checkout button -->
+            <a href="#payment-section" class="href"><button id="checkout-button" class="w-100 btn btn-primary btn-lg" type="button">Continue to checkout</button></a>
+          </div>
+  
+          <!-- Checkout Form -->
+          <div class="col-md-7 col-lg-8">
+            <h4 class="mb-3">Billing address</h4>
+            <form class="needs-validation" novalidate>
+              <div class="row g-3">
+                <!-- (Billing Address Form Content) -->
+                <div class="col-sm-6">
+                  <label for="firstName" class="form-label">First name</label>
+                  <input type="text" class="form-control" id="firstName" placeholder="Eg: John" value="" required>
+                  <div class="invalid-feedback">
+                    Valid first name is required.
+                  </div>
+                </div>
+  
+                <div class="col-sm-6">
+                  <label for="lastName" class="form-label">Last name</label>
+                  <input type="text" class="form-control" id="lastName" placeholder="Eg: Doe" value="" required>
+                  <div class="invalid-feedback">
+                    Valid last name is required.
+                  </div>
+                </div>
+  
+                <div class="col-12">
+                  <label for="username" class="form-label">Username</label>
+                  <div class="input-group has-validation">
+                    <span class="input-group-text user">@</span>
+                    <input type="text" class="form-control" id="username" placeholder="Username" required>
+                    <div class="invalid-feedback">
+                      Your username is required.
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="col-12">
+                  <label for="email" class="form-label">Email <span class="text-body-secondary">(Optional)</span></label>
+                  <input type="email" class="form-control" id="email" placeholder="TripTailor@example.com">
+                  <div class="invalid-feedback">
+                    Please enter a valid email address for shipping updates.
+                  </div>
+                </div>
+  
+                <div class="col-12">
+                  <label for="address" class="form-label">Address</label>
+                  <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
+                  <div class="invalid-feedback">
+                    Please enter your shipping address.
+                  </div>
+                </div>
+  
+                <div class="col-12">
+                  <label for="address2" class="form-label">Address 2 <span
+                      class="text-body-secondary">(Optional)</span></label>
+                  <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
+                </div>
+  
+                <div class="col-md-5">
+                  <label for="country" class="form-label">Country</label>
+                  <select class="form-select" id="country" required>
+                    <option value="">Choose...</option>
+                    <option>India</option>
+                  </select>
+                  <div class="invalid-feedback">
+                    Please select a valid country.
+                  </div>
+  
+                </div>
+  
+                <div class="col-md-4">
+                  <label for="state" class="form-label">State</label>
+                  <select class="form-select" id="state" required>
+                    <option value="">Choose...</option>
+                    <option>Andhra Pradesh</option>
+                    <option>Arunachal Pradesh</option>
+                    <option>Assam</option>
+                    <option>Bihar</option>
+                    <option>Chhattisgarh</option>
+                    <option>Goa</option>
+                    <option>Gujarat</option>
+                    <option>Haryana</option>
+                    <option>Himachal Pradesh</option>
+                    <option>Jammu and Kashmir</option>
+                    <option>Jharkhand</option>
+                    <option>Karnataka</option>
+                    <option>Kerala</option>
+                    <option>Madhya Pradesh</option>
+                    <option>Maharashtra</option>
+                    <option>Manipur</option>
+                    <option>Meghalaya</option>
+                    <option>Mizoram</option>
+                    <option>Nagaland</option>
+                    <option>Orissa</option>
+                    <option>Punjab</option>
+                    <option>Rajasthan</option>
+                    <option>Sikkim</option>                 
+                    <option>TamilNadu</option>
+                    <option>Telangana</option>
+                    <option>Tripura</option>              
+                    <option>Uttar Pradesh</option>
+                    <option>Uttarakhand</option>
+                    <option>West Bengal</option>
+                  </select>
+                  <div class="invalid-feedback">
+                    Please provide a valid state.
+                  </div>
+                </div>
+  
+                <div class="col-md-3">
+                  <label for="zip" class="form-label">Zip</label>
+                  <input type="text" class="form-control" id="zip" placeholder="" required>
+                  <div class="invalid-feedback">
+                    Please enter a valid Zipcode.
+                  </div>
+                </div>
+              </div>
+  
+              <!-- Shipping Method -->
+              <div class="mb-3">
+                <label for="shipping-method" class="form-label">Shipping Method</label>
+                <select class="form-select" id="shipping-method" required>
+                  <option value="">Choose...</option>
+                  <option value="standard">Standard Shipping</option>
+                  <option value="express">Express Shipping</option>
+                </select>
+                <div class="invalid-feedback">
+                  Please select a shipping method.
+                </div>
+              </div>
+  
+              <hr class="my-4">
+  
+              <!-- Payment Section (Initially Hidden) -->
+              <div id="payment-section" style="display: none;">
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="same-address">
+                  <label class="form-check-label" for="same-address">Shipping address is the same as my billing
+                    address</label>
+                </div>
+  
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="save-info">
+                  <label class="form-check-label" for="save-info">Save this information for next time</label>
+                </div>
+  
+                <hr class="my-4">
+  
+                <!-- Payment Options -->
+                <h4 class="mb-3">Payment</h4>
+                <div class="my-3">
+                  <div class="form-check">
+                    <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
+                    <label class="form-check-label" for="credit">Credit card</label>
+                  </div>
+                  <div class="form-check">
+                    <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
+                    <label class="form-check-label" for="debit">Debit card</label>
+                  </div>
+                  <div class="form-check">
+                    <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
+                    <label class="form-check-label" for="paypal">PayPal</label>
+                  </div>
+                </div>
+  
+                <div class="row gy-3">
+                  <div class="col-md-6">
+                    <label for="cc-name" class="form-label">Name on card</label>
+                    <input type="text" class="form-control" id="cc-name" placeholder="firstName lastName" required>
+                    <small class="text-body-secondary">Full name as displayed on card</small>
+                    <div class="invalid-feedback">
+                      Name on card is required
+                    </div>
+                  </div>
+  
+                  <div class="col-md-6">
+                    <label for="cc-number" class="form-label">Credit card number</label>
+                    <input type="text" class="form-control" id="cc-number" placeholder="xxxxxxxxxxxxx" required>
+                    <div class="invalid-feedback">
+                      Credit card number is required
+                    </div>
+                  </div>
+  
+                  <div class="col-md-3">
+                    <label for="cc-expiration" class="form-label">Expiration</label>
+                    <div class="input-group">
+                      <input type="text" class="form-control" id="cc-expiration" placeholder="MM/YY" required>
+                      <div class="input-group-append">
+                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                      </div>
+                      <div class="invalid-feedback">
+                        Expiration date required
+                      </div>
+                    </div>
+                  </div>
+  
+                  <div class="col-md-3">
+                    <label for="cc-cvv" class="form-label">CVV</label>
+                    <input type="text" class="form-control" id="cc-cvv" placeholder="xyz" required>
+                    <div class="invalid-feedback">
+                      Security code required
+                    </div>
+                  </div>
+                  <hr class="my-4">
+  
+                  <!-- Continue to Checkout button -->
+                  <button id="checkout-button" class="w-100 btn btn-primary btn-lg" type="button">Place Order</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </main>
+  
+
+  
+<!-- footer  -->
+
+<footer class="footer" data-aos="fade-up">
+  <div class="footer__container">
+    <div class="footer__col">
+      <h3 class="footer-head" class="footer__title">TripTailor<span>.</span></h3>
+      <p>
+        Ready for your next adventure? Let's make it unforgettable.<br>
+      </p>
+      <p class="footer__text">
+        Start planning your dream trip with us and explore the world.
+      </p>
+    </div>
+    <div class="footer__col">
+      <h3 class="footer-head" class="footer__title">Places You May Want to Visit<span>.</span></h3>
+      <p class="footer__text">
+
+        <a href="Cultural_Exp.html">Cultural Experiences</a>
+
+        <a href="HoneyMoon.html">Honeymoon Places</a>
+        <a href="Adventure.html">Adventure travel</a>
+
+
+      </p>
+    </div>
+    <div class="footer__col">
+      <div class="footer__area">
+        <h4 class="footer-head" class="footer__subtitle">Support</h4>
+        <p><a href="./faq.html" class="footer__link">FAQs</a></p>
+        <p><a href="./tnc.html" class="footer__link">Terms & Conditions</a></p>
+        <p><a href="./privacy.html" class="footer__link">Privacy Policy</a></p>
+        <p><a href="#cnt-form" class="footer__link">Contact Us</a></p>
+      </div>
+    </div>
+    <div class="footer__col">
+      <h4 class="footer-head" style="padding-left: 35px;"> Address</h4>
+      <div class="mapouter">
+        <div class="gmap_canvas"><iframe width="200" height="200" id="gmap_canvas"
+            src="https://maps.google.com/maps?q=wellington%20street%20kolkata&t=k&z=11&ie=UTF8&iwloc=&output=embed"
+            frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a
+            href="https://embedgooglemap.net/124/">invincible 123movies</a><br>
+          <style>
+            .mapouter {
+              position: relative;
+              text-align: right;
+              height: 200px;
+              width: 200px;
+            }
+          </style><a href="https://www.embedgooglemap.net">embed google map on website</a>
+          <style>
+            .gmap_canvas {
+              overflow: hidden;
+              background: none !important;
+              height: 200px;
+              width: 200px;
+            }
+          </style>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="footer__col">
+      <div class="footer__area">
+        <h4>Contact Us</h4>
+        <div class="d-flex align-items-center mb-2">
+          <a href="mailto:tour@TripTailor.com" class="text-nowrap">tour@TripTailor.com</a>
+        </div>
+        <div class="d-flex align-items-center">
+          <a href="tel:8562145852" class="text-nowrap">+91 8562145852</a>
+        </div>
+        <div class="icons">
+          <a href="">
+            <div class="icon">
+              <i class="fab fa-linkedin" title="linkedin" style="cursor: pointer;"></i>
+            </div>
+          </a>
+
+          <a href="https://x.com/ArpanCh40193288">
+            <div class="icon">
+              <i class="fab fa-x-twitter" title="X" style="cursor: pointer;"></i>
+            </div>
+          </a>
+
+          <a href="">
+            <div class="icon">
+              <i class="fab fa-instagram" title="Instagram" style="cursor: pointer;"></i>
+            </div>
+          </a>
+
+
+          <a href="" title="YouTube">
+            <div class="icon">
+              <i class="fab fa-youtube" style="cursor: pointer;"></i>
+            </div>
+          </a>
+
+          <a href="">
+            <div class="icon">
+              <i class="fab fa-github" title="Github"></i>
+            </div>
+          </a>
+
+        </div>
+        <!-- Visitor Widget -->
+        <div class="visitor-widget mt-3">
+          <a>
+            <img alt="Hits" src="https://hits.sh/apu52.github.io/Travel_Website.svg?style=for-the-badge&label=Visitors&extraCount=786&color=526180&labelColor=9bbbff"/>
+          </a>
+        </div>
+      </div>
+
+     
+
+    </div>
+    <div class="footer__col">
+      <div id="google_element" style="z-index: 1;"></div>
+      <script src="https://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate"></script>
+      <script>
+        function loadGoogleTranslate() {
+          new google.translate.TranslateElement({
+            pageLanguage: 'en'
+          }, 'google_element');
+        }
+      </script>
+    </div>
+   
+
+    
+    </div>
+  
+   
+
+    <!--  New copyright code to make it dynamic and display current year -->
+   
+    <div class="footer__bar">
+      <div>
+        <li>Copyright &copy;<span id="year"></span> </span> PayalThakur. All rights reserved. </li>
+      </div>
+    </div>
+</footer>
+
+  </div>
+
+  <script src="payment.js"></script>
+
+  <script>
+    document.getElementById('checkout-button').addEventListener('click', function () {
+      const paymentSection = document.getElementById('payment-section');
+      paymentSection.style.display = paymentSection.style.display === 'none' ? 'block' : 'none';
+    });
+  </script>
+
+</body>
+
+</html>
