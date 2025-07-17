@@ -1,0 +1,72 @@
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.table-container {
+  overflow-x: auto;
+  margin-bottom: 30px;
+}
+
+.holdings-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.07);
+}
+
+.holdings-table th,
+.holdings-table td {
+  padding: 10px 16px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.holdings-table th {
+  background: #f8f9fa;
+  color: #333;
+  font-weight: 600;
+}
+
+.holdings-table tr:nth-child(even) {
+  background-color: #f4f6f8;
+}
+
+.summary-cards {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  flex: 1;
+  background-color: #ffffff;
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.08);
+}
+
+.card h5 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.card p {
+  color: #777;
+  font-size: 13px;
+}
+
+.profit {
+  color: green;
+  font-weight: bold;
+}
+
+.loss {
+  color: red;
+  font-weight: bold;
+}

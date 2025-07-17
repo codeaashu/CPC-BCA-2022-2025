@@ -1,0 +1,77 @@
+/* Funds.css */
+
+.funds {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #ddd;
+}
+
+.funds p {
+  font-size: 16px;
+  color: #333;
+  margin: 0;
+}
+
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  margin-left: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.btn-green {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-blue {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.payment-history {
+  padding: 20px 30px;
+  background-color: #fff;
+}
+
+.payment-history h4 {
+  margin-bottom: 15px;
+  color: #2c3e50;
+}
+
+.payment-history .card {
+  border: 1px solid #dcdcdc;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  background-color: #f9f9f9;
+}
+
+.payment-history .card p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.payment-history .card strong {
+  color: #2c3e50;
+}
+
+.colored {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.imp {
+  font-weight: bold;
+  font-size: 15px;
+}

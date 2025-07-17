@@ -1,0 +1,78 @@
+/* Login.css */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: #f4f6f8;
+}
+
+.login-page {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-card {
+  background: white;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.login-card h2 {
+  margin-bottom: 20px;
+  color: #1e1e1e;
+}
+
+.login-card form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-card input {
+  padding: 12px 14px;
+  margin-bottom: 18px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: border 0.3s ease;
+}
+
+.login-card input:focus {
+  border: 1px solid #387ed1; /* Zerodha blue */
+  outline: none;
+}
+
+.login-card button {
+  padding: 12px;
+  background-color: #387ed1;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.login-card button:hover {
+  background-color: #296ec5;
+}
+
+.login-card p {
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.login-card a {
+  color: #387ed1;
+  text-decoration: none;
+}
+
+.login-card a:hover {
+  text-decoration: underline;
+}

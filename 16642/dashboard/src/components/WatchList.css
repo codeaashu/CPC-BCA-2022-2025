@@ -1,0 +1,107 @@
+.watchlist-container {
+  padding: 20px;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.search-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.search {
+  width: 70%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.counts {
+  font-weight: bold;
+  color: #333;
+}
+
+.stock-item {
+  border-bottom: 1px solid #eee;
+  padding: 10px;
+  transition: background 0.2s ease;
+}
+
+.itemInfo {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.up {
+  color: green;
+}
+
+.down {
+  color: red;
+}
+
+.price {
+  font-weight: bold;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.btn {
+  border: none;
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn.buy {
+  background: linear-gradient(to right, #00c6ff, #0072ff);
+  color: white;
+}
+
+.btn.sell {
+  background: linear-gradient(to right, #ff758c, #ff7eb3);
+  color: white;
+}
+
+.btn.analytics {
+  background: #f1f1f1;
+  color: #333;
+}
+
+.btn.more {
+  background: #ddd;
+  color: #333;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+.chart-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fdfdfd;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+}
+
+.chart-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.no-data {
+  text-align: center;
+  color: #888;
+  margin-top: 30px;
+}

@@ -1,0 +1,65 @@
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 12px 24px;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.indices {
+  display: flex;
+  gap: 20px;
+}
+
+.index-card {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 1px 1px;
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.04);
+  text-align: center;
+  min-width: 100px;
+  transition: background 0.3s ease;
+}
+
+.index-card.up {
+  border-left: 4px solid #0f9d58;
+}
+
+.index-card.down {
+  border-left: 4px solid #d93025;
+}
+
+.index-name {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.index-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.index-status {
+  font-size: 14px;
+  color: inherit;
+}
+
+@media screen and (max-width: 768px) {
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 16px;
+  }
+
+  .indices {
+    flex-direction: row;
+    margin-bottom: 10px;
+  }
+}

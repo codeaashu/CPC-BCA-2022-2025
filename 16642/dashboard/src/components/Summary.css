@@ -1,0 +1,79 @@
+.summary-container {
+  padding: 24px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.greeting {
+  margin-bottom: 24px;
+}
+
+.greeting h2 {
+  font-size: 26px;
+  color: #222;
+}
+
+.greeting p {
+  color: #666;
+  font-size: 15px;
+}
+
+/* Card styles */
+.card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+  padding: 20px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease-in-out;
+}
+
+.card h4 {
+  margin-bottom: 14px;
+  font-weight: 600;
+  color: #444;
+}
+
+.equity-content,
+.holdings-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.column {
+  flex: 1;
+}
+
+.column h3 {
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+.column p {
+  font-size: 14px;
+  color: #555;
+}
+
+.divider-v {
+  width: 1px;
+  height: 100%;
+  background-color: #e2e2e2;
+}
+
+.profit {
+  color: #0f9d58;
+}
+
+@media screen and (max-width: 768px) {
+  .equity-content,
+  .holdings-content {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .divider-v {
+    display: none;
+  }
+}

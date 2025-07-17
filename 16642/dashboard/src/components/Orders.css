@@ -1,0 +1,109 @@
+.orders-page {
+  padding: 20px;
+  background-color: #fdfdfd;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.title {
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+}
+
+.no-orders {
+  background: #fff;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.no-orders p {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #666;
+}
+
+.no-orders .btn-primary {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.table-container {
+  overflow-x: auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.orders-table th {
+  text-align: left;
+  padding: 12px;
+  background-color: #f1f3f5;
+  color: #333;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.orders-table td {
+  padding: 12px;
+  border-bottom: 1px solid #f0f0f0;
+  color: #444;
+}
+
+.orders-table td.buy {
+  color: #0f9d58;
+  font-weight: 600;
+}
+
+.orders-table td.sell {
+  color: #d93025;
+  font-weight: 600;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .orders-table thead {
+    display: none;
+  }
+
+  .orders-table, .orders-table tbody, .orders-table tr, .orders-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .orders-table tr {
+    margin-bottom: 15px;
+    background-color: #fafafa;
+    border-radius: 8px;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.08);
+    padding: 10px;
+  }
+
+  .orders-table td {
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  .orders-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    font-weight: 600;
+    color: #666;
+    text-align: left;
+  }
+}
