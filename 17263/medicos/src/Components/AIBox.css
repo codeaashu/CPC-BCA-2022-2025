@@ -1,0 +1,181 @@
+.h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #1c5808;
+  margin-top: 5rem;
+}
+.h2 {
+  text-align: center;
+  font-size: 1.3rem;
+  color: #858500;
+}
+
+.ai-box {
+  background: #9ece64;
+  border-radius: 20px;
+  padding: 2rem;
+  max-width: 700px;
+  margin: 2rem auto;
+  margin-top: 2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.ai-box h2 {
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.ai-form {
+  margin-bottom: 1rem;
+}
+/* 
+.ai-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #f8f9fb;
+  border: 1px solid #ccc;
+  border-radius: 40px;
+  padding: 0.6rem 1rem;
+} */
+
+/* .ai-input-wrapper input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  outline: none;
+} */
+
+/* .ai-icon {
+  font-size: 1.1rem;
+  color: #98f787;
+  margin-right: 8px;
+} */
+
+/* .mic-button {
+  background: #28c68f;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+} */
+
+/* .mic-button:hover {
+  background: #1aa76d;
+} */
+
+.quick-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.quick-tags button {
+  padding: 0.5rem 1rem;
+  background: #eef2f5;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #333;
+  transition: background 0.2s;
+}
+
+.quick-tags button:hover {
+  background: #dbe3eb;
+}
+
+.ai-response {
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #333;
+}
+/* .mic-button.listening {
+  background: #ff5252;
+  animation: pulse 1s infinite;
+} */
+
+/* @keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  } */
+
+.ai-input-wrapper {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 40px;
+  padding: 0.6rem 1rem;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.ai-icon {
+  font-size: 1rem;
+  color: #888;
+  margin-right: 0.5rem;
+}
+
+.ai-input-wrapper input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  background: transparent;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 0.4rem;
+  font-size: 1.1rem;
+  color: #28c68f;
+  transition: transform 0.2s ease, color 0.3s ease;
+}
+
+.icon-button:hover {
+  color: #1aa76d;
+  transform: scale(1.1);
+}
+
+.icon-button.send {
+  color: #666;
+}
+
+.icon-button.send:hover {
+  color: #000;
+}
+
+.icon-button.listening {
+  color: #ff5252;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

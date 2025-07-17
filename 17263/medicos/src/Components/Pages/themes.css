@@ -1,0 +1,85 @@
+.hair-theme {
+  --bg-color: #f5e9dc;
+  --card-color: #fff5ed;
+  --text-color: #3b2e2a;
+  --desc-color: #770707;
+  --cart-color: #e6b486;
+  --buy-color: #b36945;
+}
+
+.baby-theme {
+  --bg-color: #fff0f7;
+  --card-color: #ffe1ee;
+  --text-color: #8b005d;
+  --desc-color: #bf4d83;
+  --cart-color: #f39ac7;
+  --cart-hover: #ff75b8;
+  --buy-color: #e75480;
+  --buy-hover: #c43765;
+  --bookmark-color: #f78fdd;
+  --bookmark-hover: #dd6dbf;
+}
+
+.skin-theme {
+  --bg-color: #e0f7fa;
+  --card-color: #e0f2f1;
+  --text-color: #004d60;
+  --desc-color: #00796b;
+  --cart-color: #00bcd4;
+  --buy-color: #00796b;
+}
+
+.medicine-theme {
+  --bg-color: #f3f4f6;
+  --card-color: #e0e0e0;
+  --text-color: #333333;
+  --desc-color: #444;
+  --cart-color: #636262;
+  --buy-color: #2f2e2e;
+}
+
+.vitamin-theme {
+  --bg-color: #f7cb9e4e;
+  --card-color: #e7852316;
+  --text-color: #7f480d;
+  --desc-color: #4d7c0f;
+  --cart-color: #d79e18c0;
+  --buy-color: #ff7300;
+}
+
+.ayurveda-theme {
+  --bg-color: #f3fce8;
+  --card-color: #e2f7cb;
+  --text-color: #365314;
+  --desc-color: #3d6b0d;
+  --cart-color: #a3d977;
+  --buy-color: #6b8e23;
+}
+
+.category-page {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.category-page .product-card {
+  background-color: var(--card-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.category-page .description {
+  color: var(--desc-color);
+}
+
+.category-page .btn.add-cart {
+  background-color: var(--cart-color);
+  color: white;
+}
+.category-page .btn.add-cart.hover {
+  background-color: var(--cart-color);
+  color: white;
+}
+
+.category-page .btn.buy-now {
+  background-color: var(--buy-color);
+  color: white;
+}

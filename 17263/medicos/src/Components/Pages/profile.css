@@ -1,0 +1,149 @@
+.profile-page {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.profile-page h2 {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.profile-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.profile-form label {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.profile-form input {
+  width: 100%;
+  padding: 10px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+.profile-form input:focus {
+  border-color: #4e97ff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(78, 151, 255, 0.4);
+}
+
+.update-btn,
+.logout-btn {
+  grid-column: span 2;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.update-btn {
+  background-color: #4e97ff;
+  color: #fff;
+}
+
+.update-btn:hover {
+  background-color: #336fdd;
+}
+
+.logout-btn {
+  margin-top: 10px;
+  background-color: #ff5959;
+  color: #fff;
+}
+
+.logout-btn:hover {
+  background-color: #e04444;
+}
+
+.orders-section h3 {
+  margin-top: 40px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 1rem 0;
+}
+
+.order-card {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+.order-item-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.order-image-left img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.order-details-right {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.order-details-right .product-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .profile-form {
+    grid-template-columns: 1fr;
+  }
+  .update-btn,
+  .logout-btn {
+    grid-column: auto;
+    width: 150px;
+    padding: 12px 0;
+    text-align: center;
+  }
+
+  .order-item-row {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .order-image-left img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .order-details-right {
+    align-items: center;
+  }
+}

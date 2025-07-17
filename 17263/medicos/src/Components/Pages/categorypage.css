@@ -1,0 +1,90 @@
+.category-page {
+  padding: 5rem;
+  max-width: 1200px;
+  margin: auto;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 5.5rem;
+  padding-bottom: 2rem;
+}
+
+.product-card {
+  border-radius: 12px;
+  padding: 0.8rem;
+  text-align: center;
+  position: relative;
+  width: 220px;
+  transition: all 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+}
+
+.category-page h2 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+.category-desc {
+  font-size: 1.5rem;
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.product-name {
+  font-size: 1.5rem;
+  font-weight: 750;
+  margin-bottom: 0.2rem;
+}
+
+.product-category {
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.description {
+  font-size: 0.75rem;
+  overflow: hidden;
+}
+
+.price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 2.3rem;
+}
+
+.rating {
+  font-size: 0.8rem;
+  margin-bottom: 0.4rem;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 2.4rem;
+  margin-top: 0.5rem;
+}
+
+.btn {
+  padding: 0.7rem 0.9rem;
+  font-size: 12px;
+  font-weight: 300;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.add-cart:hover {
+  background-color: var(--cart-hover);
+}
+.buy-now:hover {
+  background-color: var(--buy-hover);
+}

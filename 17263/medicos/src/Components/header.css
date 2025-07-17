@@ -1,0 +1,106 @@
+header {
+  width: 90%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 5%;
+  z-index: 999;
+  font-family: "Poppins", sans-serif;
+  padding: 16px 5%;
+}
+
+.logo {
+  background: linear-gradient(90deg, #064420, #f9d923);
+  font-size: 20px;
+  font-weight: 900;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo-sub {
+  font-size: 15px;
+  font-weight: 800;
+  margin-left: 6px;
+  color: #8c9a3c;
+}
+
+.navbar {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar li {
+  margin: 0 12px;
+}
+
+.navbar a {
+  font-size: 15px;
+  color: #064420;
+  font-weight: 600;
+  padding: 3px 12px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.navbar a:hover {
+  background-color: #121212;
+  color: #fff;
+  border-radius: 6px;
+}
+
+.icons {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  font-size: 30px;
+}
+
+.icons a {
+  margin-left: 2px;
+  color: #1c6758;
+
+  text-decoration: none;
+  position: relative;
+}
+
+#cart-count {
+  font-size: 12px;
+  color: red;
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: white;
+  padding: 1px 4px;
+  border-radius: 50%;
+  border: 1px solid red;
+}
+.search-form {
+  position: absolute;
+  top: 80px;
+  right: 60px;
+  z-index: 1000;
+  background: white;
+  padding: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+.search-input {
+  padding: 8px 12px;
+  width: 250px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+}

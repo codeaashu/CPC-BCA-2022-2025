@@ -1,0 +1,144 @@
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 5rem;
+  padding: 0.5rem;
+}
+
+.product-card {
+  background: #d6f8c3a0;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 0.8rem;
+  transition: 0.2s ease;
+  text-align: center;
+  position: relative;
+  min-height: 320px;
+  max-width: 200px;
+  margin: auto;
+  overflow: visible;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(177, 223, 141, 0.924);
+}
+
+.product-image {
+  width: 100%;
+  height: 120px;
+  object-fit: contain;
+  border-radius: 10px;
+  background-color: rgb(255, 255, 255);
+  margin-bottom: 0.5rem;
+}
+
+.product-category {
+  font-size: 0.7rem;
+  color: #888;
+  margin-bottom: 0.3rem;
+}
+
+.product-name {
+  font-size: 0.85rem;
+  font-weight: 750;
+  margin-bottom: 0.2rem;
+  color: #222;
+}
+
+.emoji {
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+}
+
+.description {
+  font-size: 0.75rem;
+  color: #666;
+  height: 30px;
+  overflow: hidden;
+  margin-bottom: 0.4rem;
+}
+
+.rating {
+  font-size: 0.8rem;
+  color: #f39c12;
+  margin-bottom: 0.4rem;
+}
+
+.price {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #1a1a1a;
+}
+
+.original-price {
+  font-size: 0.7rem;
+  text-decoration: line-through;
+  color: #aaa;
+  margin-left: 0.4rem;
+}
+
+/* .btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 2.4rem;
+  margin-top: 0.5rem;
+  border: 1px solid red;
+} */
+.btn-group {
+  display: flex !important;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: auto !important;
+  /* background: rgba(178, 109, 6, 0.572); */
+}
+
+.btn {
+  padding: 0.7rem 0.9rem;
+  font-size: 0.7rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+/* .add-cart {
+  background-color: #e6b486c4;
+  color: white;
+}
+
+.add-cart:hover {
+  background-color: #13635d;
+}
+
+.buy-now {
+  background-color: #b36945;
+  color: white;
+}
+
+.buy-now:hover {
+  background-color: #a7560f;
+} */
+
+.badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  font-size: 0.6rem;
+  padding: 3px 6px;
+  border-radius: 4px;
+  color: #fff;
+  z-index: 1;
+}
+
+.discount {
+  background-color: crimson;
+}
+
+.tag {
+  background-color: purple;
+  top: 28px;
+}
