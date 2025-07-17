@@ -1,0 +1,73 @@
+{% extends "dashboard_base.html" %}
+{% load static %}
+{% block content %}
+
+
+<div class="container mt-5">
+  <div class="card bg-dark text-light shadow-lg border-light rounded-4 p-4">
+    <div class="text-center mb-4">
+      <h1 class="display-5 fw-bold">About Us</h1>
+      <p class="lead">Empowering smarter group expense management.</p>
+    </div>
+
+    <div class="text-center mb-4">
+      <img src="{% static 'images/logo_wtbg.png' %}" alt="Teamwork Image" class="img-fluid rounded-3 shadow" style="max-height: 350px;" />
+    </div>
+
+    <p>
+      Welcome to <strong>SplitIT</strong> – a platform designed to simplify and streamline how you share and settle expenses with your friends, family, and colleagues.
+    </p>
+
+    <p>
+      Our mission is to eliminate the awkwardness and hassle of managing shared costs. Whether you're traveling with friends, living with roommates, or splitting a gift, SplitIT ensures everyone pays their fair share, with total transparency.
+    </p>
+
+    <p>
+      Built with cutting-edge web technology, SplitIT enables:
+      <ul>
+        <li>Real-time expense tracking</li>
+        <li>Group creation and member management</li>
+        <li>Accurate settlement summaries</li>
+        <li>Secure authentication and profile handling</li>
+      </ul>
+    </p>
+
+    <p>
+      <strong>Our Story:</strong> The idea of SplitIT was born from everyday frustration—unbalanced bills, forgotten contributions, and confusion over who owes what. We believe that managing money together should be simple and stress-free.
+    </p>
+
+    <p>
+      <strong>Meet the Team:</strong> We're a group of passionate students and developers committed to building tools that make life easier. We combine creativity, code, and a love for collaboration to make SplitIT the most user-friendly expense-sharing solution.
+    </p>
+
+    <p>
+      <strong>Looking Ahead:</strong> Our future plans include mobile apps, integrations with payment gateways, analytics, and smart budgeting tools. We're just getting started!
+    </p>
+
+    <p class="text-center mt-4">
+      Thank you for being a part of the SplitIT community!
+    </p>
+  </div>
+</div>
+
+<!-- Additional styling -->
+<style>
+  ul {
+    list-style: disc;
+    padding-left: 1.5rem;
+  }
+  li {
+    margin-bottom: 0.5rem;
+  }
+  img{
+    height: 400px;
+    width: 400px;
+  }
+  @media (max-width: 768px) {
+    img {
+      max-height: 250px !important;
+    }
+  }
+</style>
+
+{% endblock %}

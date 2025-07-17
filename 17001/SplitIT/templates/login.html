@@ -1,0 +1,114 @@
+{%extends "base.html" %} {% block content %}
+<div class="login-container">
+  <h1>Login</h1>
+  <form id="loginForm" method="POST" action="{% url 'login' %}">
+    {% csrf_token %}
+    <div class="input-group">
+      <label for="username">Username</label>
+      <input
+        type="email"
+        id="username"
+        name="username"
+        placeholder="johndoe@example.com"
+        required
+      />
+    </div>
+    <div class="input-group">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        placeholder="********"
+        required
+      />
+    </div>
+    <button type="submit">Login</button>
+  </form>
+  <p>Don't have an account? <a href="/signup/">Sign up</a></p>
+</div>
+<div id="messages">
+  {% if messages %}
+  <ul>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</div>
+<style>
+  body {
+    font-family: "Comic Sans MS", sans-serif;
+    background-color: #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .login-container {
+    background: white;
+    border: 2px solid #000;
+    padding: 40px;
+    width: 320px;
+    box-shadow: 10px 10px 0 #000;
+    text-align: center;
+    border-radius: 8px;
+  }
+
+  h1 {
+    font-size: 28px;
+    margin-bottom: 30px;
+  }
+
+  .input-group {
+    width: 90%;
+    margin-bottom: 20px;
+    text-align: left;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+  }
+
+  input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #000;
+    box-shadow: 3px 3px 0 #000;
+    font-size: 14px;
+  }
+
+  button {
+    background-color: #ffcc00;
+    border: 2px solid #000;
+    padding: 12px;
+    width: 100%;
+    cursor: pointer;
+    box-shadow: 3px 3px 0 #000;
+    font-size: 16px;
+  }
+
+  button:hover {
+    background-color: #ffeb3b;
+  }
+
+  @media (max-width: 600px) {
+    .login-container {
+      width: 90%;
+      padding: 30px;
+    }
+  }
+  #messages {
+    color: rgb(94, 255, 0);
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+  }
+</style>
+{% endblock %}

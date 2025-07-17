@@ -1,0 +1,171 @@
+{%extends "base.html" %} {% block content %}
+<div class="login-container">
+  <h1>Sign Up</h1>
+  <form id="loginForm" method="POST" action="{% url 'signup' %}">
+    {% csrf_token %}
+    <div class="input-group">
+      <label for="first-name">First Name</label>
+      <input
+        type="text"
+        id="first-name"
+        name="first-name"
+        placeholder="John"
+        required
+      />
+    </div>
+    <div class="input-group">
+      <label for="last-name">Last Name</label>
+      <input type="text" id="last-name" name="last-name" placeholder="Doe" />
+    </div>
+    <div class="input-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="johndoe@example.com"
+        required
+      />
+    </div>
+    <div class="input-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required />
+    </div>
+    <div class="input-group">
+      <label for="confirm-password">Confirm Password</label>
+      <input
+        type="password"
+        id="confirm-password"
+        name="confirm-password"
+        required
+      />
+    </div>
+    <button type="submit" disabled="true" id="submitButton">Sign Up</button>
+  </form>
+
+  <p>Already have an account? <a href="/login/">Login</a></p>
+</div>
+
+<div id="messages">
+  {% for message in messages %}
+  <p>{{ message }}</p>
+  {% endfor %}
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const passwordField = document.getElementById("password");
+    const confirmPasswordField = document.getElementById("confirm-password");
+    const submitButton = document.getElementById("submitButton");
+
+    function validatePasswords() {
+      const password = passwordField.value;
+      const confirmPassword = confirmPasswordField.value;
+
+      // Reset error classes
+      passwordField.classList.remove("error");
+      confirmPasswordField.classList.remove("error");
+
+      // Assume valid unless proven otherwise
+      let isValid = true;
+
+      // Check password length
+      if (password.length < 8) {
+        passwordField.classList.add("error");
+        isValid = false;
+      }
+
+      // Check if passwords match
+      if (password !== confirmPassword) {
+        confirmPasswordField.classList.add("error");
+        isValid = false;
+      }
+
+      // Enable or disable the submit button
+      submitButton.disabled = !isValid;
+    }
+
+    // Add event listeners for real-time validation
+    passwordField.addEventListener("input", validatePasswords);
+    confirmPasswordField.addEventListener("input", validatePasswords);
+  });
+</script>
+<style>
+  body {
+    font-family: "Comic Sans MS", sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .login-container {
+    background: white;
+    border: 2px solid #000;
+    padding: 10px 20px 10px 20px;
+    width: 320px;
+    box-shadow: 10px 10px 0 #000;
+    text-align: center;
+    border-radius: 8px;
+  }
+
+  h1 {
+    font-size: 28px;
+    margin-bottom: 30px;
+  }
+
+  .input-group {
+    width: 90%;
+    margin-bottom: 5px;
+    text-align: left;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 16px;
+  }
+
+  input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #000;
+    box-shadow: 3px 3px 0 #000;
+    font-size: 14px;
+  }
+  input.error {
+    border: 2px solid red;
+  }
+
+  button {
+    background-color: #ffcc00;
+    border: 2px solid #000;
+    padding: 12px;
+    width: 100%;
+    cursor: pointer;
+    box-shadow: 3px 3px 0 #000;
+    font-size: 16px;
+  }
+
+  button:hover {
+    background-color: #ffeb3b;
+  }
+
+  @media (max-width: 600px) {
+    .login-container {
+      width: 90%;
+      padding: 30px;
+    }
+  }
+  #messages {
+    color: red;
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+  }
+</style>
+{% endblock %}

@@ -1,0 +1,128 @@
+{%extends 'dashboard_base.html'%} {%block content%} {%load custom_filters%}
+
+<div id="dashlist" class="hstack gap-4 flex-wrap">
+  <div class="vstack gap-4">
+    <div class="card" style="width: 25rem; height: 14.5rem">
+      <div class="card-body">
+        <h1 class="card-title">Groups</h1>
+        <h3 class="card-subtitle mb-2 text-body-secondary">
+          You are a part of
+        </h3>
+        <h1 class="card-text">{{group_count}}</h1>
+        <h3 class="card-subtitle mb-2 text-body-secondary">
+          groups.
+        </h3>
+      </div>
+      <a href="/groups/"><button class="card-button">View Groups</button></a>
+    </div>
+    <div class="card" style="width: 25rem; height: 14.5rem">
+      <div class="card-body">
+        <h1 class="card-title">Spendings</h1>
+        <h3 class="card-subtitle mb-2 text-body-secondary">
+         Simplify group spending, track transactions, and stay on top of your shared bills with SPLITIT
+        </h3>
+      </div>
+      <a href="/expense_details"><button class="card-button">View Expenses</button></a>
+    </div>
+  </div>
+
+  <div class="card" style="width: 25rem; height: 30rem">
+    <div class="card-body">
+      <h1 class="card-title">Summary</h1>
+      <div id="summary">
+        <h2>Total Amount Spent:</h2>
+        <h1 class="card-text">{{summary.total_spent}}</h1>
+        <h2>Amount Spent on self:</h2>
+        <h1 class="card-text">{{summary.on_self}}</h1>
+        {%if summary.owes|check_negative %}
+        <h2>You are owed:</h2>
+        <h1 class="card-text">{{summary.owes|negate}}</h1>
+        {%else%}
+        <h2>You owe:</h2>
+        <h1 class="card-text">{{summary.owes}}</h1>
+        {%endif%}
+      </div>
+    </div>
+    <a href="/summary-details/"><button class="card-button">Summary Details</button></a>
+  </div>
+
+  <div class="vstack gap-4">
+    <div class="card" style="width: 25rem; height: 19.5rem">
+      <div class="card-body">
+        <h1 class="card-title">Profile</h2>
+        <div id="pro_pic">
+          {%if gender%}
+          <img src="https://avatar.iran.liara.run/public/girl" alt="sample_profile">
+          {%else%}
+          <img src="https://avatar.iran.liara.run/public/boy" alt="sample_profile">
+          {%endif%}
+        </div>
+        <h3 class="card-subtitle mb-2 text-body-secondary">
+          Update profile and reset password...
+        </h3>
+      </div>
+      <a href="/profile/"><button class="card-button">Edit Profile</button></a>
+    </div>
+    <div class="card" style="width: 25rem; height: 9.5rem">
+      <div class="card-body">
+        <h1 class="card-title">About Us</h1>
+        <h3 class="card-subtitle mb-2 text-body-secondary">
+          Know more!!!
+        </h3>
+        <p class="card-text"></p>
+      </div>
+      <a href="/aboutus/"><button class="card-button btn-primary">Read More</button></a>
+    </div>
+  </div>
+</div>
+<style>
+  h1,h3 {
+    text-align: center;
+  }
+  .card-title{
+    font-size:50px;
+  }
+  img{
+    height: 70px;
+  }
+  #pro_pic {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  height: 40%
+}
+.card {
+  position: relative;
+  overflow: hidden; 
+  transition: transform 0.3s;
+}
+
+.card-body {
+  transition: filter 0.3s;
+}
+.card:hover .card-body {
+  filter: blur(2px);
+}
+
+.card:hover .card-button {
+  opacity: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+}
+.card-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  z-index: 10; 
+  background-color: #0275d8;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+</style>
+{%endblock%}

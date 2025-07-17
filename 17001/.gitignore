@@ -1,0 +1,31 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+env/
+
+# Django specific files
+*.log
+*.pot
+*.pyc
+*.pyo
+db.sqlite3 
+
+# Media files (if applicable)
+media/
+
+
+# Local configuration
+*.local
+.env
+
+# IDE specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS generated files
+.DS_Store
+Thumbs.db

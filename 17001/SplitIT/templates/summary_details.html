@@ -1,0 +1,55 @@
+{%extends "dashboard_base.html" %} {% block content %}
+<h1>Detailed Summary</h1>
+<div class="container mt-4">
+  <div class="row">
+    <div id="owe" class="col-md-6">
+      <h4>You Owe</h4>
+      {% if owe %}
+      <ul class="list-group">
+        {% for i in owe %}
+        <li class="list-group-item">{{i.amount}} to {{i.name}}</li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <h5>nothing...</h5>
+      {% endif %}
+    </div>
+    <div id="owed" class="col-md-6">
+      <h4>You Are Owed</h4>
+      {% if owed %}
+      <ul class="list-group">
+        {% for i in owed %}
+        <li class="list-group-item">{{i.amount}} from {{i.name}}</li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <h5>nothing...</h5>
+      {% endif %}
+    </div>
+  </div>
+</div>
+<style>
+  h1,
+  .row h4 {
+    color: #ffffff;
+  }
+  h5 {
+    color: #cccccc;
+    font-style: italic;
+    padding: 10px;
+  }
+  #owe,
+  #owed {
+    padding: 10px;
+    max-height: 40%;
+    overflow-y: auto;
+  }
+  .list-group-item {
+    transition: background-color 0.2s;
+  }
+  .list-group-item:hover {
+    background-color: #ffcc00;
+  }
+</style>
+
+{% endblock %}

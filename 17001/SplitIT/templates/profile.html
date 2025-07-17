@@ -1,0 +1,105 @@
+{% extends "dashboard_base.html" %}
+{% block content %}
+
+<!-- Flash Messages -->
+{% if messages %}
+<div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+  {% for message in messages %}
+    <strong>{{ message }}</strong>
+  {% endfor %}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+
+<div class="container mt-5">
+  <div class="card shadow-lg bg-dark text-light border-light rounded-4 p-4">
+    <h2 class="mb-3">Hello, {{ first_name }} {{ last_name }}</h2>
+    <p id="details"><strong>Email:</strong> {{ email }}</p>
+    <p id="details"><strong>About:</strong> {{ about|default:"Not provided" }}</p>
+    <p id="details"><strong>Gender:</strong> {{ gender|default:"Not specified" }}</p>
+
+    <div class="d-flex gap-3 mt-4">
+      <button type="button" class="btn btn-warning rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#profileModal">
+        Update Profile
+      </button>
+      <button type="button" class="btn btn-outline-light rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#resetPasswordModal">
+        Reset Password
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Update Profile Modal -->
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-light rounded-4">
+      <div class="modal-header bg-dark text-light">
+        <h5 class="modal-title" id="profileModalLabel">Update Profile</h5>
+      </div>
+      <div class="modal-body bg-warning-subtle">
+        <form method="POST">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="about" class="form-label">About:</label>
+            <input type="text" class="form-control" name="about" id="about" value="{{ about }}">
+          </div>
+          <div class="mb-3">
+            <label for="gender" class="form-label">Gender:</label>
+            <select name="gender" id="gender" class="form-select">
+              <option value="">Select gender</option>
+              <option value="M" {% if gender == "M" %}selected{% endif %}>Male</option>
+              <option value="F" {% if gender == "F" %}selected{% endif %}>Female</option>
+            </select>
+          </div>
+          <div class="d-flex justify-content-end gap-2">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <input type="submit" name="update_profile" value="Apply Changes" class="btn btn-warning" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Reset Password Modal -->
+<div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-light rounded-4">
+      <div class="modal-header bg-dark text-light">
+        <h5 class="modal-title" id="resetPasswordModalLabel">Reset Password</h5>
+      </div>
+      <div class="modal-body bg-warning-subtle">
+        <form method="POST" action="{% url 'reset_password' %}">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="current_password" class="form-label">Current Password</label>
+            <input type="password" class="form-control" name="current_password" required>
+          </div>
+          <div class="mb-3">
+            <label for="new_password" class="form-label">New Password</label>
+            <input type="password" class="form-control" name="new_password" required>
+          </div>
+          <div class="mb-3">
+            <label for="confirm_password" class="form-label">Confirm New Password</label>
+            <input type="password" class="form-control" name="confirm_password" required>
+          </div>
+          <div class="d-flex justify-content-end gap-2">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-warning">Reset Password</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Extra styling -->
+<style>
+  #details {
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
+    color: #cccccc;
+  }
+</style>
+
+{% endblock %}

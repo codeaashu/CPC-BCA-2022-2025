@@ -1,0 +1,86 @@
+{%extends "dashboard_base.html" %} {% block content%}
+<h1 style="color: #ffffff">Spendings</h1>
+<div
+  class="container"
+  style="
+    margin: 0px;
+    display: flex;
+    width: 100vw;
+    height: 70%;
+    justify-content: space-between;
+  "
+>
+  <div id="left" style="padding: 10px; width: 70%; flex-grow: 1">
+    <canvas id="myHistogram" width="100%"></canvas>
+  </div>
+  <div
+    id="right"
+    style="padding: 10px; width: 30%; flex-grow: 1; overflow-y: auto"
+  >
+    <div
+      id="row-header"
+      class="row g-2"
+      style="font-size: larger; color: #ffffff; font-weight: bold"
+    >
+      <div class="col-sm-4 col-md-6">Expense Details</div>
+      <div class="col-sm-2 col-md-4">Spent</div>
+    </div>
+    <div id="expense-list" class="vstack gap-3">
+      {% for expense in expenses %}
+      <div id="row" class="row g-2" style="color: #ffffff">
+        <div class="col-sm-4 col-md-6 align-items-center">
+          {{ expense.description }}
+        </div>
+        <div class="col-sm-2 col-md-4 align-items-center">
+          {{ expense.amount }}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<script>
+  // JavaScript to create the histogram
+  const ctx = document.getElementById("myHistogram").getContext("2d");
+  const groups = JSON.parse("{{ groups|escapejs }}");
+  const spendings = JSON.parse("{{ spendings|escapejs }}");
+  // Data for the histogram
+  const data = {
+    labels: groups, // Custom labels
+    datasets: [
+      {
+        label: "Spendings",
+        data: spendings, // Data for each bin
+        backgroundColor: "rgba(255, 204, 0, 1)", // Color of bars
+        borderColor: "rgba(255, 204, 0, 1)", // Border color of bars
+        borderWidth: 1,
+      },
+    ],
+  };
+  const config = {
+    type: "bar", // 'bar' type for histogram
+    data: data,
+    options: {
+      responsive: true,
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: "Groups", // X-axis label
+          },
+        },
+        y: {
+          title: {
+            display: true,
+            text: "Spendings", // Y-axis label
+          },
+          beginAtZero: true, // Start y-axis at 0
+        },
+      },
+    },
+  };
+
+  // Create the chart
+  new Chart(ctx, config);
+</script>
+{%endblock%}

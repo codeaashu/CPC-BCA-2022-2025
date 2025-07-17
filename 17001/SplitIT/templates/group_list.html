@@ -1,0 +1,104 @@
+{% extends "dashboard.html" %} {% block groupList %} {% for group in groups %}
+<div class="card" style="width: 16rem">
+  <div class="card-body">
+    <h5 class="card-title">{{ group.group.group_name }}</h5>
+    <h6 class="card-subtitle mb-2 text-body-secondary">
+      Created by: <br />
+      {{ group.group.created_by }}
+    </h6>
+    <p class="card-text">{{ group.group.group_description }}</p>
+
+    <form action="{% url 'group' %}" method="POST" style="display: inline">
+      {% csrf_token %}
+      <input type="hidden" name="group_id" value="{{ group.group.group_id }}" />
+      <button type="submit" id="open" class="btn btn-primary">Open</button>
+    </form>
+
+    {% if group.group.created_by == current_user %}
+    <button
+      type="button"
+      id="delete"
+      class="btn btn-danger"
+      data-bs-toggle="modal"
+      data-bs-target="#deleteGroup{{ group.group.group_id }}"
+    >
+      Delete
+    </button>
+
+    <!-- Delete Modal -->
+    <div
+      class="modal fade"
+      id="deleteGroup{{ group.group.group_id }}"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="deleteGroupLabel{{ group.group.group_id }}"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1
+              class="modal-title fs-5"
+              id="deleteGroupLabel{{ group.group.group_id }}"
+            >
+              Delete Group
+            </h1>
+          </div>
+          <div class="modal-body">
+            <form
+              action="{% url 'delete_group' %}"
+              method="POST"
+              style="display: inline"
+            >
+              <div>
+                Are you sure you want to delete the group? All shared expenses
+                will be considered settled, and this action cannot be undone.
+                <br />
+                <b>Proceed to delete?</b>
+              </div>
+
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              {% csrf_token %}
+              <input
+                type="hidden"
+                name="group_id"
+                value="{{ group.group.group_id }}"
+              />
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% endif %}
+  </div>
+</div>
+{% endfor %}
+<style>
+  .card {
+    background-color: white;
+    transition: background-color 0.2s, transform 0.2s;
+  }
+  .card:hover {
+    background-color: #ffcc00;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  }
+  .card:hover #open,
+  .card:hover #delete {
+    background-color: white;
+    color: black;
+  }
+  #open,
+  #delete {
+    background-color: #ffcc00;
+    border: none;
+  }
+</style>
+{% endblock %}

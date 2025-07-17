@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SplitIT</title>
+    {% load static %}
+  </head>
+  <body>
+    <div class="logo">
+      <img src="{% static 'images/mainlogo.jpg' %}" alt="logo" />
+    </div>
+
+    <div class="buttons">
+      <a href="/login/" class="button"><button type="submit">Login</button></a>
+      <a href="/signup/" class="button"
+        ><button type="submit">Sign up</button></a
+      >
+    </div>
+  </body>
+  <style>
+    body {
+      background-color: black;
+    }
+    .logo {
+      width: 60%;
+      position: absolute;
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      border-radius: 10px;
+    }
+    img {
+      width: 90%;
+      border-radius: 10px;
+    }
+    .button {
+      text-decoration: none;
+      width: 100%;
+      margin: 5px;
+    }
+    button {
+      background-color: #fbca1f;
+      border: 2px solid #000;
+      font-weight: 900;
+      font-size: 18px;
+      border: 3px solid black;
+      border-radius: 0.4em;
+      box-shadow: 0.1em 0.1em;
+      cursor: pointer;
+      padding: 12px;
+      width: 100%;
+      margin: 5px;
+    }
+
+    button:hover {
+      transform: translate(-0.05em, -0.05em);
+      box-shadow: 0.15em 0.15em;
+      background-color: #ffeb3b;
+    }
+    button:active {
+      transform: translate(0.05em, 0.05em);
+      box-shadow: 0.05em 0.05em;
+    }
+    .buttons {
+      font-family: "Comic Sans MS", sans-serif;
+      width: 20%;
+      position: absolute;
+      display: flex;
+      top: 80%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    form {
+      display: flex;
+      width: 100%;
+    }
+  </style>
+</html>

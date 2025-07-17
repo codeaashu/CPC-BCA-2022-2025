@@ -1,0 +1,372 @@
+{%extends "dashboard_base.html" %} {% block content %}
+<div id="messages">
+  {% if messages %}
+  <div>
+    {% for message in messages %}
+    <div
+      class="alert alert-{{ message.tags }} alert-dismissible fade show"
+      role="alert"
+    >
+      {{ message }}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+<div id="header">
+  <div>
+    <h1>{{group.group_name}}</h1>
+    <p>Created by {{group.created_by}} on {{group.created_at}}</p>
+  </div>
+  <div>
+    <button
+      type="button"
+      id="openModalBtn"
+      class="btn btn-primary add-expense"
+      data-bs-toggle="modal"
+      data-bs-target="#member-details"
+    >
+      View Members
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary add-expense"
+      data-bs-toggle="modal"
+      data-bs-target="#add_expense"
+    >
+      Add Expense
+    </button>
+  </div>
+</div>
+
+<div id="row-header" class="row g-0">
+  <div class="col-sm-4 col-md-6">Expense Details</div>
+  <div class="col-sm-2 col-md-4">Spent</div>
+  <div class="col-sm-2 col-md-2">Shared by</div>
+</div>
+<div id="expense-list" class="vstack gap-3">
+  {% for expense in expenses %}
+  <div id="row" class="row g-0">
+    <div class="col-sm-4 col-md-6 align-items-center">
+      {{ expense.description }}
+    </div>
+    <div class="col-sm-2 col-md-4 align-items-center">
+      {{ expense.amount }} paid by {% if expense.user == user %} you {% else %}
+      {{ expense.user }} {% endif %}
+    </div>
+    <div id="share-list" class="col-sm-2 col-md-2">
+      <div class="share-item-container">
+        <ul class="share-list">
+          {% for share in expense.expenseshare_set.all %}
+          <li>{{ share.user.first_name }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div
+  class="modal fade"
+  id="add_expense"
+  tabindex="-1"
+  aria-labelledby="add_expenseLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="add_expenseLabel">Add Expense</h1>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'expense' %}" method="POST">
+          {% csrf_token %}
+          <div class="row">
+            <div id="left" class="col-8">
+              <div class="mb-3">
+                <label for="expense-details" class="col-form-label"
+                  >Expense Details:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  name="expense-details"
+                  id="expense-details"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="amount-spent" class="col-form-label"
+                  >Amount Spent:</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="amount-spent"
+                  name="amount-spent"
+                  required
+                />
+              </div>
+            </div>
+            <div id="right" class="col-4">
+              <label class="form-label">Select Members:</label><br />
+              <div id="member-list" class="mb-3">
+                {% for member in members %} {% if member.user == current_user %}
+                <input
+                  type="checkbox"
+                  name="options"
+                  id="option1"
+                  value="{{member.user}}"
+                  checked
+                />
+                {% else %}
+                <input
+                  type="checkbox"
+                  name="options"
+                  id="option1"
+                  value="{{member.user}}"
+                />
+                {% endif %}
+                <label for="option1">{{member.user}}</label><br />
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <input
+            type="submit"
+            class="btn btn-primary"
+            name="create_group"
+            value="Create Expense"
+          />
+          <input type="hidden" name="group_id" value="{{ group.group_id }}" />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="member-details"
+  tabindex="-1"
+  aria-labelledby="member-detailsLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="member-detailsLabel">Members</h1>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <ul id="membersList">
+            {% for member in members %}
+            <li>
+              {{member.user.first_name}} {{ member.user.last_name}}
+              :{{member.user.username }}
+            </li>
+            {% empty %}
+            <li>No members in this group.</li>
+            {% endfor %}
+          </ul>
+        </div>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          class="btn btn-primary"
+          data-bs-target="#add-member"
+          data-bs-toggle="modal"
+        >
+          Add Member
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="add-member"
+  aria-hidden="true"
+  aria-labelledby="add-memberLabel"
+  tabindex="-1"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="add-memberLabel">Add a member</h1>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <form action="{% url 'add_member' %}" method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="username" class="col-form-label"
+                >Enter Username:</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                name="username"
+                id="username"
+                placeholder="gavin@hooli.com"
+                required
+              />
+            </div>
+
+            <input type="hidden" name="group_id" value="{{ group.group_id }}" />
+
+            <button
+              class="btn btn-secondary"
+              data-bs-target="#member-details"
+              data-bs-toggle="modal"
+            >
+              Back
+            </button>
+            <input
+              type="submit"
+              class="btn btn-primary"
+              name="add-member"
+              value="Add"
+            />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  h1 {
+    color: white;
+    margin: 0px;
+  }
+  p {
+    color: #cccccc;
+  }
+  #header {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 20px;
+    padding-right: 45px;
+  }
+
+  .add-expense {
+    background-color: #ffcc00;
+    height: 50%;
+  }
+  #add-expense:hover {
+    background-color: white;
+    color: black;
+  }
+  #expense-list {
+    min-height: 100%;
+  }
+  #expense-list,
+  #row-header {
+    padding: 20px 20px 0px 20px;
+    overflow-y: auto;
+    color: white;
+  }
+
+  #row {
+    background-color: #ffffff;
+    color: black;
+    border-radius: 5px;
+    padding: 5px;
+    transition: transform 0.2s;
+    align-items: center;
+  }
+  #row:hover {
+    background-color: #ffcc00;
+    transform: scale(1.01);
+  }
+
+  .modal-header {
+    background-color: black;
+  }
+  .modal-body {
+    background-color: #ffcc00;
+    padding: 15px;
+  }
+  .modal-content {
+    border: white 2px solid;
+  }
+  #member-list {
+    height: 150px;
+    overflow-y: auto;
+  }
+  #share-list .share-item-container {
+    height: 40px;
+    overflow-y: auto;
+  }
+  .description-wrapper {
+    align-items: center;
+  }
+  .alert {
+    margin: 20px;
+    padding: 15px;
+    border-radius: 5px;
+  }
+  .alert-success {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  .alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  .member-modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  .member-modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+  }
+
+  .member-close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .member-close:hover,
+  .member-close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+</style>
+<script>
+  setTimeout(function () {
+    const messages = document.getElementById("messages");
+    if (messages) {
+      messages.style.display = "none";
+    }
+  }, 5000);
+</script>
+{%endblock %}
